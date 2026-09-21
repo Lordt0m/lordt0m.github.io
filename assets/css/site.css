@@ -28,6 +28,7 @@
 
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --font-size-xs: 0.8125rem;  /* 13px */
@@ -230,6 +231,7 @@ body {
 
 .hero-name {
   display: block;
+  font-family: var(--font-serif);
   font-size: var(--font-size-xl);
   font-weight: 800;
   line-height: var(--line-height-tight);
@@ -356,6 +358,7 @@ body {
 }
 
 .section-header h2 {
+  font-family: var(--font-serif);
   font-size: var(--font-size-xl);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -406,6 +409,7 @@ body {
 }
 
 .proof-title {
+  font-family: var(--font-serif);
   font-size: var(--font-size-lg);
   font-weight: 700;
   letter-spacing: -0.015em;

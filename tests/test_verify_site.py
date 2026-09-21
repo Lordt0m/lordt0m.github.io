@@ -215,6 +215,39 @@ class TestVerifySite(unittest.TestCase):
         errors = verify(self.root)
         self.assertTrue(any("availability statement" in e for e in errors))
 
+    def test_valid_and_invalid_404_page(self):
+        self.create_index(VALID_INDEX_HTML)
+        # Add invalid 404.html missing skip link and main
+        (self.root / "404.html").write_text("<html><body><h1>404</h1></body></html>", encoding="utf-8")
+        errors = verify(self.root)
+        self.assertTrue(any("404.html: Expected exactly one <main>" in e for e in errors))
+
+        # Fix 404.html with valid structure
+        valid_404 = """<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>404</title><link rel="stylesheet" href="assets/css/site.css"></head>
+<body>
+    <a class="skip-link" href="#main-content">Skip</a>
+    <main id="main-content"><h1>Page Not Found</h1><a href="index.html">Home</a></main>
+</body></html>"""
+        (self.root / "404.html").write_text(valid_404, encoding="utf-8")
+        errors = verify(self.root)
+        self.assertEqual(errors, [])
+
+    def test_deploy_workflow_validation(self):
+        self.create_index(VALID_INDEX_HTML)
+        wf_dir = self.root / ".github" / "workflows"
+        wf_dir.mkdir(parents=True, exist_ok=True)
+        # Invalid workflow without verify_site.py
+        (wf_dir / "deploy.yml").write_text("name: Deploy\nsteps: []", encoding="utf-8")
+        errors = verify(self.root)
+        self.assertTrue(any("must run scripts/verify_site.py" in e for e in errors))
+
+        # Valid workflow with verify_site.py
+        (wf_dir / "deploy.yml").write_text("name: Deploy\nsteps: [run: python scripts/verify_site.py]", encoding="utf-8")
+        errors = verify(self.root)
+        self.assertEqual(errors, [])
+
 
 if __name__ == "__main__":
     unittest.main()

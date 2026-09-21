@@ -275,6 +275,38 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     if missing_ids:
         errors.append(f"Required section IDs missing in document: {sorted(list(missing_ids))}")
 
+    # 16. Verify 404 error page if present
+    page_404 = repo_root / "404.html"
+    if page_404.is_file():
+        try:
+            content_404 = page_404.read_text(encoding="utf-8")
+            for pattern, label in MACHINE_PATH_PATTERNS:
+                if pattern.search(content_404):
+                    errors.append(f"404.html: Forbidden {label} found")
+            for pattern, label in FORBIDDEN_TEXT_PATTERNS:
+                if pattern.search(content_404):
+                    errors.append(f"404.html: Forbidden placeholder found: {label}")
+            parser_404 = SiteHTMLParser()
+            parser_404.feed(content_404)
+            if parser_404.main_count != 1:
+                errors.append(f"404.html: Expected exactly one <main> landmark, found {parser_404.main_count}")
+            if parser_404.h1_count != 1:
+                errors.append(f"404.html: Expected exactly one <h1> heading, found {parser_404.h1_count}")
+            if not parser_404.links or parser_404.links[0][1] != "#main-content":
+                errors.append("404.html: Expected first link to be skip link pointing to #main-content")
+        except Exception as exc:
+            errors.append(f"Failed to verify 404.html: {exc}")
+
+    # 17. Verify deployment workflow
+    deploy_workflow = repo_root / ".github" / "workflows" / "deploy.yml"
+    if deploy_workflow.is_file():
+        try:
+            wf_content = deploy_workflow.read_text(encoding="utf-8")
+            if "scripts/verify_site.py" not in wf_content:
+                errors.append("Deployment workflow (.github/workflows/deploy.yml) must run scripts/verify_site.py")
+        except Exception as exc:
+            errors.append(f"Failed to read deploy.yml: {exc}")
+
     return errors
 
 
