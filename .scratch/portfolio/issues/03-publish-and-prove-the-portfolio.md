@@ -1,6 +1,6 @@
 # 03: Publish and prove the portfolio
 
-**Status:** blocked by 02
+**Status:** ready for deployment (blocked on remote repository/hosting credentials)
 
 ## Outcome
 
