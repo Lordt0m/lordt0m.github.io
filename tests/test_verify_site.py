@@ -21,6 +21,8 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
     <header>
         <nav aria-label="Primary navigation">
             <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#about">About</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
@@ -28,15 +30,17 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
         <section id="hero">
             <h1>Ayotomiwa Ojo</h1>
             <p>Python &amp; Django Developer</p>
-            <p>I build practical, testable web applications and backend systems with Python, Django, and PostgreSQL.</p>
+            <p>I build practical web applications and backend systems with Python, Django, and SQL.</p>
+            <p>Focused on clean code, reliable systems, and solving real-world problems.</p>
             <p>Based in Lagos, Nigeria. Available for internship, graduate, associate, and junior Python or Django/backend opportunities, with onsite, hybrid, and Nigeria-remote roles prioritized.</p>
             <div>
                 <a href="#projects">View Projects</a>
                 <a href="https://github.com/Lordt0m">GitHub</a>
+                <a href="#about">About</a>
             </div>
         </section>
         <section id="projects">
-            <h2>Featured Projects</h2>
+            <h2>Projects</h2>
             <article id="shelfsum">
                 <h3>ShelfSum</h3>
                 <p>Explainable inventory and business activity for small shops.</p>
@@ -50,6 +54,14 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
                 <p>Python · Standard Library · pytest · GitHub Actions · CSV · JSON</p>
                 <a href="https://github.com/Lordt0m/credence">Source Code</a>
             </article>
+        </section>
+        <section id="skills">
+            <h2>Skills</h2>
+            <p>Python, Django, SQL, HTML/CSS, Git, Testing, Deployment.</p>
+        </section>
+        <section id="about">
+            <h2>About</h2>
+            <p>Self-taught developer with an English and Literary Studies degree.</p>
         </section>
         <section id="contact">
             <h2>Contact</h2>
@@ -118,7 +130,7 @@ class TestVerifySite(unittest.TestCase):
 
     def test_skipped_heading_level(self):
         # h1 followed directly by h3
-        content = VALID_INDEX_HTML.replace("<h2>Featured Projects</h2>", "<h3>Featured Projects</h3>")
+        content = VALID_INDEX_HTML.replace("<h2>Projects</h2>", "<h3>Projects</h3>")
         self.create_index(content)
         errors = verify(self.root)
         self.assertTrue(any("Heading level skipped" in e for e in errors))
@@ -184,17 +196,18 @@ class TestVerifySite(unittest.TestCase):
         errors = verify(self.root)
         self.assertTrue(any("LinkedIn" in e for e in errors))
 
-        # Skills section
-        content = VALID_INDEX_HTML.replace('</main>', '<section id="skills"><h2>Skills</h2></section></main>')
+    def test_missing_required_sections(self):
+        # Missing skills
+        content = VALID_INDEX_HTML.replace('<section id="skills">', '<section id="other-skills">')
         self.create_index(content)
         errors = verify(self.root)
-        self.assertTrue(any("Skills section" in e for e in errors))
+        self.assertTrue(any("skills" in e for e in errors))
 
-        # About section
-        content = VALID_INDEX_HTML.replace('</main>', '<section id="about"><h2>About</h2></section></main>')
+        # Missing about
+        content = VALID_INDEX_HTML.replace('<section id="about">', '<section id="other-about">')
         self.create_index(content)
         errors = verify(self.root)
-        self.assertTrue(any("About section" in e for e in errors))
+        self.assertTrue(any("about" in e for e in errors))
 
     def test_missing_availability_statement(self):
         content = VALID_INDEX_HTML.replace('Based in Lagos, Nigeria. Available for internship, graduate, associate, and junior Python or Django/backend opportunities, with onsite, hybrid, and Nigeria-remote roles prioritized.', '')

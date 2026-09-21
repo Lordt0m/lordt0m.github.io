@@ -2,7 +2,7 @@
 """Structural verification for portfolio repository.
 
 Checks semantic structure, links, assets, accessibility landmarks,
-evidence-controlled URLs, and absence of placeholders.
+evidence-controlled URLs, required sections, and absence of placeholders.
 """
 
 from html.parser import HTMLParser
@@ -216,7 +216,6 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
                 )
         else:
             # Local relative file/asset link
-            # Strip query params or hash if any
             clean_href = href.split("?")[0].split("#")[0]
             local_target = repo_root / clean_href
             if not local_target.exists():
@@ -242,11 +241,10 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         if "alt" not in attrs:
             errors.append(f"Line {line}: <img> missing required 'alt' attribute")
         src = attrs.get("src", "")
-        # Check photograph / screenshot withholding in slice 01
         if "photo" in src.lower() or "avatar" in src.lower() or "headshot" in src.lower():
             errors.append(f"Line {line}: Forbidden photograph or photo placeholder found")
-        # In ticket 01, screenshots and images are withheld
-        errors.append(f"Line {line}: Visual assets (screenshots/images) are withheld for Ticket 01")
+        # Visual assets remain withheld until respective gates pass
+        errors.append(f"Line {line}: Visual assets (screenshots/images) are withheld until gates pass")
 
     # 11. Required URLs presence
     for approved_url in APPROVED_EXTERNAL_URLS:
@@ -255,15 +253,11 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
 
     # 12. Withheld content checks
     if "ayotomiwa-ojo-cv.pdf" in content or "Download CV" in content:
-        errors.append("Withheld content found: CV download must not be rendered in Ticket 01")
+        errors.append("Withheld content found: CV download must not be rendered until verified PDF exists")
     if "linkedin.com" in content.lower():
-        errors.append("Withheld content found: LinkedIn must not be rendered in Ticket 01")
-    if "skills" in parser.ids:
-        errors.append("Withheld section found: Skills section must not be rendered in Ticket 01")
-    if "about" in parser.ids:
-        errors.append("Withheld section found: About section must not be rendered in Ticket 01")
+        errors.append("Withheld content found: LinkedIn must not be rendered until verified profile exists")
     if re.search(r"\bjournal\b", content, re.IGNORECASE):
-        errors.append("Withheld content found: Private journal must not be rendered")
+        errors.append("Withheld content found: Private journal must not be rendered without inspectable evidence")
 
     # 13. Availability message presence
     if "Lagos, Nigeria" not in content or "Available for" not in content:
@@ -275,11 +269,11 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     if not (has_live_demo and has_source_code):
         errors.append("Required project inspection actions (Live Demo and Source Code) missing")
 
-    # 15. Required sections for this slice
-    required_ids = {"main-content", "projects", "contact"}
+    # 15. Required sections for the portfolio system
+    required_ids = {"main-content", "projects", "skills", "about", "contact"}
     missing_ids = required_ids - parser.ids
     if missing_ids:
-        errors.append(f"Required section IDs missing in document: {missing_ids}")
+        errors.append(f"Required section IDs missing in document: {sorted(list(missing_ids))}")
 
     return errors
 

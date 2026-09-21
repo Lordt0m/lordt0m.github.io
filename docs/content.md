@@ -14,7 +14,7 @@ Python & Django Developer
 
 **Primary statement — verified**
 
-I build practical, testable web applications and backend systems with Python, Django, and PostgreSQL.
+I build practical web applications and backend systems with Python, Django, and SQL. Focused on clean code, reliable systems, and solving real-world problems.
 
 **Availability — verified**
 
@@ -24,6 +24,7 @@ Based in Lagos, Nigeria. Available for internship, graduate, associate, and juni
 
 - `View Projects` — verified; link to `#projects`.
 - `GitHub` — verified; link to `https://github.com/Lordt0m`.
+- `About` — verified; link to `#about`.
 - `Download CV` — withheld until the final PDF exists at `assets/documents/ayotomiwa-ojo-cv.pdf` and has been inspected.
 - `LinkedIn` — planned; do not render until a verified profile URL is recorded here.
 
@@ -168,23 +169,26 @@ The portfolio itself may become a Supporting Project only after it demonstrates 
 
 Lagos, Nigeria. Do not publish a street address or more precise location.
 
-## Skills publication rule
+## Skills — verified
+ 
+Publish a skill only when at least one verified project demonstrates it.
+ 
+- **Python:** Core Python 3.13, standard library, exact decimal arithmetic, CLI parsing, object-oriented domain services. Verified in Credence (zero runtime dependencies) and ShelfSum.
+- **Django:** Django 5.2 LTS, server-rendered views, MTV architecture, custom authentication/permissions (Owner vs Staff Member), business-scoped queries, forms, CSRF protection. Verified in ShelfSum.
+- **SQL & Databases:** Relational data modelling, PostgreSQL, Neon, transactions, integrity constraints, migrations, indexing, explainable reporting queries. Verified in ShelfSum.
+- **HTML & CSS:** Semantic markup, responsive layouts, accessibility landmarks, visible focus states, zero-JS progressive enhancement. Verified in ShelfSum and Portfolio.
+- **Git & GitHub:** Version control, disciplined vertical commits, GitHub Actions CI, pull requests, release documentation. Verified across ShelfSum and Credence repositories.
+- **Testing:** Automated unit and integration testing, pytest, unittest, test isolation, deterministic fixtures, CI test matrices. Verified in ShelfSum (268 tests), Credence (35 tests), and Portfolio verification suite.
+- **Deployment:** Production deployment, environment configuration, WhiteNoise static assets, health endpoints, hosted PostgreSQL, Render. Verified in ShelfSum on Render with Neon.
 
-Publish a skill only when at least one verified project demonstrates it. Prefer grouped evidence such as:
+## About — verified
 
-- **Backend:** Python, Django, relational data modelling, permissions, transactions.
-- **Data:** PostgreSQL, SQL, migrations, deterministic seed data.
-- **Quality:** automated tests, debugging, CI, release verification.
-- **Delivery:** Git, GitHub Actions, Render, Neon, technical documentation.
+**Prose — verified**
 
-Link each group to the project evidence that supports it. Do not use percentages, star ratings, years-of-experience estimates, or exhaustive technology clouds.
+I am a self-taught software developer based in Lagos, Nigeria, focused on backend web development with Python, Django, and SQL.
 
-## About direction
+With a degree in English and Literary Studies, I combine technical discipline with clear communication—reading specifications closely, writing explainable architecture decisions, and building dependable systems.
 
-The eventual About section should connect three verified facts without becoming an autobiography:
+I prioritize clean code, test coverage, and transactional integrity over speculative complexity, building practical software that solves real-world operational problems.
 
-- self-taught software developer;
-- English and Literary Studies degree;
-- ability to communicate technical decisions while building and debugging backend systems.
-
-Exact prose remains withheld until drafted and approved. Do not imply commercial employment or professional client work.
+I am actively seeking internship, graduate, associate, and junior Python or Django/backend roles (onsite, hybrid, or Nigeria-remote).
