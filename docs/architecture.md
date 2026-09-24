@@ -4,7 +4,7 @@
 
 Turn a recruiter's short visit into a reliable path from positioning to inspectable technical evidence, with the least possible implementation and maintenance surface.
 
-The first release is one static page. Its architecture optimizes for owner comprehension, fast verification, durable public links, accessibility, and cheap future edits. The site itself must not become a fifth complex product competing with the projects it presents.
+The portfolio is a small static site: one recruiter-focused overview, two project case studies, and an error page. Its architecture optimizes for owner comprehension, fast verification, durable public links, accessibility, and cheap future edits. The site itself must not become another complex product competing with the projects it presents.
 
 ## Reader flow
 
@@ -27,31 +27,34 @@ Use this section order:
 7. CV and contact
 8. Footer
 
-The initial implemented slice includes the verified ShelfSum Featured Project, Credence Supporting Project, and the available verified contact actions. It must remain a coherent page rather than display empty sections or placeholders for the CV, LinkedIn, journal, About copy, or screenshots.
+The homepage includes the verified ShelfSum Featured Project, Credence Supporting Project, five skill groups, two About paragraphs, the CV download, and verified contact actions. Detailed evidence belongs on the two case-study pages. LinkedIn remains visible only as inert status text until the owner supplies a verified URL.
 
 ## Module map
 
 ### Public document module
 
-**Interface:** the semantic landmarks and stable fragment identifiers exposed by `index.html`.
+**Interface:** the semantic landmarks, stable fragment identifiers, and static case study routes.
 
-Required identifiers when their content exists:
+Key documents:
+- `index.html`: concise recruiter overview, hero, image-led project summaries, 5 skills groups, About, CV download, and contact actions.
+- `projects/shelfsum.html`: dedicated case study detailing problem, user roles, transactional stock architecture, immutable ledger, 271 tests, and Render/Neon deployment.
+- `projects/credence.html`: dedicated case study detailing cashbook validation pipeline, 7-column CSV contract, deterministic artifacts, exact decimal math, and 35 tests.
+- `404.html`: standalone accessible error page with navigation and return routes.
 
+Required identifiers when their content exists on `index.html`:
 - `main-content`
 - `projects`
 - `skills`
 - `about`
 - `contact`
 
-Its implementation owns public prose, heading order, link labels, accessible names, and the reading sequence. It does not own colors, breakpoints, or evidence decisions.
-
-The Contact section exposes a simple list of verified Inspection Actions. It can accrete Email, GitHub, CV, and LinkedIn independently. An unavailable action is absent from the public document; the layout must not reserve an empty slot for it.
+The Contact section exposes a simple list of verified inspection actions: direct Email, GitHub, and inert `LinkedIn — coming soon` status text.
 
 ### Presentation module
 
-**Interface:** named design tokens and responsive rules in `assets/css/site.css`.
+**Interface:** named dark design tokens and responsive rules in `assets/css/site.css`.
 
-Its implementation owns typography, spacing, color, focus appearance, layout, and local overflow. It must keep the page usable from 320 CSS pixels upward and must never require JavaScript.
+Its implementation owns typography, spacing, color, focus appearance, layout, rounded work frames, and local overflow. It must keep the page usable from 320 CSS pixels upward and must never require JavaScript.
 
 ### Enhancement module
 
@@ -63,17 +66,17 @@ This module does not exist until a real interaction requires it. When created, i
 
 **Interface:** stable repository-relative paths under `assets/`.
 
-Use:
+Structure:
 
 ```text
 assets/
   css/site.css
   documents/ayotomiwa-ojo-cv.pdf
-  images/projects/<project-slug>/
-  js/site.js
+  images/favicon.svg
+  images/projects/shelfsum/
 ```
 
-Create only directories containing real assets. Screenshots must show useful product states, use fictional data, include concise alternative text, and correspond to the linked live or repository evidence.
+Create only directories containing real assets. Screenshots must show useful product states, use fictional data, include concise alternative text, and correspond to the linked live or repository evidence. Credence's evidence preview is semantic HTML and CSS rather than an image asset.
 
 ### Verification module
 
@@ -90,6 +93,12 @@ The implementation concentrates deterministic checks in one place so builders an
 - presence of the availability message and at least one project inspection action.
 
 Browser inspection remains the test surface for layout and interaction. The structural verifier must not pretend to prove responsive appearance.
+
+### Hosting module
+
+**Current interface:** `.github/workflows/deploy.yml` verifies and deploys the reviewed `main` ref to GitHub Pages.
+
+**Planned interface:** Cloudflare Pages will deploy the same repository root from `main` through Git integration. GitHub Pages stays active until the assigned `*.pages.dev` deployment is verified. Only then may the workflow become verification-only, ADR 0003 become accepted, and canonical metadata adopt the assigned Cloudflare URL.
 
 ## Source-of-truth map
 

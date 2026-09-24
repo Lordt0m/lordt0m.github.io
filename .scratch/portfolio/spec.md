@@ -18,18 +18,17 @@ Create a precise, technically confident public portfolio that helps recruiters e
 4. **Static before abstract:** add machinery only after repeated work proves it is needed.
 5. **Truth before polish:** withhold incomplete assets and unverified claims rather than display placeholders.
 
-## Required first-release content
+## Required content
 
-- Approved identity, role label, Lagos positioning, and available-for-work message.
-- Featured ShelfSum Project Proof Block with live and source inspection actions.
-- Credence Supporting Project Proof Block after repository evidence is distilled.
-- CV download after the final PDF is present and inspected.
-- GitHub link.
-- Short evidence-backed skills and About sections.
-- Contact route suitable for job opportunities.
-- LinkedIn only when a verified profile exists.
-
-The private journal may be added after it has inspectable working evidence. Empty or planned project cards are not part of the public release.
+- Approved identity, role label, Lagos positioning, and concise junior-developer available-for-work message.
+- Featured ShelfSum project overview with live demo link, source link, dedicated case study link, demo guidance, and verified screenshots.
+- Supporting Credence project overview with source link, dedicated case study link, and verified demonstration output preview.
+- Dedicated case-study pages for ShelfSum (`projects/shelfsum.html`) and Credence (`projects/credence.html`).
+- Downloadable CV PDF (`assets/documents/ayotomiwa-ojo-cv.pdf`) inspected and linked directly from the hero section.
+- GitHub link (`https://github.com/Lordt0m`).
+- Exactly five evidence-backed skills groups (`Python`, `Django`, `SQL & PostgreSQL`, `HTML & CSS`, `Git & GitHub`).
+- Two-paragraph About section highlighting self-taught background and B.A. in English and Literary Studies from Federal University Oye-Ekiti.
+- Contact routes: direct email action (`mailto:ayotomiwa529@gmail.com`), GitHub link, and inert `LinkedIn — coming soon` status text.
 
 ## Required behaviour
 
@@ -43,7 +42,7 @@ The private journal may be added after it has inspectable working evidence. Empt
 
 ## Visual direction
 
-Use restrained, editorial presentation with strong typography, clear hierarchy, generous spacing, and one deliberate accent color. Project evidence should look inspectable, not like a dashboard or a grid of decorative cards. No photograph or photograph placeholder is required.
+Restrained dark presentation inspired by Cyze: deep navy background, slightly elevated project surfaces, soft cool blue accents, high-contrast text, rounded work preview frames, generous vertical whitespace, and clean system sans-serif typography. Project evidence is image-led on the homepage and expanded in dedicated case-study pages. No photograph or photograph placeholder is required.
 
 ## Explicit exclusions
 
@@ -53,13 +52,12 @@ Use restrained, editorial presentation with strong typography, clear hierarchy, 
 
 ## Release acceptance
 
-The first release is accepted only when:
+The redesign release is accepted only when:
 
 1. every rendered Claim is `verified` in `docs/content.md`;
-2. `python scripts/verify_site.py` passes;
+2. `python scripts/verify_site.py` passes across all public HTML documents and assets;
 3. keyboard navigation and visible focus pass manual review;
-4. 360, 768, 1024, and 1440 CSS-pixel inspections show no page-level overflow, clipping, or broken content;
-5. all public links and downloadable assets work from the deployed site;
+4. 320, 360, 768, 1024, and 1440 CSS-pixel inspections show no page-level overflow, clipping, or broken content;
+5. all public links, case study pages, and downloadable CV work from the deployed site;
 6. the repository contains no machine-specific paths, secrets, empty placeholders, or unrelated generated files;
 7. the active release ticket records the public ref, deployment URL, checks, viewports, remaining limitations, and next safe action.
-

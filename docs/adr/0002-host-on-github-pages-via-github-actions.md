@@ -1,6 +1,8 @@
 # Host on GitHub Pages via GitHub Actions
 
-The portfolio will be hosted as static files on GitHub Pages, deployed automatically on pushes to `main` via GitHub Actions.
+**Status:** Accepted. Scheduled to be superseded by [ADR 0003](0003-host-on-cloudflare-pages.md) only after Cloudflare Pages production is verified.
+
+The portfolio is hosted as static files on GitHub Pages and deployed automatically on pushes to `main` via GitHub Actions. This remains the active production route during the Cloudflare migration.
 
 ## Context
 

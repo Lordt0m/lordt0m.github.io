@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShelfSum Case Study — Ayotomiwa Ojo</title>
+  <meta name="description" content="Technical case study of ShelfSum: a server-rendered Django application for small-shop inventory tracking, immutable movement ledgers, and explainable business activity.">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="ShelfSum Case Study — Ayotomiwa Ojo">
+  <meta property="og:description" content="Explainable inventory and business activity system built with Django, PostgreSQL, and an immutable movement ledger.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ShelfSum Case Study — Ayotomiwa Ojo">
+  <meta name="twitter:description" content="Explainable inventory and business activity system built with Django, PostgreSQL, and an immutable movement ledger.">
+
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a class="header-brand" href="../index.html">Ayotomiwa Ojo</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html#projects">Projects</a>
+        <a class="nav-link" href="../index.html#skills">Skills</a>
+        <a class="nav-link" href="../index.html#about">About</a>
+        <a class="nav-link" href="../index.html#contact">Contact</a>
+        <a class="nav-link" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="site-container">
+
+      <!-- Case Study Hero -->
+      <section class="case-study-hero">
+        <a class="back-link" href="../index.html">&larr; Back to overview</a>
+        <span class="project-badge">Featured Case Study</span>
+        <h1 class="case-study-title">ShelfSum</h1>
+        <p class="case-study-descriptor">Explainable inventory and business activity for small shops.</p>
+        <p class="section-lead">
+          A server-rendered Django web application engineered to give small retail business owners dependable, explainable answers to inventory and cash flow questions.
+        </p>
+
+        <div class="case-study-meta">
+          <a class="btn btn-primary" href="https://shelfsum.onrender.com/" rel="noreferrer">Live demo</a>
+          <a class="btn btn-secondary" href="https://github.com/Lordt0m/shelfsum" rel="noreferrer">Source code</a>
+        </div>
+
+        <div class="demo-notice case-study-note">
+          <strong>Demonstration credentials:</strong>
+          <div class="demo-credentials">
+            <span>Owner: <code>demo-owner@shelfsum.test</code> / <code>ShelfSumDemoOwner2026!</code></span>
+            <span>Staff: <code>demo-staff@shelfsum.test</code> / <code>ShelfSumDemoStaff2026!</code></span>
+          </div>
+          <span class="demo-detail">
+            Hosted on Render's free tier; the first request after inactivity may take longer while the service starts.
+          </span>
+        </div>
+      </section>
+
+      <!-- Case Study Content -->
+      <article class="case-study-content">
+
+        <!-- Section: The Problem -->
+        <section class="case-study-section">
+          <h2>The problem</h2>
+          <p>
+            A stock balance is only useful when a shop can explain how it changed. A directly editable quantity cannot show which Purchases, Sales, adjustments, or reversals produced the current position, and it cannot preserve who recorded those actions.
+          </p>
+          <p>
+            ShelfSum is designed to answer two connected questions:
+          </p>
+          <ol>
+            <li><strong>Current position:</strong> How many units of each Product are on hand now?</li>
+            <li><strong>Audit trail:</strong> Which recorded actions caused that quantity to change?</li>
+          </ol>
+        </section>
+
+        <!-- Section: Intended Users -->
+        <section class="case-study-section">
+          <h2>Intended users</h2>
+          <p>
+            ShelfSum is designed around two distinct roles with server-enforced permission boundaries:
+          </p>
+          <ul>
+            <li>
+              <strong>Owner:</strong> Manages Business settings and Staff Members, records daily activity, reviews operational estimates, corrects completed documents through explicit void workflows, and inspects the Audit Event stream.
+            </li>
+            <li>
+              <strong>Staff Member:</strong> Records and inspects day-to-day activity without Owner-only Business settings or Staff management controls.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Section: Visual Evidence -->
+        <section class="case-study-section">
+          <h2>Interface evidence</h2>
+          <p>
+            The verified screenshots below show the Owner dashboard, the Stock Movement report, and the responsive mobile dashboard using fictional Demo Business data.
+          </p>
+          <div class="image-gallery">
+            <figure class="gallery-item">
+              <img src="../assets/images/projects/shelfsum/desktop-dashboard.png" alt="ShelfSum owner dashboard showing operational totals and quick actions" width="600" height="360">
+              <figcaption>Owner dashboard with operational estimates and recent activity.</figcaption>
+            </figure>
+            <figure class="gallery-item">
+              <img src="../assets/images/projects/shelfsum/desktop-movements.png" alt="ShelfSum immutable stock movement ledger showing audit history" width="600" height="360">
+              <figcaption>Stock Movement report with signed changes and origin records.</figcaption>
+            </figure>
+          </div>
+          <figure class="gallery-item mobile-gallery-item">
+            <img src="../assets/images/projects/shelfsum/mobile-dashboard.png" alt="ShelfSum responsive mobile dashboard layout" width="320" height="540">
+            <figcaption>Responsive dashboard at a mobile viewport.</figcaption>
+          </figure>
+        </section>
+
+        <!-- Section: Key Architectural Decisions -->
+        <section class="case-study-section">
+          <h2>Key decisions</h2>
+
+          <div class="decision-box">
+            <h3>Server-rendered Django</h3>
+            <p>
+              ShelfSum uses Django 5.2 LTS with server-rendered templates. Core workflows remain usable without JavaScript, while authentication, permissions, form validation, and CSRF protection stay at the server boundary. This keeps the first release focused on the inventory and transaction model instead of a separate API and client application.
+            </p>
+          </div>
+
+          <div class="decision-box">
+            <h3>Current balance plus immutable movement ledger</h3>
+            <p>
+              ShelfSum keeps <code>stock_on_hand</code> on each Product for direct reads and records every opening quantity, Purchase, Sale, adjustment, and reversal as an immutable Stock Movement. The two representations must reconcile. Corrections use explicit reversal or adjustment workflows instead of changing historical movements.
+            </p>
+          </div>
+
+          <div class="decision-box">
+            <h3>Explicit services instead of model signals</h3>
+            <p>
+              Multi-record changes run through named application services such as <code>complete_sale</code>, <code>void_purchase</code>, and <code>record_stock_adjustment</code>. These services make permissions, transaction order, row locking, rollback, movement creation, and Audit Events visible to tests and reviewers.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section: Testing -->
+        <section class="case-study-section">
+          <h2>Testing</h2>
+          <p>
+            The accepted release baseline records the following verification evidence:
+          </p>
+          <ul>
+            <li><strong>271 automated tests:</strong> The local SQLite suite passes with three documented PostgreSQL-only concurrency tests skipped.</li>
+            <li><strong>PostgreSQL release suite:</strong> GitHub Actions provisions PostgreSQL 17, converts any skip into a failure, and runs the complete suite.</li>
+            <li><strong>Covered behaviours:</strong> Permissions, cross-Business isolation, immutable history, stock reconciliation, replay protection, rollback, report/export parity, Demo fingerprints, and PostgreSQL concurrency.</li>
+          </ul>
+        </section>
+
+        <!-- Section: Deployment Facts -->
+        <section class="case-study-section">
+          <h2>Deployment</h2>
+          <ul>
+            <li><strong>Application:</strong> Render web service in Frankfurt running Python 3.13 and Gunicorn.</li>
+            <li><strong>Database:</strong> Neon PostgreSQL in Frankfurt.</li>
+            <li><strong>Static assets:</strong> WhiteNoise compressed manifest storage.</li>
+            <li><strong>Configuration:</strong> Restricted hosts, trusted origins, secure cookies, HTTPS proxy handling, HSTS, and a health endpoint.</li>
+          </ul>
+        </section>
+
+        <!-- Section: Limitations -->
+        <section class="case-study-section">
+          <h2>Limitations</h2>
+          <ul>
+            <li><strong>Operational estimates:</strong> Estimated Profit is not accounting, tax, or cash profit, and current stock value uses each Product's current unit-cost estimate.</li>
+            <li><strong>First-release scope:</strong> One user can belong to one Business; quantities are whole numbers; currency and timezone are fixed to NGN and Africa/Lagos.</li>
+            <li><strong>Excluded integrations:</strong> Payments, invoicing, payroll, tax accounting, forecasting, barcodes, external catalogues, a REST API, and AI-dependent behaviour are outside the release.</li>
+            <li><strong>Demo latency:</strong> The free Render service may sleep while idle, so the first request after inactivity can be slower.</li>
+          </ul>
+        </section>
+
+        <!-- Back to Top / Navigation -->
+        <div class="case-study-back">
+          <a class="btn btn-secondary" href="../index.html#projects">&larr; Back to all projects</a>
+        </div>
+
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-container footer-inner">
+      <span>&copy; 2026 Ayotomiwa Ojo. Built with semantic HTML &amp; CSS.</span>
+      <a href="#main-content">Back to top &uarr;</a>
+    </div>
+  </footer>
+</body>
+</html>

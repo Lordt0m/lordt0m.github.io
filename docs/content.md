@@ -14,19 +14,18 @@ Python & Django Developer
 
 **Primary statement — verified**
 
-I build practical web applications and backend systems with Python, Django, and SQL. Focused on clean code, reliable systems, and solving real-world problems.
+I build practical web applications and backend systems with Python and Django.
 
 **Availability — verified**
 
-Based in Lagos, Nigeria. Available for internship, graduate, associate, and junior Python or Django/backend opportunities, with onsite, hybrid, and Nigeria-remote roles prioritized.
+Self-taught developer based in Lagos, Nigeria. Open to junior developer and internship opportunities.
 
 **Hero actions**
 
-- `View Projects` — verified; link to `#projects`.
+- `View projects` — verified; link to `#projects`.
+- `Download CV` — verified; link to `assets/documents/ayotomiwa-ojo-cv.pdf`.
+- `Email me` — verified; link to `mailto:ayotomiwa529@gmail.com`.
 - `GitHub` — verified; link to `https://github.com/Lordt0m`.
-- `About` — verified; link to `#about`.
-- `Download CV` — withheld until the final PDF exists at `assets/documents/ayotomiwa-ojo-cv.pdf` and has been inspected.
-- `LinkedIn` — planned; do not render until a verified profile URL is recorded here.
 
 ## Featured Project: ShelfSum
 
@@ -61,8 +60,8 @@ Small retail teams need a dependable answer to two connected questions: what is 
 
 - Python 3.13 and Django 5.2 LTS.
 - PostgreSQL release verification and continuous integration on GitHub Actions.
-- 268 local automated tests at the accepted release baseline, with the three PostgreSQL-only concurrency tests executed without skips in hosted PostgreSQL CI.
-- Production deployment on Render with Neon PostgreSQL, WhiteNoise static handling, HTTPS-aware settings, and a health endpoint.
+- 271 local automated tests at the accepted release baseline, with the three PostgreSQL-only concurrency tests executed without skips in hosted PostgreSQL CI.
+- Deployed on Render with Neon PostgreSQL, WhiteNoise static handling, HTTPS-aware settings, and a health endpoint.
 - Explicit domain services for transactional stock changes instead of hidden model signals.
 - Public architecture decisions, invariant ownership, tickets, and release evidence in the repository.
 
@@ -78,11 +77,19 @@ Python · Django · PostgreSQL · HTML · CSS · GitHub Actions · Render · Neo
 
 - `Live Demo`: `https://shelfsum.onrender.com/`
 - `Source Code`: `https://github.com/Lordt0m/shelfsum`
-- `View Case Study`: initially link to the ShelfSum section itself only if an expanded in-page case study is visually distinct; otherwise omit this action rather than create a no-op link.
+- `Case Study`: `projects/shelfsum.html`
 
-**Screenshot state — withheld**
+**Demo guidance — verified**
 
-Do not publish screenshots until ShelfSum Ticket 13 closes after restart-persistence and final responsive verification. When verified, prefer no more than three useful states: the Owner dashboard, a populated report, and an Audit Event or stock-history view.
+- The free demo may take a moment to start after inactivity.
+- Fictional demonstration credentials: Owner (`demo-owner@shelfsum.test` / `ShelfSumDemoOwner2026!`) and Staff Member (`demo-staff@shelfsum.test` / `ShelfSumDemoStaff2026!`).
+
+**Screenshot state — verified**
+
+Verified screenshots copied from the ShelfSum repository's `docs/screenshots/` directory:
+- `desktop-dashboard.png`: Owner dashboard metrics and activity summary
+- `desktop-movements.png`: Immutable stock movement audit ledger
+- `mobile-dashboard.png`: Responsive mobile dashboard view
 
 ## Supporting Project: Credence
 
@@ -129,19 +136,19 @@ Python · Standard Library · pytest · GitHub Actions · CSV · JSON
 **Inspection actions — verified**
 
 - `Source Code`: `https://github.com/Lordt0m/credence`
+- `Case Study`: `projects/credence.html`
 - Credence has no hosted application. Do not render a `Live Demo` action.
 
-## Featured Project: private books-and-TV journal
+**Demonstration output preview — verified**
 
-**State — planned**
-
-Do not render as delivered work until a repository contains inspectable behaviour. When implemented, describe it as a private single-user journal with visitor or demo access; do not manufacture a product name, feature list, or completion claim here.
-
-## Portfolio repository
-
-**State — planned until the first implemented slice passes verification**
-
-The portfolio itself may become a Supporting Project only after it demonstrates deliberate accessibility, responsive behaviour, evidence control, and deployment. Its existence alone is not an engineering Claim.
+Verified fixture output from `fixtures/expected_mixed_output/summary.json` implemented directly as accessible, responsive semantic HTML and CSS without raster or SVG image files:
+- Processed rows: 10
+- Valid rows: 4
+- Invalid rows: 6
+- Total errors: 7
+- Total income: NGN 75,000.00
+- Total expenses: NGN 59,500.50
+- Net cash movement: NGN 15,499.50
 
 ## Contact actions
 
@@ -153,42 +160,36 @@ The portfolio itself may become a Supporting Project only after it demonstrates 
 **Email — verified**
 
 - Address: `ayotomiwa529@gmail.com`
-- Render as a direct `mailto:ayotomiwa529@gmail.com` Inspection Action labelled `Email` or `Email me`.
-- This is the owner-confirmed recruiter-facing address and is already published as package-author metadata in Credence.
+- Destination: `mailto:ayotomiwa529@gmail.com`
 
-**CV — withheld**
+**CV — verified**
 
-- Render `Download CV` only after the final PDF exists at `assets/documents/ayotomiwa-ojo-cv.pdf` and passes content and link inspection.
+- Asset: `assets/documents/ayotomiwa-ojo-cv.pdf`
+- Rendered as direct download action on homepage hero.
 
-**LinkedIn — planned**
+**LinkedIn — intentionally visible as inert status text**
 
-- The Contact interface supports a LinkedIn action.
-- Do not render an empty icon, disabled action, `#` destination, or placeholder profile. Add the action when a verified public URL is recorded here.
+- Render only the inert text `LinkedIn — coming soon`.
+- Do not render an anchor, `#` link, or disabled control.
 
 **Location — verified**
 
 Lagos, Nigeria. Do not publish a street address or more precise location.
 
 ## Skills — verified
- 
-Publish a skill only when at least one verified project demonstrates it.
- 
+
+Publish exactly five evidence-backed skill groups demonstrated by the portfolio projects:
+
 - **Python:** Core Python 3.13, standard library, exact decimal arithmetic, CLI parsing, object-oriented domain services. Verified in Credence (zero runtime dependencies) and ShelfSum.
 - **Django:** Django 5.2 LTS, server-rendered views, MTV architecture, custom authentication/permissions (Owner vs Staff Member), business-scoped queries, forms, CSRF protection. Verified in ShelfSum.
-- **SQL & Databases:** Relational data modelling, PostgreSQL, Neon, transactions, integrity constraints, migrations, indexing, explainable reporting queries. Verified in ShelfSum.
+- **SQL & PostgreSQL:** Relational data modelling, PostgreSQL, Neon, transactions, integrity constraints, migrations, indexing, explainable reporting queries. Verified in ShelfSum.
 - **HTML & CSS:** Semantic markup, responsive layouts, accessibility landmarks, visible focus states, zero-JS progressive enhancement. Verified in ShelfSum and Portfolio.
-- **Git & GitHub:** Version control, disciplined vertical commits, GitHub Actions CI, pull requests, release documentation. Verified across ShelfSum and Credence repositories.
-- **Testing:** Automated unit and integration testing, pytest, unittest, test isolation, deterministic fixtures, CI test matrices. Verified in ShelfSum (268 tests), Credence (35 tests), and Portfolio verification suite.
-- **Deployment:** Production deployment, environment configuration, WhiteNoise static assets, health endpoints, hosted PostgreSQL, Render. Verified in ShelfSum on Render with Neon.
+- **Git & GitHub:** Version control, focused commits, GitHub Actions CI, and release documentation. Verified across ShelfSum and Credence repositories.
 
 ## About — verified
 
 **Prose — verified**
 
-I am a self-taught software developer based in Lagos, Nigeria, focused on backend web development with Python, Django, and SQL.
+I am a self-taught developer focused on backend web development with Python, Django, and SQL. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti. My background helps me communicate technical decisions clearly and document the systems I build.
 
-With a degree in English and Literary Studies, I combine technical discipline with clear communication—reading specifications closely, writing explainable architecture decisions, and building dependable systems.
-
-I prioritize clean code, test coverage, and transactional integrity over speculative complexity, building practical software that solves real-world operational problems.
-
-I am actively seeking internship, graduate, associate, and junior Python or Django/backend roles (onsite, hybrid, or Nigeria-remote).
+I prioritize clean code, automated testing, and transactional integrity over speculative complexity, building practical software around clear operational rules.

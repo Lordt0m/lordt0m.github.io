@@ -2,11 +2,13 @@
 """Structural verification for portfolio repository.
 
 Checks semantic structure, links, assets, accessibility landmarks,
-evidence-controlled URLs, required sections, and absence of placeholders.
+evidence-controlled URLs, required sections, image alternative text,
+and absence of placeholders across all public HTML documents.
 """
 
 from html.parser import HTMLParser
 from pathlib import Path
+from collections import Counter
 import re
 import sys
 from urllib.parse import urlparse
@@ -26,6 +28,32 @@ FORBIDDEN_TEXT_PATTERNS = [
     (re.compile(r"\blorem\s+ipsum\b", re.IGNORECASE), "Lorem ipsum placeholder text"),
 ]
 
+FORBIDDEN_PUBLIC_FACT_PATTERNS = [
+    (re.compile(r"\bproduction-ready\b", re.IGNORECASE), "unsupported 'production-ready' claim"),
+    (re.compile(r"\bdemo_owner\b", re.IGNORECASE), "stale ShelfSum demo username 'demo_owner'"),
+    (re.compile(r"\bdemo_staff\b", re.IGNORECASE), "stale ShelfSum demo username 'demo_staff'"),
+    (re.compile(r"\b268\s+automated\s+tests?\b", re.IGNORECASE), "stale ShelfSum test total"),
+    (re.compile(r"\batomic\s+staged", re.IGNORECASE), "unsupported atomic publication claim"),
+    (re.compile(r"09151855301"), "phone number withheld from the website"),
+    (re.compile(r"lordt0m\.github\.io", re.IGNORECASE), "stale GitHub Pages production URL"),
+]
+
+SHELFSUM_DEMO_CREDENTIALS = (
+    "demo-owner@shelfsum.test",
+    "ShelfSumDemoOwner2026!",
+    "demo-staff@shelfsum.test",
+    "ShelfSumDemoStaff2026!",
+)
+
+CREDENCE_FIXTURE_VALUES = (
+    "Processed rows: 10",
+    "Valid rows: 4",
+    "Invalid rows: 6",
+    "75,000.00",
+    "59,500.50",
+    "15,499.50",
+)
+
 MACHINE_PATH_PATTERNS = [
     (re.compile(r"[a-zA-Z]:[\\/][a-zA-Z0-9_.\-\\]+"), "Windows absolute path"),
     (re.compile(r"file:///", re.IGNORECASE), "file:/// URI"),
@@ -38,12 +66,15 @@ class SiteHTMLParser(HTMLParser):
         super().__init__()
         self.tags = []
         self.main_count = 0
+        self.main_id = None
         self.h1_count = 0
         self.headings = []  # (level, line_num)
         self.ids = set()
-        self.main_id = None
-        self.links = []  # (tag, href, text, is_nav, line_num)
-        self.assets = []  # (tag, attr, val, line_num)
+        self.duplicate_ids = set()
+        self.class_counts = Counter()
+        self.inline_style_lines = []
+        self.links = []  # (tag, href, text, is_nav, line_num, attrs)
+        self.assets = []  # (tag, attr, val, rel, line_num)
         self.images = []  # (attrs, line_num)
         self.in_nav = False
         self.current_a = None
@@ -54,7 +85,16 @@ class SiteHTMLParser(HTMLParser):
         line_num = self.getpos()[0]
 
         if "id" in attr_dict:
-            self.ids.add(attr_dict["id"])
+            element_id = attr_dict["id"]
+            if element_id in self.ids:
+                self.duplicate_ids.add(element_id)
+            self.ids.add(element_id)
+
+        for class_name in attr_dict.get("class", "").split():
+            self.class_counts[class_name] += 1
+
+        if "style" in attr_dict:
+            self.inline_style_lines.append(line_num)
 
         if tag == "main":
             self.main_count += 1
@@ -77,6 +117,7 @@ class SiteHTMLParser(HTMLParser):
                 "text": [],
                 "is_nav": self.in_nav,
                 "line": line_num,
+                "attrs": attr_dict,
             }
 
         if tag == "link":
@@ -105,6 +146,7 @@ class SiteHTMLParser(HTMLParser):
                     text,
                     self.current_a["is_nav"],
                     self.current_a["line"],
+                    self.current_a["attrs"],
                 )
             )
             self.current_a = None
@@ -115,195 +157,344 @@ class SiteHTMLParser(HTMLParser):
         self.text_chunks.append(data)
 
 
-def verify(repo_root: Path = Path(".")) -> list[str]:
-    errors = []
-    index_file = repo_root / "index.html"
+def parse_and_collect_ids(file_path: Path) -> set[str]:
+    """Extract all IDs from an HTML file."""
+    if not file_path.is_file():
+        return set()
+    try:
+        content = file_path.read_text(encoding="utf-8")
+        parser = SiteHTMLParser()
+        parser.feed(content)
+        return parser.ids
+    except Exception:
+        return set()
 
-    if not index_file.is_file():
-        return [f"Missing required file: {index_file}"]
+
+def verify_html_document(
+    html_file: Path, repo_root: Path
+) -> tuple[list[str], SiteHTMLParser, str]:
+    errors = []
+    rel_path = html_file.relative_to(repo_root).as_posix()
 
     try:
-        content = index_file.read_text(encoding="utf-8")
+        content = html_file.read_text(encoding="utf-8")
     except Exception as exc:
-        return [f"Failed to read {index_file}: {exc}"]
+        return [f"{rel_path}: Failed to read file: {exc}"], None, ""
 
-    # 1. Check for machine-specific paths in index.html
+    # Check for machine-specific paths
     for pattern, label in MACHINE_PATH_PATTERNS:
         matches = pattern.findall(content)
         if matches:
-            errors.append(f"Forbidden {label} found: {matches[:3]}")
+            errors.append(f"{rel_path}: Forbidden {label} found: {matches[:3]}")
 
-    # 2. Check for forbidden placeholders in index.html
+    # Check for forbidden placeholders
     for pattern, label in FORBIDDEN_TEXT_PATTERNS:
         matches = pattern.findall(content)
         if matches:
-            errors.append(f"Forbidden placeholder found: {label}")
+            errors.append(f"{rel_path}: Forbidden placeholder found: {label}")
 
-    # Parse HTML
+    for pattern, label in FORBIDDEN_PUBLIC_FACT_PATTERNS:
+        if pattern.search(content):
+            errors.append(f"{rel_path}: Forbidden public content found: {label}")
+
     parser = SiteHTMLParser()
     try:
         parser.feed(content)
     except Exception as exc:
-        errors.append(f"HTML parsing error: {exc}")
-        return errors
+        errors.append(f"{rel_path}: HTML parsing error: {exc}")
+        return errors, parser, content
 
-    full_text = " ".join(parser.text_chunks)
-
-    # 3. Exactly one main landmark
+    # Exactly one main landmark with id="main-content"
     if parser.main_count != 1:
         errors.append(
-            f"Expected exactly one <main> landmark, found {parser.main_count}"
+            f"{rel_path}: Expected exactly one <main> landmark, found {parser.main_count}"
         )
     elif parser.main_id != "main-content":
         errors.append(
-            f"Expected <main> to have id='main-content', found id='{parser.main_id}'"
+            f"{rel_path}: Expected <main> to have id='main-content', found id='{parser.main_id}'"
         )
 
-    # 4. Exactly one level-one heading
+    # Exactly one level-one heading
     if parser.h1_count != 1:
-        errors.append(f"Expected exactly one <h1> heading, found {parser.h1_count}")
+        errors.append(
+            f"{rel_path}: Expected exactly one <h1> heading, found {parser.h1_count}"
+        )
 
-    # 5. Heading hierarchy (no skipping levels)
+    if parser.duplicate_ids:
+        errors.append(
+            f"{rel_path}: Duplicate element IDs found: {sorted(parser.duplicate_ids)}"
+        )
+
+    if parser.inline_style_lines:
+        errors.append(
+            f"{rel_path}: Inline style attributes found on lines {parser.inline_style_lines}; use assets/css/site.css"
+        )
+
+    # Heading hierarchy (no skipping levels)
     prev_level = 0
     for level, line in parser.headings:
         if prev_level > 0 and level > prev_level + 1:
             errors.append(
-                f"Line {line}: Heading level skipped from h{prev_level} to h{level}"
+                f"{rel_path}:{line}: Heading level skipped from h{prev_level} to h{level}"
             )
         prev_level = level
 
-    # 6. Skip link to #main-content
+    # Skip link pointing to #main-content
     first_link = parser.links[0] if parser.links else None
     if not first_link or first_link[1] != "#main-content":
         errors.append(
-            f"Expected first link to be skip link pointing to #main-content, found {first_link}"
+            f"{rel_path}: Expected first link to be skip link pointing to #main-content, found {first_link[1] if first_link else 'none'}"
         )
 
-    # 7. Navigation links and required identifiers
-    nav_links = [link for link in parser.links if link[3]]  # is_nav
-    if not nav_links:
-        errors.append("No navigation links found in <nav>")
-    for _, href, text, _, line in nav_links:
-        if not href or not href.startswith("#"):
-            errors.append(
-                f"Line {line}: Nav link '{text}' ({href}) must be an in-page fragment"
-            )
-        else:
-            target_id = href[1:]
-            if target_id not in parser.ids:
-                errors.append(
-                    f"Line {line}: Nav link target id '{target_id}' does not exist in document"
-                )
-
-    # 8. All links validation (empty links, local fragments, local files, external URLs)
-    found_urls = set()
-    for _, href, text, _, line in parser.links:
+    # Links verification
+    for _, href, text, is_nav, line, attrs in parser.links:
         if href is None or href == "" or href == "#":
-            errors.append(f"Line {line}: Empty or bare hash link found with text '{text}'")
+            errors.append(
+                f"{rel_path}:{line}: Empty or bare hash link found with text '{text}'"
+            )
             continue
 
         if href.startswith("#"):
             target_id = href[1:]
             if target_id not in parser.ids:
                 errors.append(
-                    f"Line {line}: Fragment link target id '{target_id}' does not exist"
+                    f"{rel_path}:{line}: Fragment link target id '{target_id}' does not exist in document"
                 )
         elif href.startswith(("http://", "https://", "mailto:")):
-            found_urls.add(href)
-            if href not in APPROVED_EXTERNAL_URLS:
+            if "linkedin.com" in href.lower():
                 errors.append(
-                    f"Line {line}: Unapproved external URL '{href}' not in docs/content.md"
+                    f"{rel_path}:{line}: LinkedIn link is withheld until verified profile exists"
+                )
+            elif href not in APPROVED_EXTERNAL_URLS:
+                errors.append(
+                    f"{rel_path}:{line}: Unapproved external URL '{href}' not in docs/content.md"
                 )
         else:
-            # Local relative file/asset link
-            clean_href = href.split("?")[0].split("#")[0]
-            local_target = repo_root / clean_href
-            if not local_target.exists():
-                errors.append(
-                    f"Line {line}: Local link target '{clean_href}' does not exist on disk"
-                )
+            # Local relative path
+            path_part, _, fragment = href.partition("#")
+            clean_path = path_part.split("?")[0]
+            if clean_path:
+                target_file = (html_file.parent / clean_path).resolve()
+                if not target_file.is_relative_to(repo_root):
+                    errors.append(
+                        f"{rel_path}:{line}: Local link target '{clean_path}' escapes the repository"
+                    )
+                elif not target_file.exists():
+                    errors.append(
+                        f"{rel_path}:{line}: Local link target '{clean_path}' does not exist on disk"
+                    )
+                elif fragment and target_file.suffix == ".html":
+                    target_ids = parse_and_collect_ids(target_file)
+                    if fragment not in target_ids:
+                        errors.append(
+                            f"{rel_path}:{line}: Target id '{fragment}' does not exist in '{clean_path}'"
+                        )
 
-    # 9. Asset links (<link>, <script>)
+    # Asset verification (<link>, <script>)
     for tag, attr, val, rel, line in parser.assets:
         if val.startswith(("http://", "https://")):
             if val not in APPROVED_EXTERNAL_URLS:
-                errors.append(f"Line {line}: Unapproved external asset '{val}'")
+                errors.append(f"{rel_path}:{line}: Unapproved external asset '{val}'")
         else:
             clean_path = val.split("?")[0].split("#")[0]
-            target_file = repo_root / clean_path
-            if not target_file.exists():
+            target_asset = (html_file.parent / clean_path).resolve()
+            if not target_asset.is_relative_to(repo_root):
                 errors.append(
-                    f"Line {line}: Local asset '{clean_path}' in <{tag} {attr}='{val}'> does not exist"
+                    f"{rel_path}:{line}: Local asset '{clean_path}' escapes the repository"
+                )
+            elif not target_asset.exists():
+                errors.append(
+                    f"{rel_path}:{line}: Local asset '{clean_path}' in <{tag} {attr}='{val}'> does not exist"
                 )
 
-    # 10. Images check
+    # Image verification
     for attrs, line in parser.images:
-        if "alt" not in attrs:
-            errors.append(f"Line {line}: <img> missing required 'alt' attribute")
         src = attrs.get("src", "")
-        if "photo" in src.lower() or "avatar" in src.lower() or "headshot" in src.lower():
-            errors.append(f"Line {line}: Forbidden photograph or photo placeholder found")
-        # Visual assets remain withheld until respective gates pass
-        errors.append(f"Line {line}: Visual assets (screenshots/images) are withheld until gates pass")
+        alt = attrs.get("alt")
+        if alt is None:
+            errors.append(f"{rel_path}:{line}: <img> missing required 'alt' attribute")
+        elif not alt.strip():
+            errors.append(f"{rel_path}:{line}: <img> has empty 'alt' attribute")
 
-    # 11. Required URLs presence
-    for approved_url in APPROVED_EXTERNAL_URLS:
-        if approved_url not in found_urls:
-            errors.append(f"Required approved external URL missing: {approved_url}")
+        if any(term in src.lower() for term in ("photo", "avatar", "headshot")):
+            errors.append(
+                f"{rel_path}:{line}: Forbidden photograph or photo placeholder found in '{src}'"
+            )
 
-    # 12. Withheld content checks
-    if "ayotomiwa-ojo-cv.pdf" in content or "Download CV" in content:
-        errors.append("Withheld content found: CV download must not be rendered until verified PDF exists")
-    if "linkedin.com" in content.lower():
-        errors.append("Withheld content found: LinkedIn must not be rendered until verified profile exists")
-    if re.search(r"\bjournal\b", content, re.IGNORECASE):
-        errors.append("Withheld content found: Private journal must not be rendered without inspectable evidence")
+        if src:
+            clean_src = src.split("?")[0].split("#")[0]
+            target_img = (html_file.parent / clean_src).resolve()
+            if not target_img.is_relative_to(repo_root):
+                errors.append(
+                    f"{rel_path}:{line}: Image path '{clean_src}' escapes the repository"
+                )
+            elif not target_img.exists():
+                errors.append(
+                    f"{rel_path}:{line}: Image file '{clean_src}' does not exist on disk"
+                )
 
-    # 13. Availability message presence
-    if "Lagos, Nigeria" not in content or "Available for" not in content:
-        errors.append("Required availability statement from docs/content.md is missing")
+    return errors, parser, content
 
-    # 14. Project inspection actions presence
-    has_live_demo = any("Live Demo" in text for _, _, text, _, _ in parser.links)
-    has_source_code = any("Source Code" in text for _, _, text, _, _ in parser.links)
-    if not (has_live_demo and has_source_code):
-        errors.append("Required project inspection actions (Live Demo and Source Code) missing")
 
-    # 15. Required sections for the portfolio system
+def verify(repo_root: Path = Path(".")) -> list[str]:
+    errors = []
+    repo_root = repo_root.resolve()
+
+    index_file = repo_root / "index.html"
+    if not index_file.is_file():
+        return [f"Missing required file: {index_file}"]
+
+    required_html_files = {
+        repo_root / "index.html",
+        repo_root / "404.html",
+        repo_root / "projects" / "shelfsum.html",
+        repo_root / "projects" / "credence.html",
+    }
+    for required_file in sorted(required_html_files):
+        if not required_file.is_file():
+            errors.append(
+                f"Missing required HTML document: {required_file.relative_to(repo_root).as_posix()}"
+            )
+
+    public_html_files = set(repo_root.glob("*.html"))
+    projects_dir = repo_root / "projects"
+    if projects_dir.is_dir():
+        public_html_files.update(projects_dir.rglob("*.html"))
+
+    parsed_documents = {}
+    for html_file in sorted(public_html_files):
+        document_errors, parser, content = verify_html_document(html_file, repo_root)
+        errors.extend(document_errors)
+        parsed_documents[html_file] = (parser, content)
+
+    index_parser, index_content = parsed_documents.get(index_file, (None, ""))
+    if index_parser is None:
+        return errors
+    index_visible_text = re.sub(r"\s+", " ", " ".join(index_parser.text_chunks)).strip()
+
+    # Check required section IDs on index.html
     required_ids = {"main-content", "projects", "skills", "about", "contact"}
-    missing_ids = required_ids - parser.ids
+    missing_ids = required_ids - index_parser.ids
     if missing_ids:
-        errors.append(f"Required section IDs missing in document: {sorted(list(missing_ids))}")
+        errors.append(
+            f"index.html: Required section IDs missing: {sorted(list(missing_ids))}"
+        )
 
-    # 16. Verify 404 error page if present
-    page_404 = repo_root / "404.html"
-    if page_404.is_file():
-        try:
-            content_404 = page_404.read_text(encoding="utf-8")
-            for pattern, label in MACHINE_PATH_PATTERNS:
-                if pattern.search(content_404):
-                    errors.append(f"404.html: Forbidden {label} found")
-            for pattern, label in FORBIDDEN_TEXT_PATTERNS:
-                if pattern.search(content_404):
-                    errors.append(f"404.html: Forbidden placeholder found: {label}")
-            parser_404 = SiteHTMLParser()
-            parser_404.feed(content_404)
-            if parser_404.main_count != 1:
-                errors.append(f"404.html: Expected exactly one <main> landmark, found {parser_404.main_count}")
-            if parser_404.h1_count != 1:
-                errors.append(f"404.html: Expected exactly one <h1> heading, found {parser_404.h1_count}")
-            if not parser_404.links or parser_404.links[0][1] != "#main-content":
-                errors.append("404.html: Expected first link to be skip link pointing to #main-content")
-        except Exception as exc:
-            errors.append(f"Failed to verify 404.html: {exc}")
+    if index_parser.class_counts["project-card"] != 2:
+        errors.append(
+            f"index.html: Expected exactly 2 project cards, found {index_parser.class_counts['project-card']}"
+        )
 
-    # 17. Verify deployment workflow
+    if index_parser.class_counts["skill-card"] != 5:
+        errors.append(
+            f"index.html: Expected exactly 5 skill groups, found {index_parser.class_counts['skill-card']}"
+        )
+
+    # Check required external URLs present on index.html
+    found_external_urls = {
+        href
+        for _, href, _, _, _, _ in index_parser.links
+        if href and href.startswith(("http://", "https://", "mailto:"))
+    }
+    for approved_url in APPROVED_EXTERNAL_URLS:
+        if approved_url not in found_external_urls:
+            errors.append(
+                f"index.html: Required approved external URL missing: {approved_url}"
+            )
+
+    # Check inspection actions (Live demo and Source code)
+    has_live_demo = any(
+        "live demo" in text.lower() for _, _, text, _, _, _ in index_parser.links
+    )
+    has_source_code = any(
+        "source code" in text.lower() for _, _, text, _, _, _ in index_parser.links
+    )
+    if not (has_live_demo and has_source_code):
+        errors.append(
+            "index.html: Required project inspection actions (Live demo and Source code) missing"
+        )
+
+    # Check availability statement on index.html
+    if (
+        "lagos, nigeria" not in index_content.lower()
+        or not any(term in index_content.lower() for term in ("junior", "internship", "available for"))
+    ):
+        errors.append("index.html: Required availability statement is missing or incomplete")
+
+    # Check LinkedIn inert text (must not be an active link)
+    if "linkedin — coming soon" not in index_content and "linkedin — coming soon" not in index_content.lower():
+        errors.append(
+            "index.html: Expected 'LinkedIn — coming soon' inert text for unreleased profile"
+        )
+
+    # Check CV download link and asset existence
+    has_cv_link = any(
+        "ayotomiwa-ojo-cv.pdf" in (href or "") for _, href, _, _, _, _ in index_parser.links
+    )
+    cv_asset = repo_root / "assets" / "documents" / "ayotomiwa-ojo-cv.pdf"
+    if not has_cv_link:
+        errors.append("index.html: Missing link to verified CV PDF")
+    if not cv_asset.is_file():
+        errors.append(f"Missing required CV document: {cv_asset.relative_to(repo_root)}")
+    elif not cv_asset.read_bytes().startswith(b"%PDF-"):
+        errors.append("assets/documents/ayotomiwa-ojo-cv.pdf: File is not a valid PDF header")
+
+    # Check Case Study links on index.html
+    has_shelfsum_cs = any(
+        "projects/shelfsum.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
+    )
+    has_credence_cs = any(
+        "projects/credence.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
+    )
+    if not has_shelfsum_cs:
+        errors.append("index.html: Missing link to ShelfSum case study (projects/shelfsum.html)")
+    if not has_credence_cs:
+        errors.append("index.html: Missing link to Credence case study (projects/credence.html)")
+
+    # 2. Verify project-specific evidence
+    shelfsum_page = repo_root / "projects" / "shelfsum.html"
+    if shelfsum_page.is_file():
+        ss_parser, ss_content = parsed_documents.get(shelfsum_page, (None, ""))
+        ss_visible_text = re.sub(r"\s+", " ", " ".join(ss_parser.text_chunks)).strip()
+        for credential in SHELFSUM_DEMO_CREDENTIALS:
+            if credential not in index_content:
+                errors.append(f"index.html: Missing exact ShelfSum demo credential '{credential}'")
+            if credential not in ss_content:
+                errors.append(
+                    f"projects/shelfsum.html: Missing exact ShelfSum demo credential '{credential}'"
+                )
+        if "271 automated tests" not in index_content.lower():
+            errors.append("index.html: Missing verified ShelfSum total of 271 automated tests")
+        if "271 automated tests" not in ss_visible_text.lower():
+            errors.append(
+                "projects/shelfsum.html: Missing verified ShelfSum total of 271 automated tests"
+            )
+
+    credence_page = repo_root / "projects" / "credence.html"
+    if credence_page.is_file():
+        cr_parser, cr_content = parsed_documents.get(credence_page, (None, ""))
+        cr_visible_text = re.sub(r"\s+", " ", " ".join(cr_parser.text_chunks)).strip()
+        for value in CREDENCE_FIXTURE_VALUES:
+            if value not in index_visible_text:
+                errors.append(f"index.html: Missing verified Credence fixture value '{value}'")
+            if value not in cr_visible_text:
+                errors.append(
+                    f"projects/credence.html: Missing verified Credence fixture value '{value}'"
+                )
+        if "credence-preview-title" not in index_parser.ids:
+            errors.append("index.html: Missing semantic Credence preview")
+        if cr_parser and "fixture-sample-title" not in cr_parser.ids:
+            errors.append("projects/credence.html: Missing semantic fictional fixture sample")
+
+    # 3. Verify deployment workflow
     deploy_workflow = repo_root / ".github" / "workflows" / "deploy.yml"
     if deploy_workflow.is_file():
         try:
             wf_content = deploy_workflow.read_text(encoding="utf-8")
             if "scripts/verify_site.py" not in wf_content:
-                errors.append("Deployment workflow (.github/workflows/deploy.yml) must run scripts/verify_site.py")
+                errors.append(
+                    "Deployment workflow (.github/workflows/deploy.yml) must run scripts/verify_site.py"
+                )
         except Exception as exc:
             errors.append(f"Failed to read deploy.yml: {exc}")
 

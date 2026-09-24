@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayotomiwa Ojo — Python &amp; Django Developer</title>
-  <meta name="description" content="Portfolio of Ayotomiwa Ojo, a Lagos-based Python and Django developer building practical web applications and backend systems.">
+  <meta name="description" content="Portfolio of Ayotomiwa Ojo, a self-taught Python and Django developer based in Lagos, Nigeria. Building practical web applications and backend systems.">
 
-  <!-- Social Metadata -->
+  <!-- Open Graph / Social Sharing -->
   <meta property="og:title" content="Ayotomiwa Ojo — Python &amp; Django Developer">
-  <meta property="og:description" content="Portfolio of Ayotomiwa Ojo, a Lagos-based Python and Django developer building practical web applications and backend systems.">
+  <meta property="og:description" content="I build practical web applications and backend systems with Python and Django.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Ayotomiwa Ojo — Python &amp; Django Developer">
-  <meta name="twitter:description" content="Portfolio of Ayotomiwa Ojo, a Lagos-based Python and Django developer building practical web applications and backend systems.">
+  <meta name="twitter:description" content="I build practical web applications and backend systems with Python and Django.">
 
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/site.css">
@@ -28,298 +28,239 @@
         <a class="nav-link" href="#skills">Skills</a>
         <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
     <div class="site-container">
+
+      <!-- Hero Section -->
       <section id="hero" class="hero-section" aria-labelledby="hero-title">
-        <div class="hero-header">
+        <div class="hero-title-group">
           <h1 id="hero-title">
             <span class="hero-name">Ayotomiwa Ojo</span>
             <span class="hero-role">Python &amp; Django Developer</span>
           </h1>
         </div>
         <p class="hero-statement">
-          I build practical web applications and backend systems with Python, Django, and SQL.
+          I build practical web applications and backend systems with Python and Django.
         </p>
-        <p class="hero-substatement">
-          Focused on clean code, reliable systems, and solving real-world problems.
+        <p class="hero-availability">
+          Self-taught developer based in Lagos, Nigeria. Open to junior developer and internship opportunities.
         </p>
-        <p class="availability">
-          Based in Lagos, Nigeria. Available for internship, graduate, associate, and junior Python or Django/backend opportunities, with onsite, hybrid, and Nigeria-remote roles prioritized.
-        </p>
-        <div class="action-group hero-actions">
-          <a class="action-link action-primary" href="#projects">View Projects</a>
-          <a class="action-link" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
-          <a class="action-link" href="#about">About</a>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-secondary" href="assets/documents/ayotomiwa-ojo-cv.pdf" download="ayotomiwa-ojo-cv.pdf">Download CV</a>
+          <a class="btn btn-secondary" href="mailto:ayotomiwa529@gmail.com">Email me</a>
+          <a class="btn btn-ghost" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
         </div>
       </section>
 
-      <section id="projects" class="projects-section" aria-labelledby="projects-title">
+      <!-- Projects Section -->
+      <section id="projects" class="section projects-section" aria-labelledby="projects-title">
         <div class="section-header">
-          <h2 id="projects-title">Projects</h2>
+          <h2 id="projects-title" class="section-title">Projects</h2>
           <p class="section-lead">
-            Production-ready and command-line systems built with rigorous test coverage, clean architectural boundaries, and inspectable engineering evidence.
+            Two projects that show how I structure data, protect important rules, and test the workflows that depend on them.
           </p>
         </div>
 
-        <article id="shelfsum" class="proof-block" aria-labelledby="shelfsum-title">
-          <div class="proof-header">
-            <span class="proof-badge">Featured Project</span>
-            <h3 id="shelfsum-title" class="proof-title">ShelfSum</h3>
-            <p class="proof-descriptor">Explainable inventory and business activity for small shops.</p>
-            <p class="tech-stack" aria-label="Technology stack">
-              Python · Django · PostgreSQL · HTML · CSS · GitHub Actions · Render · Neon
-            </p>
-          </div>
+        <div class="projects-list">
 
-          <div class="proof-body">
-            <div class="proof-section">
-              <h4>Project Summary</h4>
-              <p>
-                ShelfSum is a server-rendered Django application for small-shop Owner and Staff Member teams to track Products, Stock on Hand, Purchases, Sales, Expenses, and operational estimates through records they can inspect and explain.
-              </p>
-              <p>
-                I designed it as an independent portfolio product around secure permissions, Business-scoped data, transactional stock operations, immutable movement history, deterministic fictional demonstration data, and reports that connect summaries to their underlying activity.
-              </p>
+          <!-- Project 1: ShelfSum (Featured) -->
+          <article id="shelfsum" class="project-card" aria-labelledby="shelfsum-title">
+            <div class="project-card-grid">
+              <div class="project-preview">
+                <div class="project-preview-frame">
+                  <img src="assets/images/projects/shelfsum/desktop-dashboard.png" alt="ShelfSum owner dashboard showing inventory metrics and business activity" width="800" height="480">
+                </div>
+              </div>
+              <div class="project-content">
+                <div>
+                  <span class="project-badge">Featured Project</span>
+                  <h3 id="shelfsum-title" class="project-title">ShelfSum</h3>
+                  <p class="project-descriptor">Explainable inventory and business activity for small shops.</p>
+                  <p class="project-summary">
+                    ShelfSum is a server-rendered Django application for small shops. Owners and Staff Members can record Products, Purchases, Sales, Expenses, and Stock Adjustments while permissions and Business-scoped lookups protect each record. I built stock changes around explicit transactional services and an append-only movement ledger, so current quantities remain fast to read and every change stays traceable. The public Demo Business contains deterministic August 2026 data and rejects writes at both request and service boundaries. The accepted release baseline includes 271 automated tests, PostgreSQL CI, and a Render deployment backed by Neon PostgreSQL.
+                  </p>
+                  <div class="project-capabilities">
+                    <div class="capabilities-title">Key Capabilities</div>
+                    <ul class="capabilities-list">
+                      <li>Role-based Owner and Staff permissions with tenant data isolation.</li>
+                      <li>Append-only stock movements and transactional reversals instead of model signals.</li>
+                      <li>Filtered ledger reports, explainable dashboard totals, and safe CSV exports.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="project-tech">
+                    Python 3.13 &bull; Django 5.2 LTS &bull; PostgreSQL &bull; Render &bull; Neon &bull; GitHub Actions
+                  </div>
+                  <div class="project-actions">
+                    <a class="btn btn-primary" href="https://shelfsum.onrender.com/" rel="noreferrer">Live demo</a>
+                    <a class="btn btn-secondary" href="https://github.com/Lordt0m/shelfsum" rel="noreferrer">Source code</a>
+                    <a class="btn btn-secondary" href="projects/shelfsum.html">Case study</a>
+                  </div>
+                  <div class="demo-notice">
+                    <strong>Demo note:</strong> The free demo may take a moment to start after inactivity.
+                    <div class="demo-credentials">
+                      <span>Owner: <code>demo-owner@shelfsum.test</code> / <code>ShelfSumDemoOwner2026!</code></span>
+                      <span>Staff: <code>demo-staff@shelfsum.test</code> / <code>ShelfSumDemoStaff2026!</code></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </article>
 
-            <div class="proof-section">
-              <h4>Problem</h4>
-              <p>
-                Small retail teams need a dependable answer to two connected questions: what is currently on the shelf, and which recorded actions produced that position? A directly editable stock number cannot explain purchases, sales, corrections, reversals, or responsibility.
-              </p>
+          <!-- Project 2: Credence (Supporting) -->
+          <article id="credence" class="project-card" aria-labelledby="credence-title">
+            <div class="project-card-grid">
+              <div class="project-preview">
+                <div class="project-preview-frame">
+                  <div class="terminal-preview" role="group" aria-labelledby="credence-preview-title">
+                    <div class="terminal-preview-bar" aria-hidden="true">
+                      <span class="terminal-preview-dot dot-red"></span>
+                      <span class="terminal-preview-dot dot-amber"></span>
+                      <span class="terminal-preview-dot dot-green"></span>
+                      <span class="terminal-preview-title">credence check</span>
+                    </div>
+                    <div class="terminal-preview-body">
+                      <p id="credence-preview-title" class="term-fictional-note">Fictional sample data</p>
+                      <p class="term-command"><span class="term-prompt">$</span> credence check mixed_cashbook.csv</p>
+                      <div class="term-output">
+                        <p><span class="term-label">Processed rows:</span> 10</p>
+                        <p><span class="term-valid">Valid rows: 4</span> <span aria-hidden="true">/</span> <span class="term-invalid">Invalid rows: 6</span> <span aria-hidden="true">/</span> <span class="term-error">Errors: 7</span></p>
+                        <div class="term-summary-box">
+                          <div class="term-summary-title">Financial summary in NGN</div>
+                          <div class="term-stat-line"><span>Income</span><span class="term-amount">75,000.00</span></div>
+                          <div class="term-stat-line"><span>Expenses</span><span class="term-amount">59,500.50</span></div>
+                          <div class="term-stat-line term-net-line"><span>Net cash movement</span><span class="term-amount term-positive">15,499.50</span></div>
+                        </div>
+                        <div class="term-meta-line">
+                          <span class="term-status-badge">Exit code 1</span>
+                          <span>Row issues detected</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <div>
+                  <span class="project-badge">Supporting Project</span>
+                  <h3 id="credence-title" class="project-title">Credence</h3>
+                  <p class="project-descriptor">Deterministic cashbook validation and financial summaries from one Python command.</p>
+                  <p class="project-summary">
+                    Credence is a local Python 3.13 command-line tool that validates small-business cashbook CSV files and produces clean transactions, validation errors, and a JSON summary. It uses only the standard library at runtime, keeps physical source-line numbers in diagnostics, rejects every duplicate transaction ID case-insensitively, and calculates income and expenses with Decimal. Report files are completed in a temporary staging directory before publication. Existing target files cause a safe refusal, and handled publication errors trigger best-effort rollback without claiming crash-safe multi-file commits. The accepted release baseline contains 35 automated tests across Ubuntu and Windows CI.
+                  </p>
+                  <div class="project-capabilities">
+                    <div class="capabilities-title">Key Capabilities</div>
+                    <ul class="capabilities-list">
+                      <li>Strict 7-column CSV contract with row-level error accumulation and physical line tracking.</li>
+                      <li>Exact decimal arithmetic for income, expenses, and net cash movement in NGN.</li>
+                      <li>Deterministic staged outputs with collision refusal and best-effort rollback for handled publication failures.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="project-tech">
+                    Python 3.13 &bull; Standard Library &bull; pytest &bull; GitHub Actions &bull; CSV &bull; JSON
+                  </div>
+                  <div class="project-actions">
+                    <a class="btn btn-secondary" href="https://github.com/Lordt0m/credence" rel="noreferrer">Source code</a>
+                    <a class="btn btn-secondary" href="projects/credence.html">Case study</a>
+                  </div>
+                </div>
+              </div>
             </div>
+          </article>
 
-            <div class="proof-section">
-              <h4>Delivered Behaviour</h4>
-              <ul>
-                <li>Owner and Staff Member access with server-enforced permissions.</li>
-                <li>Business-scoped lookups that prevent cross-Business record access.</li>
-                <li>Products, Purchases, Sales, Expenses, Stock Adjustments, and Audit Events.</li>
-                <li>Append-only Stock Movements with explicit reversal workflows.</li>
-                <li>Explainable dashboard totals, filtered reports, and safe CSV exports.</li>
-                <li>A public, read-only fictional Demo Business with deterministic August 2026 activity.</li>
-              </ul>
-            </div>
-
-            <div class="proof-section">
-              <h4>Engineering Evidence</h4>
-              <ul>
-                <li>Python 3.13 and Django 5.2 LTS.</li>
-                <li>PostgreSQL release verification and continuous integration on GitHub Actions.</li>
-                <li>268 local automated tests at the accepted release baseline, with the three PostgreSQL-only concurrency tests executed without skips in hosted PostgreSQL CI.</li>
-                <li>Production deployment on Render with Neon PostgreSQL, WhiteNoise static handling, HTTPS-aware settings, and a health endpoint.</li>
-                <li>Explicit domain services for transactional stock changes instead of hidden model signals.</li>
-                <li>Public architecture decisions, invariant ownership, tickets, and release evidence in the repository.</li>
-              </ul>
-            </div>
-
-            <div class="proof-section">
-              <h4>Trade-off</h4>
-              <p>
-                ShelfSum keeps a current Stock on Hand value for fast reads while recording every change in an immutable movement ledger. This makes the displayed balance efficient and independently explainable, at the cost of stricter transaction and reconciliation rules.
-              </p>
-            </div>
-          </div>
-
-          <div class="action-group proof-actions">
-            <a class="action-link action-primary" href="https://shelfsum.onrender.com/" rel="noreferrer">Live Demo</a>
-            <a class="action-link" href="https://github.com/Lordt0m/shelfsum" rel="noreferrer">Source Code</a>
-          </div>
-        </article>
-
-        <article id="credence" class="proof-block" aria-labelledby="credence-title">
-          <div class="proof-header">
-            <span class="proof-badge">Supporting Project</span>
-            <h3 id="credence-title" class="proof-title">Credence</h3>
-            <p class="proof-descriptor">Deterministic cashbook validation and financial summaries from one Python command.</p>
-            <p class="tech-stack" aria-label="Technology stack">
-              Python · Standard Library · pytest · GitHub Actions · CSV · JSON
-            </p>
-          </div>
-
-          <div class="proof-body">
-            <div class="proof-section">
-              <h4>Project Summary</h4>
-              <p>
-                Credence is a Python command-line application that turns small-business cashbook CSV files into an explainable validation report, a clean transaction file, and a reconciled financial summary in Nigerian Naira.
-              </p>
-              <p>
-                It processes files locally without accounts, databases, cloud APIs, spreadsheet software, or runtime dependencies. Invalid rows remain traceable through stable error codes and physical source-line numbers, while financial totals include only validated transactions.
-              </p>
-            </div>
-
-            <div class="proof-section">
-              <h4>Delivered Behaviour</h4>
-              <ul>
-                <li>Strict seven-column CSV contract with flexible column order.</li>
-                <li>Accumulated row-level errors rather than first-error-only reporting.</li>
-                <li>Case-insensitive whole-file duplicate transaction rejection.</li>
-                <li>Exact decimal arithmetic for income, expenses, and net cash movement.</li>
-                <li>Three deterministic artifacts: clean transactions, validation errors, and a JSON summary.</li>
-                <li>Explicit exit codes separating clean validation, row issues, and operational failure.</li>
-                <li>Staged output generation, collision refusal, and best-effort rollback for handled publication failures.</li>
-              </ul>
-            </div>
-
-            <div class="proof-section">
-              <h4>Engineering Evidence</h4>
-              <ul>
-                <li>Python 3.13 standard-library runtime with zero runtime package dependencies.</li>
-                <li>35 automated unit, integration, and demonstration tests at the accepted release baseline.</li>
-                <li>Public GitHub Actions CI passing on Ubuntu and Windows with Python 3.13.</li>
-                <li>Both <code>credence</code> console-script and <code>python -m credence</code> entry points verified against fictional demonstration data.</li>
-                <li>Public input contracts, architectural decisions, known limitations, and release evidence in the repository.</li>
-              </ul>
-            </div>
-
-            <div class="proof-section">
-              <h4>Trade-off</h4>
-              <p>
-                Credence stages every report before publication and refuses to overwrite existing target files. It provides best-effort rollback for handled filesystem failures, while explicitly avoiding the false claim that separate files can be atomically committed across sudden power loss, operating-system crashes, or forced termination.
-              </p>
-            </div>
-          </div>
-
-          <div class="action-group proof-actions">
-            <a class="action-link action-primary" href="https://github.com/Lordt0m/credence" rel="noreferrer">Source Code</a>
-          </div>
-        </article>
+        </div>
       </section>
 
-      <section id="skills" class="skills-section" aria-labelledby="skills-title">
+      <!-- Skills Section -->
+      <section id="skills" class="section skills-section" aria-labelledby="skills-title">
         <div class="section-header">
-          <h2 id="skills-title">Skills &amp; Evidence</h2>
+          <h2 id="skills-title" class="section-title">Skills</h2>
           <p class="section-lead">
-            Every technical skill listed below is demonstrated by working code, automated test suites, and continuous integration in ShelfSum or Credence.
+            Five core technical competencies demonstrated directly by the architecture, test suites, and deployments of ShelfSum and Credence.
           </p>
         </div>
 
         <div class="skills-grid">
           <div class="skill-card">
-            <h3 class="skill-name">Python</h3>
-            <p class="skill-detail">
-              Core Python 3.13, standard-library architecture, exact decimal arithmetic, CLI argument parsing, domain services, clean exception hierarchies.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#credence">Credence</a> (zero external dependencies) and <a href="#shelfsum">ShelfSum</a> (domain services).
-            </p>
+            <h3>Python</h3>
+            <p>Python 3.13, the standard library, Decimal arithmetic, command-line interfaces, domain services, and CSV/JSON processing.</p>
           </div>
 
           <div class="skill-card">
-            <h3 class="skill-name">Django</h3>
-            <p class="skill-detail">
-              Django 5.2 LTS, MTV patterns, custom authentication/permissions (Owner vs Staff Member), business-scoped queries, forms, CSRF protection, server rendering.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#shelfsum">ShelfSum</a>.
-            </p>
+            <h3>Django</h3>
+            <p>Django 5.2 LTS, server-rendered views, authentication and permissions, business-scoped queries, forms, and CSRF protection.</p>
           </div>
 
           <div class="skill-card">
-            <h3 class="skill-name">SQL &amp; Databases</h3>
-            <p class="skill-detail">
-              Relational data modelling, PostgreSQL, Neon, transactions, integrity constraints, schema migrations, indexing, explainable reporting queries.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#shelfsum">ShelfSum</a>.
-            </p>
+            <h3>SQL &amp; PostgreSQL</h3>
+            <p>Relational data modelling, PostgreSQL, transactions, integrity constraints, migrations, indexing, and explainable reporting queries.</p>
           </div>
 
           <div class="skill-card">
-            <h3 class="skill-name">HTML &amp; CSS</h3>
-            <p class="skill-detail">
-              Semantic HTML5, responsive layout systems, accessible landmarks, visible focus states, WCAG contrast compliance, zero-JS progressive enhancement.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#shelfsum">ShelfSum</a> and this portfolio.
-            </p>
+            <h3>HTML &amp; CSS</h3>
+            <p>Semantic markup, responsive layouts, accessibility landmarks, visible focus states, and progressive enhancement without essential JavaScript.</p>
           </div>
 
           <div class="skill-card">
-            <h3 class="skill-name">Git &amp; GitHub</h3>
-            <p class="skill-detail">
-              Disciplined vertical commit structure, branch management, GitHub Actions workflows, pull request reviews, release documentation.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#shelfsum">ShelfSum</a> and <a href="#credence">Credence</a> repositories.
-            </p>
-          </div>
-
-          <div class="skill-card">
-            <h3 class="skill-name">Testing</h3>
-            <p class="skill-detail">
-              Automated unit and integration testing, pytest, unittest, deterministic test fixtures, test isolation, multi-OS CI testing matrices.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> 268 tests in <a href="#shelfsum">ShelfSum</a>, 35 tests in <a href="#credence">Credence</a>, and portfolio test suite.
-            </p>
-          </div>
-
-          <div class="skill-card">
-            <h3 class="skill-name">Deployment</h3>
-            <p class="skill-detail">
-              Cloud hosting on Render, managed Neon PostgreSQL, WhiteNoise static file handling, HTTPS settings, environment secrets management, health check endpoints.
-            </p>
-            <p class="skill-evidence">
-              <strong>Evidence:</strong> <a href="#shelfsum">ShelfSum</a> on Render.
-            </p>
+            <h3>Git &amp; GitHub</h3>
+            <p>Version control, focused commits, issue-led delivery, repository documentation, and reviewable release history.</p>
           </div>
         </div>
       </section>
 
-      <section id="about" class="about-section" aria-labelledby="about-title">
+      <!-- About Section -->
+      <section id="about" class="section about-section" aria-labelledby="about-title">
         <div class="section-header">
-          <h2 id="about-title">About</h2>
+          <h2 id="about-title" class="section-title">About</h2>
         </div>
-        <div class="about-content">
+
+        <div class="about-prose">
           <p>
-            I am a self-taught software developer based in Lagos, Nigeria, focused on backend web development with Python, Django, and SQL.
+            I am a self-taught developer focused on backend web development with Python, Django, and SQL. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti. My background helps me communicate technical decisions clearly and document the systems I build.
           </p>
           <p>
-            With a degree in English and Literary Studies, I combine technical discipline with clear communication—reading specifications closely, writing explainable architecture decisions, and building dependable systems.
-          </p>
-          <p>
-            I prioritize clean code, test coverage, and transactional integrity over speculative complexity, building practical software that solves real-world operational problems.
-          </p>
-          <p>
-            I am actively seeking internship, graduate, associate, and junior Python or Django/backend roles (onsite, hybrid, or Nigeria-remote).
+            I prioritize clean code, automated testing, and transactional integrity over speculative complexity, building practical software around clear operational rules.
           </p>
         </div>
       </section>
 
-      <section id="contact" class="contact-section" aria-labelledby="contact-title">
+      <!-- Contact Section -->
+      <section id="contact" class="section contact-section" aria-labelledby="contact-title">
         <div class="section-header">
-          <h2 id="contact-title">Contact</h2>
-        </div>
-        <p class="availability">
-          Based in Lagos, Nigeria. Available for internship, graduate, associate, and junior Python or Django/backend opportunities, with onsite, hybrid, and Nigeria-remote roles prioritized.
-        </p>
-        <div class="contact-details">
-          <p>
-            Direct contact for technical opportunities, code walkthroughs, or recruiter inquiries:
+          <h2 id="contact-title" class="section-title">Contact</h2>
+          <p class="section-lead">
+            If you are reviewing my work or hiring for a suitable role, email is the quickest way to reach me.
           </p>
-          <ul class="contact-list" role="list">
-            <li class="contact-item">
-              <span class="contact-label">Email:</span>
-              <a class="action-link action-primary" href="mailto:ayotomiwa529@gmail.com">ayotomiwa529@gmail.com</a>
-            </li>
-            <li class="contact-item">
-              <span class="contact-label">GitHub:</span>
-              <a class="action-link" href="https://github.com/Lordt0m" rel="noreferrer">github.com/Lordt0m</a>
-            </li>
-          </ul>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:ayotomiwa529@gmail.com">Email me</a>
+            <a class="btn btn-secondary" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
+            <span class="inert-link">LinkedIn — coming soon</span>
+          </div>
         </div>
       </section>
+
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="site-container footer-inner">
-      <p>&copy; 2026 Ayotomiwa Ojo. Evidence-led developer portfolio.</p>
+      <span>&copy; 2026 Ayotomiwa Ojo. Built with semantic HTML &amp; CSS.</span>
+      <a href="#main-content">Back to top &uarr;</a>
     </div>
   </footer>
 </body>
