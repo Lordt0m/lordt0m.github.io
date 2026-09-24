@@ -71,3 +71,9 @@ Keep GitHub as the source repository and migrate production hosting to Cloudflar
 ## Design documentation
 
 - After acceptance and validation: add the Cloudflare Pages ADR, update `docs/architecture.md`, update the release ticket, and mark the GitHub Pages ADR as superseded.
+
+## Delivery evidence
+
+- The owner-provided production address is `https://ayotomiwa.pages.dev/`; it was live before the cutover and matched the reviewed `61146be` site.
+- Cutover commit `8ba7ff9` added canonical/social URLs, the portfolio URL to the verified CV, and verification-only GitHub Actions; it retired the GitHub Pages deployment workflow. GitHub Actions run `35953942321` passed.
+- After the push, the live homepage, both case studies, 404 page, stylesheet, ShelfSum screenshot, and CV exactly matched the committed files over HTTPS. An unknown route returned HTTP 404. Ticket 04 records the complete verification and remaining limitations.
