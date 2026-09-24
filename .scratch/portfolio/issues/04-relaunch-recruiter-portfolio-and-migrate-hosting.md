@@ -23,10 +23,11 @@ Execute a comprehensive portfolio redesign inspired by Cyze's restrained dark pr
 
 ## Pre-authorization completion record
 
-- **Reviewed ref:** Ticket 04 implementation on `main`, based on `0322363`; this record is included in the implementation commit.
+- **Reviewed ref:** `ce7d291` on `main`, based on `0322363`.
 - **Public behaviour:** Dark recruiter-focused homepage, ShelfSum and Credence case studies, semantic Credence fixture preview, verified screenshots, active email/GitHub/CV actions, and inert LinkedIn status. The phone number appears only in the CV.
 - **Automated checks:** `python scripts/verify_site.py` passes; `python -m unittest discover tests` passes 28 tests; `git diff --check` reports no whitespace errors.
 - **Viewport review:** All four public pages inspected at 320, 360, 768, 1024, and 1440 CSS pixels. No page-level horizontal overflow, clipping, unreadable text, broken screenshots, small primary targets, hidden focus, or keyboard traps observed. Local routes and the PDF responded successfully; approved external GitHub links and the ShelfSum demo responded successfully.
 - **Evidence:** ShelfSum is documented at 271 tests with exact public demo credentials. Credence's fictional fixture values and 35-test baseline match its local repository. CV personal and education details match the owner-supplied DOCX; the final PDF was text-checked, link-checked, rendered, and visually inspected.
-- **Remaining risk:** The GitHub Pages address timed out from this host during external checking; its deployment workflow remains enabled. Cloudflare's assigned address does not exist until owner authorization and deployment. Do not publish an invented URL or retire GitHub Pages first.
+- **Post-push deployment:** GitHub Pages workflow run `35951034139` completed successfully for `ce7d291`. The live homepage, both case studies, 404 page, PDF CV, and ShelfSum screenshot returned HTTP 200 with the expected content types. The live homepage contains 271 tests and exact demo usernames, with no stale count or LinkedIn link.
+- **Remaining risk:** Cloudflare's assigned address does not exist until owner authorization and deployment. GitHub Pages remains active as the verified public site; do not publish an invented Cloudflare URL or retire GitHub Pages first.
 - **Next safe action:** The owner authorizes Cloudflare Pages Git integration for `Lordt0m/lordt0m.github.io` and deploys `main`. Verify the assigned `*.pages.dev` URL and commit, then add canonical/social metadata and the portfolio URL to the CV, retire the GitHub Pages deployment job, accept ADR 0003, and close this ticket.
