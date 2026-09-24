@@ -12,6 +12,10 @@ Ayotomiwa Ojo
 
 Python & Django Developer
 
+**Portfolio address — verified**
+
+`https://ayotomiwa.pages.dev/` is the owner-provided Cloudflare Pages production URL. The homepage, both case studies, stylesheet, screenshots, custom 404 response, and PDF CV were checked live against the reviewed repository before adopting it. Use this address for canonical metadata and the CV; keep GitHub repository URLs as source links.
+
 **Primary statement — verified**
 
 I build practical web applications and backend systems with Python and Django.
@@ -166,6 +170,7 @@ Verified fixture output from `fixtures/expected_mixed_output/summary.json` imple
 
 - Asset: `assets/documents/ayotomiwa-ojo-cv.pdf`
 - Rendered as direct download action on homepage hero.
+- Include the verified production portfolio URL `https://ayotomiwa.pages.dev/`; do not include the former GitHub Pages address.
 
 **LinkedIn — intentionally visible as inert status text**
 

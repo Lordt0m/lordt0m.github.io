@@ -96,9 +96,9 @@ Browser inspection remains the test surface for layout and interaction. The stru
 
 ### Hosting module
 
-**Current interface:** `.github/workflows/deploy.yml` verifies and deploys the reviewed `main` ref to GitHub Pages.
+**Production interface:** Cloudflare Pages deploys the repository root from `main` through Git integration at `https://ayotomiwa.pages.dev/`. The verified assigned URL owns canonical and sharing metadata as well as the CV's portfolio link.
 
-**Planned interface:** Cloudflare Pages will deploy the same repository root from `main` through Git integration. GitHub Pages stays active until the assigned `*.pages.dev` deployment is verified. Only then may the workflow become verification-only, ADR 0003 become accepted, and canonical metadata adopt the assigned Cloudflare URL.
+**Verification interface:** `.github/workflows/verify.yml` runs structural verification and unit tests on pushes and pull requests without publishing to GitHub Pages. The former GitHub Pages deployment workflow was retired only after the Cloudflare production site passed live page, asset, and CV checks.
 
 ## Source-of-truth map
 

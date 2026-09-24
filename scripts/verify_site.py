@@ -22,6 +22,12 @@ APPROVED_EXTERNAL_URLS = {
     "mailto:ayotomiwa529@gmail.com",
 }
 
+CANONICAL_URLS = {
+    "index.html": "https://ayotomiwa.pages.dev/",
+    "projects/shelfsum.html": "https://ayotomiwa.pages.dev/projects/shelfsum.html",
+    "projects/credence.html": "https://ayotomiwa.pages.dev/projects/credence.html",
+}
+
 FORBIDDEN_TEXT_PATTERNS = [
     (re.compile(r"\bTODO\b", re.IGNORECASE), "TODO placeholder"),
     (re.compile(r"\bFIXME\b", re.IGNORECASE), "FIXME placeholder"),
@@ -75,6 +81,7 @@ class SiteHTMLParser(HTMLParser):
         self.inline_style_lines = []
         self.links = []  # (tag, href, text, is_nav, line_num, attrs)
         self.assets = []  # (tag, attr, val, rel, line_num)
+        self.meta_properties = []  # (property, content, line_num)
         self.images = []  # (attrs, line_num)
         self.in_nav = False
         self.current_a = None
@@ -125,6 +132,11 @@ class SiteHTMLParser(HTMLParser):
             rel = attr_dict.get("rel", "")
             if href:
                 self.assets.append(("link", "href", href, rel, line_num))
+
+        if tag == "meta" and "property" in attr_dict:
+            self.meta_properties.append(
+                (attr_dict["property"], attr_dict.get("content", ""), line_num)
+            )
 
         if tag == "script":
             src = attr_dict.get("src")
@@ -230,6 +242,24 @@ def verify_html_document(
             f"{rel_path}: Inline style attributes found on lines {parser.inline_style_lines}; use assets/css/site.css"
         )
 
+    expected_canonical = CANONICAL_URLS.get(rel_path)
+    if expected_canonical:
+        canonical_links = [
+            val for tag, _, val, rel, _ in parser.assets
+            if tag == "link" and rel.lower() == "canonical"
+        ]
+        if canonical_links != [expected_canonical]:
+            errors.append(
+                f"{rel_path}: Expected one canonical URL '{expected_canonical}', found {canonical_links}"
+            )
+        og_urls = [
+            value for prop, value, _ in parser.meta_properties if prop.lower() == "og:url"
+        ]
+        if og_urls != [expected_canonical]:
+            errors.append(
+                f"{rel_path}: Expected one og:url '{expected_canonical}', found {og_urls}"
+            )
+
     # Heading hierarchy (no skipping levels)
     prev_level = 0
     for level, line in parser.headings:
@@ -292,6 +322,8 @@ def verify_html_document(
 
     # Asset verification (<link>, <script>)
     for tag, attr, val, rel, line in parser.assets:
+        if tag == "link" and rel.lower() == "canonical":
+            continue
         if val.startswith(("http://", "https://")):
             if val not in APPROVED_EXTERNAL_URLS:
                 errors.append(f"{rel_path}:{line}: Unapproved external asset '{val}'")
@@ -436,8 +468,14 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         errors.append("index.html: Missing link to verified CV PDF")
     if not cv_asset.is_file():
         errors.append(f"Missing required CV document: {cv_asset.relative_to(repo_root)}")
-    elif not cv_asset.read_bytes().startswith(b"%PDF-"):
-        errors.append("assets/documents/ayotomiwa-ojo-cv.pdf: File is not a valid PDF header")
+    else:
+        cv_bytes = cv_asset.read_bytes()
+        if not cv_bytes.startswith(b"%PDF-"):
+            errors.append("assets/documents/ayotomiwa-ojo-cv.pdf: File is not a valid PDF header")
+        if b"https://ayotomiwa.pages.dev/" not in cv_bytes:
+            errors.append("assets/documents/ayotomiwa-ojo-cv.pdf: Missing verified portfolio URL")
+        if b"lordt0m.github.io" in cv_bytes.lower():
+            errors.append("assets/documents/ayotomiwa-ojo-cv.pdf: Stale GitHub Pages URL")
 
     # Check Case Study links on index.html
     has_shelfsum_cs = any(
@@ -486,17 +524,24 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         if cr_parser and "fixture-sample-title" not in cr_parser.ids:
             errors.append("projects/credence.html: Missing semantic fictional fixture sample")
 
-    # 3. Verify deployment workflow
+    # 3. Verification-only CI; GitHub Pages publication is retired.
     deploy_workflow = repo_root / ".github" / "workflows" / "deploy.yml"
-    if deploy_workflow.is_file():
+    if deploy_workflow.exists():
+        errors.append("Retired GitHub Pages deployment workflow must not remain")
+    verify_workflow = repo_root / ".github" / "workflows" / "verify.yml"
+    if not verify_workflow.is_file():
+        errors.append("Missing verification-only workflow (.github/workflows/verify.yml)")
+    else:
         try:
-            wf_content = deploy_workflow.read_text(encoding="utf-8")
-            if "scripts/verify_site.py" not in wf_content:
-                errors.append(
-                    "Deployment workflow (.github/workflows/deploy.yml) must run scripts/verify_site.py"
-                )
+            wf_content = verify_workflow.read_text(encoding="utf-8")
+            for required in ("scripts/verify_site.py", "python -m unittest discover tests", "pull_request:"):
+                if required not in wf_content:
+                    errors.append(f"verify.yml: Missing required CI step or trigger '{required}'")
+            for forbidden in ("deploy-pages", "upload-pages-artifact", "configure-pages", "pages: write", "id-token: write"):
+                if forbidden in wf_content:
+                    errors.append(f"verify.yml: Retired GitHub Pages deployment setting '{forbidden}' remains")
         except Exception as exc:
-            errors.append(f"Failed to read deploy.yml: {exc}")
+            errors.append(f"Failed to read verify.yml: {exc}")
 
     return errors
 

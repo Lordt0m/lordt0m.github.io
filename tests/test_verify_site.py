@@ -14,6 +14,8 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ayotomiwa Ojo — Python &amp; Django Developer</title>
+    <link rel="canonical" href="https://ayotomiwa.pages.dev/">
+    <meta property="og:url" content="https://ayotomiwa.pages.dev/">
     <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -99,6 +101,8 @@ VALID_SHELFSUM_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"><title>ShelfSum Case Study</title>
+    <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/shelfsum.html">
+    <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/shelfsum.html">
     <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
@@ -119,6 +123,8 @@ VALID_CREDENCE_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"><title>Credence Case Study</title>
+    <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/credence.html">
+    <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/credence.html">
     <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
@@ -159,7 +165,18 @@ class TestVerifySite(unittest.TestCase):
 
         docs_dir = self.root / "assets" / "documents"
         docs_dir.mkdir(parents=True)
-        (docs_dir / "ayotomiwa-ojo-cv.pdf").write_bytes(b"%PDF-1.4 mock")
+        (docs_dir / "ayotomiwa-ojo-cv.pdf").write_bytes(
+            b"%PDF-1.4 mock https://ayotomiwa.pages.dev/"
+        )
+
+        workflow_dir = self.root / ".github" / "workflows"
+        workflow_dir.mkdir(parents=True)
+        (workflow_dir / "verify.yml").write_text(
+            "on:\n  pull_request:\nsteps:\n"
+            "  - run: python scripts/verify_site.py\n"
+            "  - run: python -m unittest discover tests\n",
+            encoding="utf-8",
+        )
 
         # Create project case studies
         proj_dir = self.root / "projects"
@@ -289,6 +306,25 @@ class TestVerifySite(unittest.TestCase):
         errors = verify(self.root)
         self.assertTrue(any("Missing link to verified CV PDF" in e for e in errors))
 
+    def test_cv_must_link_verified_portfolio(self):
+        cv = self.root / "assets" / "documents" / "ayotomiwa-ojo-cv.pdf"
+        cv.write_bytes(b"%PDF-1.4 mock")
+        errors = verify(self.root)
+        self.assertTrue(any("Missing verified portfolio URL" in e for e in errors))
+
+    def test_canonical_and_social_urls(self):
+        self.create_index(VALID_INDEX_HTML.replace(
+            '<link rel="canonical" href="https://ayotomiwa.pages.dev/">', ""
+        ))
+        errors = verify(self.root)
+        self.assertTrue(any("Expected one canonical URL" in e for e in errors))
+
+        self.create_index(VALID_INDEX_HTML.replace(
+            '<meta property="og:url" content="https://ayotomiwa.pages.dev/">', ""
+        ))
+        errors = verify(self.root)
+        self.assertTrue(any("Expected one og:url" in e for e in errors))
+
     def test_missing_case_study(self):
         (self.root / "projects" / "shelfsum.html").unlink()
         errors = verify(self.root)
@@ -387,14 +423,24 @@ class TestVerifySite(unittest.TestCase):
         errors = verify(self.root)
         self.assertTrue(any("404.html: Expected exactly one <main>" in e for e in errors))
 
-    def test_deploy_workflow_validation(self):
+    def test_verification_only_workflow(self):
         wf_dir = self.root / ".github" / "workflows"
-        wf_dir.mkdir(parents=True, exist_ok=True)
+        verify_file = wf_dir / "verify.yml"
+        valid_content = verify_file.read_text(encoding="utf-8")
+        verify_file.write_text("name: Broken", encoding="utf-8")
+        errors = verify(self.root)
+        self.assertTrue(any("verify.yml: Missing required" in e for e in errors))
+
+        verify_file.write_text(valid_content + "pages: write\n", encoding="utf-8")
+        errors = verify(self.root)
+        self.assertTrue(any("Retired GitHub Pages deployment setting" in e for e in errors))
+
+        verify_file.write_text(valid_content, encoding="utf-8")
         (wf_dir / "deploy.yml").write_text("name: Deploy\nsteps: []", encoding="utf-8")
         errors = verify(self.root)
-        self.assertTrue(any("must run scripts/verify_site.py" in e for e in errors))
+        self.assertTrue(any("Retired GitHub Pages deployment workflow" in e for e in errors))
 
-        (wf_dir / "deploy.yml").write_text("name: Deploy\nsteps: [run: python scripts/verify_site.py]", encoding="utf-8")
+        (wf_dir / "deploy.yml").unlink()
         errors = verify(self.root)
         self.assertEqual(errors, [])
 

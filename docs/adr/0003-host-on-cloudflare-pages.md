@@ -1,8 +1,8 @@
 # Host on Cloudflare Pages
 
-**Status:** Proposed. Supersedes [ADR 0002](0002-host-on-github-pages-via-github-actions.md) only after live production verification.
+**Status:** Accepted. Supersedes [ADR 0002](0002-host-on-github-pages-via-github-actions.md) after live production verification.
 
-The portfolio production hosting is planned to migrate from GitHub Pages to Cloudflare Pages, deployed automatically from the `main` branch through Cloudflare's GitHub integration.
+The portfolio production host is `https://ayotomiwa.pages.dev/`, deployed from `main` through Cloudflare Pages GitHub integration. The owner-provided address was adopted only after the homepage, case studies, assets, CV, and custom 404 response were verified live against the reviewed repository.
 
 ## Context
 
@@ -12,13 +12,13 @@ We evaluated Cloudflare Pages Git integration against remaining on GitHub Pages 
 
 ## Decision
 
-Migrate production hosting to Cloudflare Pages:
+Use Cloudflare Pages for production hosting:
 1. Connect the `Lordt0m/lordt0m.github.io` repository to Cloudflare Pages via GitHub integration.
 2. Production branch is `main`, framework preset is `None`, the build command is `exit 0`, and the build output directory is `.` (the repository root). Leave the optional root-directory setting at its repository-root default.
-3. GitHub Actions CI workflow is maintained as a pre-flight verification gate running `python scripts/verify_site.py` and unit tests on push and pull requests.
-4. Keep the current GitHub Pages deployment active until the assigned `*.pages.dev` site is validated against the reviewed commit, then retire the GitHub Pages deployment steps and mark this ADR accepted.
+3. GitHub Actions CI in `.github/workflows/verify.yml` remains a verification gate running `python scripts/verify_site.py` and unit tests on push and pull requests.
+4. The GitHub Pages deployment job was retained until the assigned `*.pages.dev` site passed production checks, then removed. The former GitHub Pages site may remain reachable as a historical copy, but it is no longer the canonical destination or an active deployment pipeline.
 
 ## Consequences
 
 - **Pros:** Global edge CDN performance, automatic SSL/TLS on assigned `*.pages.dev` domain, automatic branch previews for pull requests, and simple future custom domain addition if desired.
-- **Trade-offs:** Deployment authorization requires owner-controlled OAuth/permissions setup in the Cloudflare dashboard. Zero build step keeps the static asset pipeline simple and independent of node/npm build tools.
+- **Trade-offs:** Git integration depends on owner-controlled Cloudflare/GitHub authorization. The `exit 0` build command leaves the static asset pipeline independent of node/npm build tools. GitHub Actions remains a separate verification pipeline, not a second publishing pipeline.
