@@ -19,13 +19,25 @@ APPROVED_EXTERNAL_URLS = {
     "https://shelfsum.onrender.com/",
     "https://github.com/Lordt0m/shelfsum",
     "https://github.com/Lordt0m/credence",
+    "https://crewcast-lagos.onrender.com/",
+    "https://crewcast-lagos.onrender.com/operations/",
+    "https://github.com/Lordt0m/crewcast-lagos",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118",
     "mailto:ayotomiwa529@gmail.com",
+}
+
+REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
+    "https://crewcast-lagos.onrender.com/operations/",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118",
 }
 
 CANONICAL_URLS = {
     "index.html": "https://ayotomiwa.pages.dev/",
     "projects/shelfsum.html": "https://ayotomiwa.pages.dev/projects/shelfsum.html",
     "projects/credence.html": "https://ayotomiwa.pages.dev/projects/credence.html",
+    "projects/crewcast-lagos.html": "https://ayotomiwa.pages.dev/projects/crewcast-lagos.html",
 }
 
 FORBIDDEN_TEXT_PATTERNS = [
@@ -381,6 +393,7 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         repo_root / "404.html",
         repo_root / "projects" / "shelfsum.html",
         repo_root / "projects" / "credence.html",
+        repo_root / "projects" / "crewcast-lagos.html",
     }
     for required_file in sorted(required_html_files):
         if not required_file.is_file():
@@ -412,9 +425,9 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
             f"index.html: Required section IDs missing: {sorted(list(missing_ids))}"
         )
 
-    if index_parser.class_counts["project-card"] != 2:
+    if index_parser.class_counts["project-card"] != 3:
         errors.append(
-            f"index.html: Expected exactly 2 project cards, found {index_parser.class_counts['project-card']}"
+            f"index.html: Expected exactly 3 project cards, found {index_parser.class_counts['project-card']}"
         )
 
     if index_parser.class_counts["skill-card"] != 5:
@@ -428,7 +441,7 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         for _, href, _, _, _, _ in index_parser.links
         if href and href.startswith(("http://", "https://", "mailto:"))
     }
-    for approved_url in APPROVED_EXTERNAL_URLS:
+    for approved_url in REQUIRED_INDEX_URLS:
         if approved_url not in found_external_urls:
             errors.append(
                 f"index.html: Required approved external URL missing: {approved_url}"
@@ -484,10 +497,15 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     has_credence_cs = any(
         "projects/credence.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
     )
+    has_crewcast_cs = any(
+        "projects/crewcast-lagos.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
+    )
     if not has_shelfsum_cs:
         errors.append("index.html: Missing link to ShelfSum case study (projects/shelfsum.html)")
     if not has_credence_cs:
         errors.append("index.html: Missing link to Credence case study (projects/credence.html)")
+    if not has_crewcast_cs:
+        errors.append("index.html: Missing link to CrewCast case study (projects/crewcast-lagos.html)")
 
     # 2. Verify project-specific evidence
     shelfsum_page = repo_root / "projects" / "shelfsum.html"

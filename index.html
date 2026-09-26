@@ -65,7 +65,7 @@
         <div class="section-header">
           <h2 id="projects-title" class="section-title">Projects</h2>
           <p class="section-lead">
-            Two projects that show how I structure data, protect important rules, and test the workflows that depend on them.
+            Three projects that show how I structure data, protect important rules, and test the workflows that depend on them.
           </p>
         </div>
 
@@ -118,7 +118,52 @@
             </div>
           </article>
 
-          <!-- Project 2: Credence (Supporting) -->
+          <!-- Project 2: CrewCast Lagos (Supporting) -->
+          <article id="crewcast-lagos" class="project-card" aria-labelledby="crewcast-title">
+            <div class="project-card-grid">
+              <div class="project-preview">
+                <div class="project-preview-frame crewcast-preview" role="group" aria-label="Illustrative CrewCast planning board preview; example jobs are synthetic">
+                  <div class="crewcast-preview-header"><span>CrewCast Lagos</span><span>Planning desk</span></div>
+                  <div class="crewcast-preview-body">
+                    <p class="crewcast-preview-eyebrow">Outdoor job planning</p>
+                    <p class="crewcast-preview-title">Know when a forecast needs a second look.</p>
+                    <div class="crewcast-preview-row"><span>Site visit · Lekki</span><strong>Check conditions</strong></div>
+                    <div class="crewcast-preview-row"><span>Equipment check · Ikeja</span><strong>Forecast aged</strong></div>
+                    <p class="crewcast-preview-note">Illustrative interface · example jobs</p>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <div>
+                  <span class="project-badge">Supporting Project</span>
+                  <h3 id="crewcast-title" class="project-title">CrewCast Lagos</h3>
+                  <p class="project-descriptor">Weather-aware planning for outdoor dispatchers in Lagos.</p>
+                  <p class="project-summary">
+                    CrewCast compares example outdoor jobs with real retrieved forecasts, showing dispatchers the age and provenance of each planning signal. Its pure evaluator explains policy threshold crossings, while stale forecasts suppress favourable recommendations. A scheduled GitHub Actions run refreshes the shared PostgreSQL data without making provider calls during page loads; the public site remains read-only.
+                  </p>
+                  <div class="project-capabilities">
+                    <div class="capabilities-title">Key Capabilities</div>
+                    <ul class="capabilities-list">
+                      <li>Versioned weather policies and explainable job-window evaluations.</li>
+                      <li>Forecast freshness, retry history, daily request budget, and circuit-breaker visibility.</li>
+                      <li>Read-only failure replay for timeouts, stale data, and provider recovery.</li>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <div class="project-tech">Python &bull; Django &bull; PostgreSQL &bull; Neon &bull; GitHub Actions &bull; Render</div>
+                  <div class="project-actions">
+                    <a class="btn btn-primary" href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Live demo</a>
+                    <a class="btn btn-secondary" href="https://github.com/Lordt0m/crewcast-lagos" rel="noreferrer">Source code</a>
+                    <a class="btn btn-secondary" href="projects/crewcast-lagos.html">Case study</a>
+                  </div>
+                  <div class="demo-notice"><strong>Demo note:</strong> Jobs and sites are synthetic; forecasts are retrieved from Open-Meteo. This is a planning aid, not a safety clearance.</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Credence (Supporting) -->
           <article id="credence" class="project-card" aria-labelledby="credence-title">
             <div class="project-card-grid">
               <div class="project-preview">
@@ -190,7 +235,7 @@
         <div class="section-header">
           <h2 id="skills-title" class="section-title">Skills</h2>
           <p class="section-lead">
-            Five core technical competencies demonstrated directly by the architecture, test suites, and deployments of ShelfSum and Credence.
+            Five core technical competencies demonstrated directly by the architecture, test suites, and deployments of ShelfSum, CrewCast Lagos, and Credence.
           </p>
         </div>
 

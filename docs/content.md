@@ -154,6 +154,40 @@ Verified fixture output from `fixtures/expected_mixed_output/summary.json` imple
 - Total expenses: NGN 59,500.50
 - Net cash movement: NGN 15,499.50
 
+## Supporting Project: CrewCast Lagos
+
+**Title and descriptor — verified**
+
+CrewCast Lagos — weather-aware job planning for outdoor dispatchers in Lagos.
+
+**Project summary — verified**
+
+CrewCast is a Django planning aid that compares scheduled outdoor jobs with retrieved Open-Meteo forecasts. The public demo uses synthetic sites and jobs, while forecast retrievals are real. It shows when a forecast was last obtained, explains threshold-based recommendations, and suppresses favourable recommendations when the data becomes stale.
+
+**Engineering evidence — verified**
+
+- A pure evaluator combines job windows, hourly forecast metrics, and versioned weather policies.
+- PostgreSQL stores forecast snapshots, sync attempts, budget reservations, and recommendations; web page loads do not call the provider.
+- A Lagos-calendar daily call budget, retry policy, and provider circuit breaker bound external requests.
+- GitHub Actions runs the forecast refresh on a schedule; automatic `schedule` run [36246262643](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643) succeeded on 26 September 2026. The public Operations page showed that run's per-site attempts against the shared Neon database.
+- A read-only failure replay demonstrates timeout, stale data, expiry, and circuit-breaker behaviour without mutating shared records.
+- CrewCast CI passed after the portfolio-readiness fixes at [36247508159](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36247508159), and the final public error-copy fix passed at [36248342118](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118).
+
+**Trade-off and limitations — verified**
+
+The public site is a read-only demonstration, not a dispatch or occupational-safety clearance tool. GitHub's scheduled jobs can be delayed or skipped, and provider requests can fail. CrewCast therefore surfaces data age and failure states rather than implying forecasts are always fresh. No always-on production worker or hosted Redis is claimed.
+
+**Technology line — verified**
+
+Python · Django · PostgreSQL · Neon · GitHub Actions · Render · Open-Meteo
+
+**Inspection actions — verified**
+
+- `Live demo`: `https://crewcast-lagos.onrender.com/`
+- `Operations`: `https://crewcast-lagos.onrender.com/operations/`
+- `Source code`: `https://github.com/Lordt0m/crewcast-lagos`
+- `Case study`: `projects/crewcast-lagos.html`
+
 ## Contact actions
 
 **GitHub — verified**

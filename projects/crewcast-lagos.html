@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrewCast Lagos Case Study — Ayotomiwa Ojo</title>
+  <meta name="description" content="CrewCast Lagos case study: weather-aware outdoor job planning with Django, forecast freshness, a bounded provider budget, and scheduled GitHub Actions updates.">
+  <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
+  <meta property="og:title" content="CrewCast Lagos Case Study — Ayotomiwa Ojo">
+  <meta property="og:description" content="Explainable weather-aware planning with real forecast retrievals and synthetic example jobs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CrewCast Lagos Case Study — Ayotomiwa Ojo">
+  <meta name="twitter:description" content="Explainable weather-aware planning with real forecast retrievals and synthetic example jobs.">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a class="header-brand" href="../index.html">Ayotomiwa Ojo</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html#projects">Projects</a>
+        <a class="nav-link" href="../index.html#skills">Skills</a>
+        <a class="nav-link" href="../index.html#about">About</a>
+        <a class="nav-link" href="../index.html#contact">Contact</a>
+        <a class="nav-link" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <div class="site-container">
+      <section class="case-study-hero">
+        <a class="back-link" href="../index.html">&larr; Back to overview</a>
+        <span class="project-badge">Supporting Case Study</span>
+        <h1 class="case-study-title">CrewCast Lagos</h1>
+        <p class="case-study-descriptor">Weather-aware job planning for outdoor dispatchers in Lagos.</p>
+        <p class="section-lead">A read-only planning aid that explains how real retrieved forecasts affect synthetic outdoor jobs, and makes the age of every planning signal visible.</p>
+        <div class="case-study-meta">
+          <a class="btn btn-primary" href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Live demo</a>
+          <a class="btn btn-secondary" href="https://github.com/Lordt0m/crewcast-lagos" rel="noreferrer">Source code</a>
+          <a class="btn btn-secondary" href="https://crewcast-lagos.onrender.com/operations/" rel="noreferrer">Live operations</a>
+        </div>
+        <div class="demo-notice case-study-note"><strong>Demo boundary:</strong> Example sites and jobs are synthetic. Forecast retrievals are live, but CrewCast is not an occupational-safety clearance system.</div>
+      </section>
+      <article class="case-study-content">
+        <section class="case-study-section">
+          <h2>The problem</h2>
+          <p>Outdoor work plans can change when rain, gusts, or heat enter a job window. A recommendation without its retrieval time can be misleading: an apparently suitable job may only be supported by an old forecast. Dispatchers need both an explainable signal and a clear indication of whether its underlying data is still current.</p>
+        </section>
+        <section class="case-study-section">
+          <h2>What CrewCast does</h2>
+          <ul>
+            <li>Compares scheduled job windows with four hourly Open-Meteo metrics and versioned policy thresholds.</li>
+            <li>Shows reasons for caution or unsuitability and the age of the forecast used.</li>
+            <li>Suppresses favourable recommendations once a forecast becomes stale; after expiry, it shows no current recommendation.</li>
+            <li>Provides an Operations page with per-site sync history, request budget, circuit state, and retry outcomes.</li>
+            <li>Offers a read-only failure replay to demonstrate timeout, stale-data, expiry, and circuit-breaker scenarios without changing shared database records.</li>
+          </ul>
+        </section>
+        <section class="case-study-section">
+          <h2>Key decisions</h2>
+          <div class="decision-box">
+            <h3>Separate retrieval from web requests</h3>
+            <p>Page loads read stored PostgreSQL records; they do not contact the weather provider. An hourly GitHub Actions schedule checks due sites and writes sync attempts and forecast snapshots to the same Neon database as the Render web app. An automatic <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643" rel="noreferrer">scheduled run on 26 September 2026</a> completed successfully and appeared in the public Operations history.</p>
+          </div>
+          <div class="decision-box">
+            <h3>Make freshness part of the answer</h3>
+            <p>Fresh forecasts support an active recommendation. Between four and twelve hours old, a previous result is historical context and a favourable signal is suppressed. Beyond twelve hours, CrewCast stops presenting it as a current recommendation. This protects against delayed schedules and provider failures without pretending the data is always live.</p>
+          </div>
+          <div class="decision-box">
+            <h3>Bound and explain provider traffic</h3>
+            <p>A PostgreSQL-backed Lagos-calendar budget reserves at most 300 calls per day. The sync path records each attempt, deduplicates identical forecast content by hash, and uses retry and circuit-breaker rules for transient provider failures. The public demo shows outcomes without exposing internal provider error strings.</p>
+          </div>
+        </section>
+        <section class="case-study-section">
+          <h2>Verification and limitations</h2>
+          <p>The repository contains automated tests for the evaluator, provider handling, budget, freshness, views, demo restrictions, and deployment configuration. The final CI run <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118" rel="noreferrer">passed on 26 September 2026</a>. The public Operations page independently showed six site attempts from the automatic scheduled run; some provider calls timed out, and those sites were correctly marked stale rather than silently treated as fresh.</p>
+          <p>GitHub schedules can be delayed or skipped. This is a non-commercial educational prototype with synthetic jobs, not a live customer dispatch system. Redis is optional and is not a hosted dependency of the public demo; when absent, reads use PostgreSQL directly.</p>
+        </section>
+        <div class="case-study-back"><a class="btn btn-secondary" href="../index.html#projects">&larr; Back to all projects</a></div>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="site-container footer-inner"><span>&copy; 2026 Ayotomiwa Ojo. Built with semantic HTML &amp; CSS.</span><a href="#main-content">Back to top &uarr;</a></div></footer>
+</body>
+</html>

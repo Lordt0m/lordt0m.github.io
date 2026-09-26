@@ -69,6 +69,13 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
                 <a href="https://github.com/Lordt0m/credence">Source code</a>
                 <a href="projects/credence.html">Case study</a>
             </article>
+            <article id="crewcast-lagos" class="project-card">
+                <h3>CrewCast Lagos</h3>
+                <p>Synthetic example jobs with real forecast retrievals.</p>
+                <a href="https://crewcast-lagos.onrender.com/">Live demo</a>
+                <a href="https://github.com/Lordt0m/crewcast-lagos">Source code</a>
+                <a href="projects/crewcast-lagos.html">Case study</a>
+            </article>
         </section>
         <section id="skills">
             <h2>Skills</h2>
@@ -144,6 +151,26 @@ VALID_CREDENCE_HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
+VALID_CREWCAST_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>CrewCast Lagos Case Study</title>
+    <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
+    <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <main id="main-content">
+        <h1>CrewCast Lagos Case Study</h1>
+        <p>Synthetic example jobs with real forecast retrievals.</p>
+        <a href="../index.html">Back</a>
+        <a href="https://crewcast-lagos.onrender.com/">Live demo</a>
+        <a href="https://github.com/Lordt0m/crewcast-lagos">Source code</a>
+    </main>
+</body>
+</html>"""
+
 VALID_404_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><title>404 Not Found</title><link rel="stylesheet" href="assets/css/site.css"></head>
@@ -183,6 +210,7 @@ class TestVerifySite(unittest.TestCase):
         proj_dir.mkdir(parents=True)
         (proj_dir / "shelfsum.html").write_text(VALID_SHELFSUM_HTML, encoding="utf-8")
         (proj_dir / "credence.html").write_text(VALID_CREDENCE_HTML, encoding="utf-8")
+        (proj_dir / "crewcast-lagos.html").write_text(VALID_CREWCAST_HTML, encoding="utf-8")
 
         # Create 404 page
         (self.root / "404.html").write_text(VALID_404_HTML, encoding="utf-8")
@@ -330,6 +358,18 @@ class TestVerifySite(unittest.TestCase):
         errors = verify(self.root)
         self.assertTrue(any("projects/shelfsum.html" in e for e in errors))
 
+    def test_missing_crewcast_case_study_or_link(self):
+        (self.root / "projects" / "crewcast-lagos.html").unlink()
+        errors = verify(self.root)
+        self.assertTrue(any("projects/crewcast-lagos.html" in e for e in errors))
+
+        (self.root / "projects" / "crewcast-lagos.html").write_text(
+            VALID_CREWCAST_HTML, encoding="utf-8"
+        )
+        self.create_index(VALID_INDEX_HTML.replace('href="projects/crewcast-lagos.html"', 'href="#projects"'))
+        errors = verify(self.root)
+        self.assertTrue(any("Missing link to CrewCast case study" in e for e in errors))
+
     def test_missing_required_sections(self):
         content = VALID_INDEX_HTML.replace('<section id="skills">', '<section id="other-skills">')
         self.create_index(content)
@@ -394,7 +434,7 @@ class TestVerifySite(unittest.TestCase):
     def test_exact_project_and_skill_counts(self):
         self.create_index(VALID_INDEX_HTML.replace(' class="project-card"', '', 1))
         errors = verify(self.root)
-        self.assertTrue(any("exactly 2 project cards" in e for e in errors))
+        self.assertTrue(any("exactly 3 project cards" in e for e in errors))
 
         self.create_index(VALID_INDEX_HTML.replace(' class="skill-card"', '', 1))
         errors = verify(self.root)

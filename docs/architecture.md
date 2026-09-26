@@ -4,7 +4,7 @@
 
 Turn a recruiter's short visit into a reliable path from positioning to inspectable technical evidence, with the least possible implementation and maintenance surface.
 
-The portfolio is a small static site: one recruiter-focused overview, two project case studies, and an error page. Its architecture optimizes for owner comprehension, fast verification, durable public links, accessibility, and cheap future edits. The site itself must not become another complex product competing with the projects it presents.
+The portfolio is a small static site: one recruiter-focused overview, three project case studies, and an error page. Its architecture optimizes for owner comprehension, fast verification, durable public links, accessibility, and cheap future edits. The site itself must not become another complex product competing with the projects it presents.
 
 ## Reader flow
 
@@ -27,7 +27,7 @@ Use this section order:
 7. CV and contact
 8. Footer
 
-The homepage includes the verified ShelfSum Featured Project, Credence Supporting Project, five skill groups, two About paragraphs, the CV download, and verified contact actions. Detailed evidence belongs on the two case-study pages. LinkedIn remains visible only as inert status text until the owner supplies a verified URL.
+The homepage includes the verified ShelfSum Featured Project, CrewCast Lagos and Credence Supporting Projects, five skill groups, two About paragraphs, the CV download, and verified contact actions. Detailed evidence belongs on the three case-study pages. LinkedIn remains visible only as inert status text until the owner supplies a verified URL.
 
 ## Module map
 
@@ -36,9 +36,10 @@ The homepage includes the verified ShelfSum Featured Project, Credence Supportin
 **Interface:** the semantic landmarks, stable fragment identifiers, and static case study routes.
 
 Key documents:
-- `index.html`: concise recruiter overview, hero, image-led project summaries, 5 skills groups, About, CV download, and contact actions.
+- `index.html`: concise recruiter overview, hero, project proof blocks, 5 skills groups, About, CV download, and contact actions.
 - `projects/shelfsum.html`: dedicated case study detailing problem, user roles, transactional stock architecture, immutable ledger, 271 tests, and Render/Neon deployment.
 - `projects/credence.html`: dedicated case study detailing cashbook validation pipeline, 7-column CSV contract, deterministic artifacts, exact decimal math, and 35 tests.
+- `projects/crewcast-lagos.html`: dedicated case study detailing forecast freshness, bounded provider traffic, scheduled updates, and the read-only demo boundary.
 - `404.html`: standalone accessible error page with navigation and return routes.
 
 Required identifiers when their content exists on `index.html`:
