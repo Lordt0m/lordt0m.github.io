@@ -188,6 +188,39 @@ Python · Django · PostgreSQL · Neon · GitHub Actions · Render · Open-Meteo
 - `Source code`: `https://github.com/Lordt0m/crewcast-lagos`
 - `Case study`: `projects/crewcast-lagos.html`
 
+## Supporting Project: CiteGrid
+
+**Title and descriptor — verified**
+
+CiteGrid — reproducible citations for development data.
+
+**Project summary — verified**
+
+CiteGrid is a Django evidence ledger for comparing electricity access across Nigeria, Ghana, and Kenya. It records complete, immutable snapshots, shows revisions between them, and keeps a public example briefing pinned to the exact snapshot it cites.
+
+**Engineering evidence — verified**
+
+- Complete imports cover all nine country and indicator series in one publication transaction; partial imports do not publish a snapshot.
+- A content hash identifies normalized observation records; a revision ledger records changed, new, and withdrawn values between adjacent published snapshots.
+- The public example briefing and its CSV/source export remain tied to a specific snapshot.
+- The offline suite found 121 tests: 120 passed and one PostgreSQL-only concurrency test skipped on SQLite.
+- The PythonAnywhere demo and public GitHub source were inspected on 1 October 2026.
+
+**Demo boundary — verified**
+
+The hosted site contains simulated fixture data. It labels the example as simulated and must not be described as a live World Bank data feed. The World Bank is attributed as the indicator provider and underlying source; values in this demo are illustrative. The free PythonAnywhere site requires a monthly renewal in the owner's Web tab.
+
+**Technology line — verified**
+
+Python · Django · SQLite demo · HTML · CSS · PythonAnywhere
+
+**Inspection actions — verified**
+
+- `Live demo`: `https://lordtom.pythonanywhere.com/`
+- `Example briefing`: `https://lordtom.pythonanywhere.com/comparisons/example/`
+- `Source code`: `https://github.com/Lordt0m/citegrid`
+- `Case study`: `projects/citegrid.html`
+
 ## Contact actions
 
 **GitHub — verified**

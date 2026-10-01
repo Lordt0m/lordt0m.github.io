@@ -550,6 +550,64 @@ code {
   margin-top: var(--space-4);
 }
 
+.citegrid-preview {
+  min-height: 18rem;
+  background: #f8f7f1;
+  color: #111827;
+}
+
+.citegrid-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid #deded8;
+  background: #fff;
+  font-size: var(--font-size-xs);
+}
+
+.citegrid-preview-header span {
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  background: #f1e4fb;
+  color: #6b2588;
+  font-weight: 700;
+}
+
+.citegrid-preview-body {
+  padding: var(--space-5) var(--space-4);
+}
+
+.citegrid-preview-eyebrow,
+.citegrid-preview-note {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: #4b5563;
+}
+
+.citegrid-preview-title {
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111827;
+}
+
+.citegrid-preview-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-top: 1px solid #deded8;
+  font-size: var(--font-size-sm);
+}
+
+.citegrid-preview-note {
+  margin-top: var(--space-3);
+}
+
 .project-content {
   padding: var(--space-6);
   display: flex;

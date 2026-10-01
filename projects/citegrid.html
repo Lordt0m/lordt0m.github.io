@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CiteGrid Case Study — Ayotomiwa Ojo</title>
+  <meta name="description" content="CiteGrid case study: immutable electricity-access snapshots, revision history, and reproducible citations in Django.">
+  <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/citegrid.html">
+  <meta property="og:title" content="CiteGrid Case Study — Ayotomiwa Ojo">
+  <meta property="og:description" content="Complete data snapshots, visible revisions, and briefings pinned to the values they cite.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/citegrid.html">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CiteGrid Case Study — Ayotomiwa Ojo">
+  <meta name="twitter:description" content="Complete data snapshots, visible revisions, and briefings pinned to the values they cite.">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="site-container header-inner">
+      <a class="header-brand" href="../index.html">Ayotomiwa Ojo</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="nav-link" href="../index.html#projects">Projects</a>
+        <a class="nav-link" href="../index.html#skills">Skills</a>
+        <a class="nav-link" href="../index.html#about">About</a>
+        <a class="nav-link" href="../index.html#contact">Contact</a>
+        <a class="nav-link" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <div class="site-container">
+      <section class="case-study-hero">
+        <a class="back-link" href="../index.html">&larr; Back to overview</a>
+        <span class="project-badge">Supporting Case Study</span>
+        <h1 class="case-study-title">CiteGrid</h1>
+        <p class="case-study-descriptor">Reproducible citations for development data.</p>
+        <p class="section-lead">A Django evidence ledger that makes the source snapshot behind a comparison inspectable and keeps later revisions visible.</p>
+        <div class="case-study-meta">
+          <a class="btn btn-primary" href="https://lordtom.pythonanywhere.com/" rel="noreferrer">Live demo</a>
+          <a class="btn btn-secondary" href="https://github.com/Lordt0m/citegrid" rel="noreferrer">Source code</a>
+          <a class="btn btn-secondary" href="https://lordtom.pythonanywhere.com/comparisons/example/" rel="noreferrer">Example briefing</a>
+        </div>
+        <div class="demo-notice case-study-note"><strong>Demo boundary:</strong> The hosted comparison uses simulated fixture values. Its World Bank attribution describes the indicator and underlying source, not a live retrieval of the displayed figures.</div>
+      </section>
+      <article class="case-study-content">
+        <section class="case-study-section">
+          <h2>The problem</h2>
+          <p>A data citation can become ambiguous when a provider later revises or withdraws an observation. A chart alone does not tell a reader which release supplied a figure or what changed afterward. CiteGrid gives each complete import a durable snapshot and lets a briefing point to that exact version.</p>
+        </section>
+        <section class="case-study-section">
+          <h2>What CiteGrid does</h2>
+          <ul>
+            <li>Compares total, rural, and urban electricity access across Nigeria, Ghana, and Kenya by observation year.</li>
+            <li>Publishes a new snapshot only when all nine country and indicator series validate together.</li>
+            <li>Shows changed, added, and withdrawn values between adjacent snapshots in a revision ledger.</li>
+            <li>Pins the example briefing to a snapshot and exports the cited observations with source information.</li>
+            <li>Marks simulated fixture replay and example data visibly so a visitor does not mistake them for a current data feed.</li>
+          </ul>
+        </section>
+        <section class="case-study-section">
+          <h2>Key decisions</h2>
+          <div class="decision-box">
+            <h3>Publish complete evidence</h3>
+            <p>The import validates all nine series before publication and writes a complete snapshot transactionally. A failed import retains an audit record while leaving the previously published snapshot available. This prevents a comparison from mixing values from partial releases.</p>
+          </div>
+          <div class="decision-box">
+            <h3>Keep citations attached to their source</h3>
+            <p>Normalized observation records produce a content hash. A pinned briefing refers to a particular immutable snapshot, while later imports create their own versions and revision records. The reader can inspect both the cited value and what changed after it was pinned.</p>
+          </div>
+          <div class="decision-box">
+            <h3>Make the demonstration boundary explicit</h3>
+            <p>The public site runs on a separate SQLite demonstration database seeded with simulated values. Labels on Explore, About, Revisions, the briefing, and its export identify this boundary. The database is suitable for trying the interface, not for quoting as a live World Bank measurement.</p>
+          </div>
+        </section>
+        <section class="case-study-section">
+          <h2>Verification and limitations</h2>
+          <p>The offline test suite found 121 tests: 120 passed and one PostgreSQL-only concurrency test was skipped on SQLite. The public PythonAnywhere deployment was checked with a populated Explore page, revision and provenance pages, fixture replay, and an example briefing. The repository documents the import command, data constraints, and setup steps.</p>
+          <p>The hosted demo uses SQLite and simulated values. The PostgreSQL concurrency path is implemented but was not verified by the local SQLite run. The free PythonAnywhere site also requires a monthly renewal by its owner, so its availability depends on that upkeep.</p>
+        </section>
+        <div class="case-study-back"><a class="btn btn-secondary" href="../index.html#projects">&larr; Back to all projects</a></div>
+      </article>
+    </div>
+  </main>
+  <footer class="site-footer"><div class="site-container footer-inner"><span>&copy; 2026 Ayotomiwa Ojo. Built with semantic HTML &amp; CSS.</span><a href="#main-content">Back to top &uarr;</a></div></footer>
+</body>
+</html>

@@ -24,7 +24,8 @@ Create a precise, technically confident public portfolio that helps recruiters e
 - Featured ShelfSum project overview with live demo link, source link, dedicated case study link, demo guidance, and verified screenshots.
 - Supporting Credence project overview with source link, dedicated case study link, and verified demonstration output preview.
 - Supporting CrewCast Lagos project overview with live demo, source, and dedicated case study links; distinguish synthetic jobs from live forecast retrievals.
-- Dedicated case-study pages for ShelfSum (`projects/shelfsum.html`), CrewCast Lagos (`projects/crewcast-lagos.html`), and Credence (`projects/credence.html`).
+- Supporting CiteGrid project overview with live demo, source, and dedicated case study links; mark the hosted dataset as simulated.
+- Dedicated case-study pages for ShelfSum (`projects/shelfsum.html`), CrewCast Lagos (`projects/crewcast-lagos.html`), CiteGrid (`projects/citegrid.html`), and Credence (`projects/credence.html`).
 - Downloadable CV PDF (`assets/documents/ayotomiwa-ojo-cv.pdf`) inspected and linked directly from the hero section.
 - GitHub link (`https://github.com/Lordt0m`).
 - Exactly five evidence-backed skills groups (`Python`, `Django`, `SQL & PostgreSQL`, `HTML & CSS`, `Git & GitHub`).

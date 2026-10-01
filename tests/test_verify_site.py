@@ -76,6 +76,13 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
                 <a href="https://github.com/Lordt0m/crewcast-lagos">Source code</a>
                 <a href="projects/crewcast-lagos.html">Case study</a>
             </article>
+            <article id="citegrid" class="project-card">
+                <h3>CiteGrid</h3>
+                <p>Simulated example data.</p>
+                <a href="https://lordtom.pythonanywhere.com/">Live demo</a>
+                <a href="https://github.com/Lordt0m/citegrid">Source code</a>
+                <a href="projects/citegrid.html">Case study</a>
+            </article>
         </section>
         <section id="skills">
             <h2>Skills</h2>
@@ -171,6 +178,26 @@ VALID_CREWCAST_HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
+VALID_CITEGRID_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>CiteGrid Case Study</title>
+    <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/citegrid.html">
+    <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/citegrid.html">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <main id="main-content">
+        <h1>CiteGrid Case Study</h1>
+        <p>Simulated example data.</p>
+        <a href="../index.html">Back</a>
+        <a href="https://lordtom.pythonanywhere.com/">Live demo</a>
+        <a href="https://github.com/Lordt0m/citegrid">Source code</a>
+    </main>
+</body>
+</html>"""
+
 VALID_404_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><title>404 Not Found</title><link rel="stylesheet" href="assets/css/site.css"></head>
@@ -211,6 +238,7 @@ class TestVerifySite(unittest.TestCase):
         (proj_dir / "shelfsum.html").write_text(VALID_SHELFSUM_HTML, encoding="utf-8")
         (proj_dir / "credence.html").write_text(VALID_CREDENCE_HTML, encoding="utf-8")
         (proj_dir / "crewcast-lagos.html").write_text(VALID_CREWCAST_HTML, encoding="utf-8")
+        (proj_dir / "citegrid.html").write_text(VALID_CITEGRID_HTML, encoding="utf-8")
 
         # Create 404 page
         (self.root / "404.html").write_text(VALID_404_HTML, encoding="utf-8")
@@ -434,11 +462,16 @@ class TestVerifySite(unittest.TestCase):
     def test_exact_project_and_skill_counts(self):
         self.create_index(VALID_INDEX_HTML.replace(' class="project-card"', '', 1))
         errors = verify(self.root)
-        self.assertTrue(any("exactly 3 project cards" in e for e in errors))
+        self.assertTrue(any("exactly 4 project cards" in e for e in errors))
 
         self.create_index(VALID_INDEX_HTML.replace(' class="skill-card"', '', 1))
         errors = verify(self.root)
         self.assertTrue(any("exactly 5 skill groups" in e for e in errors))
+
+    def test_citegrid_requires_visible_simulation_label(self):
+        self.create_index(VALID_INDEX_HTML.replace("Simulated example data.", "Example data."))
+        errors = verify(self.root)
+        self.assertTrue(any("CiteGrid project and simulated-data label" in e for e in errors))
 
     def test_inline_styles_are_rejected(self):
         self.create_index(VALID_INDEX_HTML.replace('<section id="about">', '<section id="about" style="padding: 1rem">'))

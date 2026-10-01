@@ -22,6 +22,9 @@ APPROVED_EXTERNAL_URLS = {
     "https://crewcast-lagos.onrender.com/",
     "https://crewcast-lagos.onrender.com/operations/",
     "https://github.com/Lordt0m/crewcast-lagos",
+    "https://lordtom.pythonanywhere.com/",
+    "https://lordtom.pythonanywhere.com/comparisons/example/",
+    "https://github.com/Lordt0m/citegrid",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118",
     "mailto:ayotomiwa529@gmail.com",
@@ -31,6 +34,7 @@ REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
     "https://crewcast-lagos.onrender.com/operations/",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118",
+    "https://lordtom.pythonanywhere.com/comparisons/example/",
 }
 
 CANONICAL_URLS = {
@@ -38,6 +42,7 @@ CANONICAL_URLS = {
     "projects/shelfsum.html": "https://ayotomiwa.pages.dev/projects/shelfsum.html",
     "projects/credence.html": "https://ayotomiwa.pages.dev/projects/credence.html",
     "projects/crewcast-lagos.html": "https://ayotomiwa.pages.dev/projects/crewcast-lagos.html",
+    "projects/citegrid.html": "https://ayotomiwa.pages.dev/projects/citegrid.html",
 }
 
 FORBIDDEN_TEXT_PATTERNS = [
@@ -394,6 +399,7 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
         repo_root / "projects" / "shelfsum.html",
         repo_root / "projects" / "credence.html",
         repo_root / "projects" / "crewcast-lagos.html",
+        repo_root / "projects" / "citegrid.html",
     }
     for required_file in sorted(required_html_files):
         if not required_file.is_file():
@@ -425,9 +431,9 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
             f"index.html: Required section IDs missing: {sorted(list(missing_ids))}"
         )
 
-    if index_parser.class_counts["project-card"] != 3:
+    if index_parser.class_counts["project-card"] != 4:
         errors.append(
-            f"index.html: Expected exactly 3 project cards, found {index_parser.class_counts['project-card']}"
+            f"index.html: Expected exactly 4 project cards, found {index_parser.class_counts['project-card']}"
         )
 
     if index_parser.class_counts["skill-card"] != 5:
@@ -500,12 +506,24 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     has_crewcast_cs = any(
         "projects/crewcast-lagos.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
     )
+    has_citegrid_cs = any(
+        "projects/citegrid.html" in (href or "") for _, href, _, _, _, _ in index_parser.links
+    )
     if not has_shelfsum_cs:
         errors.append("index.html: Missing link to ShelfSum case study (projects/shelfsum.html)")
     if not has_credence_cs:
         errors.append("index.html: Missing link to Credence case study (projects/credence.html)")
     if not has_crewcast_cs:
         errors.append("index.html: Missing link to CrewCast case study (projects/crewcast-lagos.html)")
+    if not has_citegrid_cs:
+        errors.append("index.html: Missing link to CiteGrid case study (projects/citegrid.html)")
+    citegrid_block = re.search(
+        r'<article\b[^>]*\bid="citegrid"[^>]*>.*?</article>',
+        index_content,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not citegrid_block or "simulated" not in citegrid_block.group(0).lower():
+        errors.append("index.html: CiteGrid project and simulated-data label are required")
 
     # 2. Verify project-specific evidence
     shelfsum_page = repo_root / "projects" / "shelfsum.html"
