@@ -21,6 +21,9 @@ APPROVED_EXTERNAL_URLS = {
     "https://github.com/Lordt0m/credence",
     "https://crewcast-lagos.onrender.com/",
     "https://crewcast-lagos.onrender.com/operations/",
+    "https://crewcast-lagos.onrender.com/demo/replay/",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667",
     "https://github.com/Lordt0m/crewcast-lagos",
     "https://lordtom.pythonanywhere.com/",
     "https://lordtom.pythonanywhere.com/comparisons/example/",
@@ -31,6 +34,9 @@ APPROVED_EXTERNAL_URLS = {
 }
 
 REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
+    "https://crewcast-lagos.onrender.com/demo/replay/",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667",
     "https://crewcast-lagos.onrender.com/operations/",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118",
