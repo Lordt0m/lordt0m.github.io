@@ -47,7 +47,7 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
             <article id="shelfsum" class="project-card">
                 <h3>ShelfSum</h3>
                 <p>Explainable inventory and business activity for small shops.</p>
-                <p>271 automated tests.</p>
+                <p>288 automated tests.</p>
                 <p>Owner: demo-owner@shelfsum.test / ShelfSumDemoOwner2026!</p>
                 <p>Staff: demo-staff@shelfsum.test / ShelfSumDemoStaff2026!</p>
                 <p>Python · Django · PostgreSQL · HTML · CSS · GitHub Actions · Render · Neon</p>
@@ -123,7 +123,7 @@ VALID_SHELFSUM_HTML = """<!DOCTYPE html>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <main id="main-content">
         <h1>ShelfSum Case Study</h1>
-        <p>271 automated tests.</p>
+        <p>288 automated tests.</p>
         <p>Owner: demo-owner@shelfsum.test / ShelfSumDemoOwner2026!</p>
         <p>Staff: demo-staff@shelfsum.test / ShelfSumDemoStaff2026!</p>
         <a href="../index.html">Back</a>
@@ -443,7 +443,7 @@ class TestVerifySite(unittest.TestCase):
 
     def test_stale_or_unsupported_public_claims(self):
         replacements = {
-            "271 automated tests.": "268 automated tests.",
+            "288 automated tests.": "268 automated tests.",
             "Explainable inventory": "Production-ready inventory",
             "demo-owner@shelfsum.test": "demo_owner",
             "demo-staff@shelfsum.test": "demo_staff",
@@ -467,6 +467,11 @@ class TestVerifySite(unittest.TestCase):
         self.create_index(VALID_INDEX_HTML.replace(' class="skill-card"', '', 1))
         errors = verify(self.root)
         self.assertTrue(any("exactly 5 skill groups" in e for e in errors))
+
+    def test_previous_shelfsum_test_total_is_rejected(self):
+        self.create_index(VALID_INDEX_HTML.replace("288 automated tests.", "271 automated tests."))
+        errors = verify(self.root)
+        self.assertTrue(any("stale ShelfSum test total" in e for e in errors))
 
     def test_citegrid_requires_visible_simulation_label(self):
         self.create_index(VALID_INDEX_HTML.replace("Simulated example data.", "Example data."))

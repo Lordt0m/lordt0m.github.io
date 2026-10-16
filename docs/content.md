@@ -64,7 +64,8 @@ Small retail teams need a dependable answer to two connected questions: what is 
 
 - Python 3.13 and Django 5.2 LTS.
 - PostgreSQL release verification and continuous integration on GitHub Actions.
-- 271 local automated tests at the accepted release baseline, with the three PostgreSQL-only concurrency tests executed without skips in hosted PostgreSQL CI.
+- 288 automated tests passed with zero skips against PostgreSQL for the 16 October 2026 release, including all three concurrency tests. Verified CI: https://github.com/Lordt0m/shelfsum/actions/runs/38831631681 at production ref e4f4acd415c294a29e4dcf30ecf6fc56a16137b2.
+- Public landing motion progressively enhances server-rendered content: a coordinated hero entrance and fictional Purchase/Sale sequence retain movement rows. Keyboard and reduced-motion replay settle immediately; the page remains useful without JavaScript.
 - Deployed on Render with Neon PostgreSQL, WhiteNoise static handling, HTTPS-aware settings, and a health endpoint.
 - Explicit domain services for transactional stock changes instead of hidden model signals.
 - Public architecture decisions, invariant ownership, tickets, and release evidence in the repository.
@@ -90,10 +91,13 @@ Python · Django · PostgreSQL · HTML · CSS · GitHub Actions · Render · Neo
 
 **Screenshot state — verified**
 
-Verified screenshots copied from the ShelfSum repository's `docs/screenshots/` directory:
-- `desktop-dashboard.png`: Owner dashboard metrics and activity summary
-- `desktop-movements.png`: Immutable stock movement audit ledger
-- `mobile-dashboard.png`: Responsive mobile dashboard view
+Captured and visually inspected from the live 16 October release (production ref e4f4acd415c294a29e4dcf30ecf6fc56a16137b2), using only the fictional read-only Demo Business:
+- `desktop-landing-20261016.jpg`: public hero and clearly labelled fictional product preview.
+- `desktop-dashboard-20261016.jpg`: current Owner dashboard and stock priorities.
+- `desktop-movements-20261016.jpg`: August 2026 movement report with original and reversal records.
+- `mobile-dashboard-20261016.jpg`: current dashboard at a 390-by-844 CSS-pixel viewport.
+
+Desktop captures used a 1440-by-1000 CSS-pixel viewport; stored images are 1425 by 990 pixels. The phone image is 390 by 844 pixels. Static images do not reproduce animation; the case study links to the live page to inspect motion. Ticket 08 records the review and portfolio verification.
 
 ## Supporting Project: Credence
 
