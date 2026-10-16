@@ -37,7 +37,7 @@ The homepage includes the verified ShelfSum Featured Project, CrewCast Lagos, Ci
 
 Key documents:
 - `index.html`: concise recruiter overview, hero, project proof blocks, 5 skills groups, About, CV download, and contact actions.
-- `projects/shelfsum.html`: dedicated case study detailing problem, user roles, transactional stock architecture, immutable ledger, 271 tests, and Render/Neon deployment.
+- `projects/shelfsum.html`: dedicated case study detailing problem, user roles, transactional stock architecture, immutable ledger, current interface captures, progressive landing motion, 288 PostgreSQL tests, and Render/Neon deployment.
 - `projects/credence.html`: dedicated case study detailing cashbook validation pipeline, 7-column CSV contract, deterministic artifacts, exact decimal math, and 35 tests.
 - `projects/crewcast-lagos.html`: dedicated case study detailing forecast freshness, bounded provider traffic, scheduled updates, and the read-only demo boundary.
 - `projects/citegrid.html`: dedicated case study detailing complete snapshot publication, revision history, pinned citations, and the simulated demo boundary.

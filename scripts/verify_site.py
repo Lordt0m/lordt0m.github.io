@@ -55,7 +55,7 @@ FORBIDDEN_PUBLIC_FACT_PATTERNS = [
     (re.compile(r"\bproduction-ready\b", re.IGNORECASE), "unsupported 'production-ready' claim"),
     (re.compile(r"\bdemo_owner\b", re.IGNORECASE), "stale ShelfSum demo username 'demo_owner'"),
     (re.compile(r"\bdemo_staff\b", re.IGNORECASE), "stale ShelfSum demo username 'demo_staff'"),
-    (re.compile(r"\b268\s+automated\s+tests?\b", re.IGNORECASE), "stale ShelfSum test total"),
+    (re.compile(r"\b(?:268|271)\s+automated\s+tests?\b", re.IGNORECASE), "stale ShelfSum test total"),
     (re.compile(r"\batomic\s+staged", re.IGNORECASE), "unsupported atomic publication claim"),
     (re.compile(r"09151855301"), "phone number withheld from the website"),
     (re.compile(r"lordt0m\.github\.io", re.IGNORECASE), "stale GitHub Pages production URL"),
@@ -537,11 +537,11 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
                 errors.append(
                     f"projects/shelfsum.html: Missing exact ShelfSum demo credential '{credential}'"
                 )
-        if "271 automated tests" not in index_content.lower():
-            errors.append("index.html: Missing verified ShelfSum total of 271 automated tests")
-        if "271 automated tests" not in ss_visible_text.lower():
+        if "288 automated tests" not in index_content.lower():
+            errors.append("index.html: Missing verified ShelfSum total of 288 automated tests")
+        if "288 automated tests" not in ss_visible_text.lower():
             errors.append(
-                "projects/shelfsum.html: Missing verified ShelfSum total of 271 automated tests"
+                "projects/shelfsum.html: Missing verified ShelfSum total of 288 automated tests"
             )
 
     credence_page = repo_root / "projects" / "credence.html"

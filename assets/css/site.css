@@ -1004,6 +1004,18 @@ code {
   margin-top: var(--space-4);
 }
 
+#interface-evidence .gallery-item {
+  margin-inline: 0;
+}
+
+#interface-evidence .gallery-item > a {
+  display: block;
+}
+
+#interface-evidence .gallery-item a:focus-visible {
+  outline-offset: -4px;
+}
+
 .case-study-back {
   margin-top: var(--space-12);
   padding-top: var(--space-6);

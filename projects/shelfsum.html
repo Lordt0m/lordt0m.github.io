@@ -17,7 +17,7 @@
   <meta name="twitter:description" content="Explainable inventory and business activity system built with Django, PostgreSQL, and an immutable movement ledger.">
 
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/site.css?v=20261016-shelfsum-2">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -45,7 +45,7 @@
         <h1 class="case-study-title">ShelfSum</h1>
         <p class="case-study-descriptor">Explainable inventory and business activity for small shops.</p>
         <p class="section-lead">
-          A server-rendered Django web application engineered to give small retail business owners dependable, explainable answers to inventory and cash flow questions.
+          A server-rendered Django web application engineered to give small retail business owners dependable, explainable answers to stock and business activity questions.
         </p>
 
         <div class="case-study-meta">
@@ -100,24 +100,31 @@
         </section>
 
         <!-- Section: Visual Evidence -->
-        <section class="case-study-section">
+        <section class="case-study-section" id="interface-evidence">
           <h2>Interface evidence</h2>
           <p>
-            The verified screenshots below show the Owner dashboard, the Stock Movement report, and the responsive mobile dashboard using fictional Demo Business data.
+            Captured from the live release on 16 October 2026, these screenshots show the reworked landing page, Owner dashboard, Stock Movement report and phone dashboard. All demonstration records are fictional and read-only.
+          </p>
+          <figure class="gallery-item">
+            <a href="../assets/images/projects/shelfsum/desktop-landing-20261016.jpg" aria-label="Open full-size landing page screenshot"><img src="../assets/images/projects/shelfsum/desktop-landing-20261016.jpg" alt="ShelfSum's green landing page with the headline A good day starts with a clear shelf and a clearly labelled fictional stock preview" width="1425" height="990" loading="lazy"></a>
+            <figcaption>Public landing page. Static capture of the live interface; the product preview is fictional.</figcaption>
+          </figure>
+          <p>
+            The landing page uses progressive TypeScript and CSS motion to explain stock arriving with a Purchase and leaving with a Sale while movement records stay visible. Replay is interruptible; keyboard and reduced-motion actions settle immediately. Content and navigation remain usable without JavaScript. <a href="https://shelfsum.onrender.com/" rel="noreferrer">View the animated landing page</a>.
           </p>
           <div class="image-gallery">
             <figure class="gallery-item">
-              <img src="../assets/images/projects/shelfsum/desktop-dashboard.png" alt="ShelfSum owner dashboard showing operational totals and quick actions" width="600" height="360">
-              <figcaption>Owner dashboard with operational estimates and recent activity.</figcaption>
+              <a href="../assets/images/projects/shelfsum/desktop-dashboard-20261016.jpg" aria-label="Open full-size Owner dashboard screenshot"><img src="../assets/images/projects/shelfsum/desktop-dashboard-20261016.jpg" alt="Reworked ShelfSum Owner dashboard showing inventory status, low stock and recent movements in the fictional Demo Business" width="1425" height="990" loading="lazy"></a>
+              <figcaption>Current Owner dashboard with stock priorities and recent movements.</figcaption>
             </figure>
             <figure class="gallery-item">
-              <img src="../assets/images/projects/shelfsum/desktop-movements.png" alt="ShelfSum immutable stock movement ledger showing audit history" width="600" height="360">
-              <figcaption>Stock Movement report with signed changes and origin records.</figcaption>
+              <a href="../assets/images/projects/shelfsum/desktop-movements-20261016.jpg" aria-label="Open full-size movement history screenshot"><img src="../assets/images/projects/shelfsum/desktop-movements-20261016.jpg" alt="ShelfSum's August 2026 fictional movement report showing signed changes, a reversal and its original movement" width="1425" height="990" loading="lazy"></a>
+              <figcaption>August Demo Business movements, including a reversal linked to its original record.</figcaption>
             </figure>
           </div>
           <figure class="gallery-item mobile-gallery-item">
-            <img src="../assets/images/projects/shelfsum/mobile-dashboard.png" alt="ShelfSum responsive mobile dashboard layout" width="320" height="540">
-            <figcaption>Responsive dashboard at a mobile viewport.</figcaption>
+            <a href="../assets/images/projects/shelfsum/mobile-dashboard-20261016.jpg" aria-label="Open full-size phone dashboard screenshot"><img src="../assets/images/projects/shelfsum/mobile-dashboard-20261016.jpg" alt="ShelfSum phone dashboard with a read-only fictional-data banner and stacked active, low-stock and out-of-stock counts" width="390" height="844" loading="lazy"></a>
+            <figcaption>Current dashboard at a 390-pixel phone viewport.</figcaption>
           </figure>
         </section>
 
@@ -154,7 +161,7 @@
             The accepted release baseline records the following verification evidence:
           </p>
           <ul>
-            <li><strong>271 automated tests:</strong> The local SQLite suite passes with three documented PostgreSQL-only concurrency tests skipped.</li>
+            <li><strong>288 automated tests:</strong> The complete PostgreSQL release suite passed with zero skips on 16 October 2026, including all three concurrency tests.</li>
             <li><strong>PostgreSQL release suite:</strong> GitHub Actions provisions PostgreSQL 17, converts any skip into a failure, and runs the complete suite.</li>
             <li><strong>Covered behaviours:</strong> Permissions, cross-Business isolation, immutable history, stock reconciliation, replay protection, rollback, report/export parity, Demo fingerprints, and PostgreSQL concurrency.</li>
           </ul>
