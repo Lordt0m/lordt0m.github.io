@@ -15,13 +15,14 @@ from urllib.parse import urlparse
 
 # Approved external destinations from docs/content.md
 APPROVED_EXTERNAL_URLS = {
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5",
     "https://github.com/Lordt0m",
     "https://shelfsum.onrender.com/",
     "https://github.com/Lordt0m/shelfsum",
     "https://github.com/Lordt0m/credence",
     "https://crewcast-lagos.onrender.com/",
     "https://crewcast-lagos.onrender.com/operations/",
-    "https://crewcast-lagos.onrender.com/demo/replay/",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370",
     "https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667",
     "https://github.com/Lordt0m/crewcast-lagos",
@@ -34,7 +35,8 @@ APPROVED_EXTERNAL_URLS = {
 }
 
 REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
-    "https://crewcast-lagos.onrender.com/demo/replay/",
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370",
     "https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667",
     "https://crewcast-lagos.onrender.com/operations/",

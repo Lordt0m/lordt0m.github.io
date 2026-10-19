@@ -176,16 +176,17 @@ The 16 October 2026 release adds a weather-bulletin interface, explicit job wind
 - PostgreSQL stores forecast snapshots, sync attempts, budget reservations, and recommendations; web page loads do not call the provider.
 - A Lagos-calendar daily call budget, retry policy, and provider circuit breaker bound external requests.
 - GitHub Actions runs the forecast refresh on a schedule; automatic `schedule` run [36246262643](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36246262643) succeeded on 26 September 2026. The public Operations page showed that run's per-site attempts against the shared Neon database.
-- A read-only failure replay demonstrates timeout, stale data, expiry, and circuit-breaker behaviour without mutating shared records.
+- Operations exposes actual retrieval attempts, retry outcomes and provider circuit state. The failure replay has been retired; old app bookmarks redirect to the planning board.
 - CrewCast CI passed after the portfolio-readiness fixes at [36247508159](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36247508159), and the final public error-copy fix passed at [36248342118](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118).
-- Current release [e7bcb50](https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667) deployed successfully on Render. [CI 38928513370](https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370) passed 94 application tests with PostgreSQL/Redis and six frontend tests for replay, request cancellation and recovery.
+- The interface release [e7bcb50](https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667) passed [CI 38928513370](https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370): 94 application tests with PostgreSQL/Redis and six frontend tests for comparison highlights, request cancellation and recovery.
+- The 19 October cleanup [563aaa2](https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5) is live on Render. [CI 39207360080](https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080) passed 102 application tests with PostgreSQL/Redis and six frontend tests, including nine legacy bookmark cases.
 - Browser checks covered desktop/phone layouts, keyboard, reduced motion, JavaScript-disabled public date navigation, browser Back and offline retry. Slower CPU/network emulation was checked; physical lowest-end devices and production Core Web Vitals were not measured.
-- The comparison and failure replay use optional, interruptible highlights; keyboard and reduced-motion activation settle immediately. The replay is scripted illustration, not retrieved weather or a new evaluator run.
+- The example comparison uses optional, interruptible highlights; keyboard and reduced-motion activation settle immediately. Its concise public label is “Example comparison.”
 
-**Interface evidence — verified 16 October 2026**
+**Interface evidence — verified 19 October 2026**
 
-- Actual live release screenshots: `assets/images/projects/crewcast/desktop-entry-20261016.jpg`, `desktop-operations-20261016.jpg`, and `desktop-replay-20261016.jpg`; 1440 × 1000 capture viewport, 1425 × 990 image dimensions. These replace the previous illustrative HTML preview.
-- Entry screenshot includes an explicitly synthetic weather comparison. Operations shows actual stored retrieval records with fresh and expired sites. Replay screenshot shows synthetic job/weather values. The current live week was empty when captured; do not imply these screenshots show customer jobs or a fully fresh fleet.
+- Actual published entry and Operations captures: `assets/images/projects/crewcast/desktop-entry-20261019.jpg` and `desktop-operations-20261019.jpg`. The retired replay screenshot is removed from public pages.
+- The entry explains a work-window comparison. Operations shows stored retrieval records with their individual ages. Do not imply customer jobs or a fully fresh fleet.
 
 **Trade-off and limitations — verified**
 
@@ -199,8 +200,7 @@ Python · Django · PostgreSQL · TypeScript · CSS · Neon · GitHub Actions ·
 
 - `Live demo`: `https://crewcast-lagos.onrender.com/`
 - `Operations`: `https://crewcast-lagos.onrender.com/operations/`
-- `Failure replay`: `https://crewcast-lagos.onrender.com/demo/replay/`
-- `Release CI`: `https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370`
+- `Release CI`: `https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080`
 - `Source code`: `https://github.com/Lordt0m/crewcast-lagos`
 - `Case study`: `projects/crewcast-lagos.html`
 
