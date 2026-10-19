@@ -42,29 +42,22 @@
           <a class="btn btn-primary" href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Live demo</a>
           <a class="btn btn-secondary" href="https://github.com/Lordt0m/crewcast-lagos" rel="noreferrer">Source code</a>
           <a class="btn btn-secondary" href="https://crewcast-lagos.onrender.com/operations/" rel="noreferrer">Live operations</a>
-          <a class="btn btn-secondary" href="https://crewcast-lagos.onrender.com/demo/replay/" rel="noreferrer">Explore failure replay</a>
         </div>
         <div class="demo-notice case-study-note"><strong>Demo boundary:</strong> Example sites and jobs are synthetic. Forecast retrievals are live, but CrewCast is not an occupational-safety clearance system.</div>
       </section>
       <article class="case-study-content">
         <section class="case-study-section" id="interface-evidence">
           <h2>The published interface</h2>
-          <p>Captured from release e7bcb50 on 16 October 2026. These are actual interface screenshots. The introduction and replay contain clearly labelled synthetic jobs and weather; Operations displays actual stored retrieval records. The live planning week was empty at capture time.</p>
+          <p>The published CrewCast interface, captured on 19 October 2026. Start with a work-window comparison, move into the planning board, then inspect forecast health in Operations.</p>
           <figure class="gallery-item">
-            <a href="../assets/images/projects/crewcast/desktop-entry-20261016.jpg" aria-label="Open full-size CrewCast entry screenshot"><img src="../assets/images/projects/crewcast/desktop-entry-20261016.jpg" alt="CrewCast's weather-bulletin entry page with a yellow example comparing a work window with hourly rain probabilities" width="1425" height="990" loading="lazy"></a>
-            <figcaption>The window, conditions and reason are explained together. This comparison is synthetic, not a retrieved forecast.</figcaption>
+            <a href="../assets/images/projects/crewcast/desktop-entry-20261019.jpg" aria-label="Open full-size CrewCast entry screenshot"><img src="../assets/images/projects/crewcast/desktop-entry-20261019.jpg" alt="CrewCast's weather-bulletin entry page with a yellow example comparing a work window with hourly rain probabilities" width="1425" height="990" loading="lazy"></a>
+            <figcaption>The work window, weather conditions and reason to review are explained together.</figcaption>
           </figure>
           <p>The optional comparison replay highlights those steps in sequence. Repeated activation settles it; keyboard and reduced-motion activation are immediate. <a href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Try the comparison and planning board</a>.</p>
-          <div class="image-gallery">
             <figure class="gallery-item">
-              <a href="../assets/images/projects/crewcast/desktop-operations-20261016.jpg" aria-label="Open full-size CrewCast Operations screenshot"><img src="../assets/images/projects/crewcast/desktop-operations-20261016.jpg" alt="CrewCast Operations showing its daily request budget and site retrieval table with both fresh and expired forecasts" width="1425" height="990" loading="lazy"></a>
+              <a href="../assets/images/projects/crewcast/desktop-operations-20261019.jpg" aria-label="Open full-size CrewCast Operations screenshot"><img src="../assets/images/projects/crewcast/desktop-operations-20261019.jpg" alt="CrewCast Operations showing the request budget, scheduled refresh status and individual site forecast ages" width="1425" height="990" loading="lazy"></a>
               <figcaption>Actual stored retrieval history. A successful update at one site does not make every site's data fresh.</figcaption>
             </figure>
-            <figure class="gallery-item">
-              <a href="../assets/images/projects/crewcast/desktop-replay-20261016.jpg" aria-label="Open full-size CrewCast replay screenshot"><img src="../assets/images/projects/crewcast/desktop-replay-20261016.jpg" alt="CrewCast's scripted caution replay linking a synthetic job window to rain and wind threshold crossings and an hourly evidence table" width="1425" height="990" loading="lazy"></a>
-              <figcaption>Scripted caution replay with synthetic weather. It illustrates display rules rather than recording a live provider event or running the evaluator again.</figcaption>
-            </figure>
-          </div>
         </section>
         <section class="case-study-section">
           <h2>The problem</h2>
@@ -77,7 +70,6 @@
             <li>Shows reasons for caution or unsuitability and the age of the forecast used.</li>
             <li>Suppresses favourable recommendations once a forecast becomes stale; after expiry, it shows no current recommendation.</li>
             <li>Provides an Operations page with per-site sync history, request budget, circuit state, and retry outcomes.</li>
-            <li>Offers a read-only failure replay to demonstrate timeout, stale-data, expiry, and circuit-breaker scenarios without changing shared database records.</li>
             <li>Updates the selected day's server-rendered board without jumping to the page top; failed requests keep current jobs visible and offer retry or full-page navigation.</li>
           </ul>
         </section>
@@ -103,7 +95,7 @@
         </section>
         <section class="case-study-section">
           <h2>Verification and limitations</h2>
-          <p>The released <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370" rel="noreferrer">16 October 2026 CI run</a> passed 94 application tests with PostgreSQL and Redis, plus six frontend tests for replay cancellation, out-of-order date responses and failure recovery. <a href="https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667" rel="noreferrer">Inspect the released changes</a>.</p>
+          <p>The <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080" rel="noreferrer">19 October 2026 CI run</a> passed 102 application tests with PostgreSQL and Redis, plus six frontend tests for comparison highlights, out-of-order date responses and failure recovery. <a href="https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5" rel="noreferrer">Inspect the released changes</a>.</p>
           <p>Browser checks covered desktop and phone layouts, keyboard, reduced motion, JavaScript-disabled public navigation, browser Back and offline retry. Slower CPU/network emulation was checked; physical lowest-end phones and production Core Web Vitals were not measured.</p>
           <p>GitHub schedules can be delayed or skipped. This is a non-commercial educational prototype with synthetic jobs, not a live customer dispatch system. Redis is optional and is not a hosted dependency of the public demo; when absent, reads use PostgreSQL directly.</p>
         </section>
