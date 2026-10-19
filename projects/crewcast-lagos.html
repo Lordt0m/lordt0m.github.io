@@ -7,12 +7,12 @@
   <meta name="description" content="CrewCast Lagos case study: weather-aware outdoor job planning with Django, forecast freshness, a bounded provider budget, and scheduled GitHub Actions updates.">
   <link rel="canonical" href="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
   <meta property="og:title" content="CrewCast Lagos Case Study — Ayotomiwa Ojo">
-  <meta property="og:description" content="Explainable weather-aware planning with real forecast retrievals and synthetic example jobs.">
+  <meta property="og:description" content="Weather-aware job planning with forecast provenance, clear recommendations and retrieval health.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://ayotomiwa.pages.dev/projects/crewcast-lagos.html">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="CrewCast Lagos Case Study — Ayotomiwa Ojo">
-  <meta name="twitter:description" content="Explainable weather-aware planning with real forecast retrievals and synthetic example jobs.">
+  <meta name="twitter:description" content="Weather-aware job planning with forecast provenance, clear recommendations and retrieval health.">
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
@@ -39,23 +39,23 @@
         <p class="case-study-descriptor">Weather-aware job planning for outdoor dispatchers in Lagos.</p>
         <p class="section-lead">A Django planning aid that connects job windows, forecast evidence and reasons to review. The reworked interface makes data age explicit and keeps date navigation in place, with essential content available without JavaScript.</p>
         <div class="case-study-meta">
-          <a class="btn btn-primary" href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Live demo</a>
+          <a class="btn btn-primary" href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Open CrewCast</a>
           <a class="btn btn-secondary" href="https://github.com/Lordt0m/crewcast-lagos" rel="noreferrer">Source code</a>
           <a class="btn btn-secondary" href="https://crewcast-lagos.onrender.com/operations/" rel="noreferrer">Live operations</a>
         </div>
-        <div class="demo-notice case-study-note"><strong>Demo boundary:</strong> Example sites and jobs are synthetic. Forecast retrievals are live, but CrewCast is not an occupational-safety clearance system.</div>
+        <div class="demo-notice case-study-note"><strong>Planning context:</strong> Example jobs and sites; forecasts from Open-Meteo. CrewCast provides planning signals, not occupational-safety clearance.</div>
       </section>
       <article class="case-study-content">
         <section class="case-study-section" id="interface-evidence">
           <h2>The published interface</h2>
           <p>The published CrewCast interface, captured on 19 October 2026. Start with a work-window comparison, move into the planning board, then inspect forecast health in Operations.</p>
           <figure class="gallery-item">
-            <a href="../assets/images/projects/crewcast/desktop-entry-20261019.jpg" aria-label="Open full-size CrewCast entry screenshot"><img src="../assets/images/projects/crewcast/desktop-entry-20261019.jpg" alt="CrewCast's weather-bulletin entry page with a yellow example comparing a work window with hourly rain probabilities" width="1425" height="990" loading="lazy"></a>
+            <a href="../assets/images/projects/crewcast/desktop-entry-product-20261019.jpg" aria-label="Open full-size CrewCast entry screenshot"><img src="../assets/images/projects/crewcast/desktop-entry-product-20261019.jpg" alt="CrewCast's weather-bulletin entry page with a yellow example comparing a work window with hourly rain probabilities" width="1440" height="1000" loading="lazy"></a>
             <figcaption>The work window, weather conditions and reason to review are explained together.</figcaption>
           </figure>
           <p>The optional comparison replay highlights those steps in sequence. Repeated activation settles it; keyboard and reduced-motion activation are immediate. <a href="https://crewcast-lagos.onrender.com/" rel="noreferrer">Try the comparison and planning board</a>.</p>
             <figure class="gallery-item">
-              <a href="../assets/images/projects/crewcast/desktop-operations-20261019.jpg" aria-label="Open full-size CrewCast Operations screenshot"><img src="../assets/images/projects/crewcast/desktop-operations-20261019.jpg" alt="CrewCast Operations showing the request budget, scheduled refresh status and individual site forecast ages" width="1425" height="990" loading="lazy"></a>
+              <a href="../assets/images/projects/crewcast/desktop-operations-product-20261019.jpg" aria-label="Open full-size CrewCast Operations screenshot"><img src="../assets/images/projects/crewcast/desktop-operations-product-20261019.jpg" alt="CrewCast Operations showing the request budget, scheduled refresh status and individual site forecast ages" width="1440" height="1000" loading="lazy"></a>
               <figcaption>Actual stored retrieval history. A successful update at one site does not make every site's data fresh.</figcaption>
             </figure>
         </section>
@@ -85,7 +85,7 @@
           </div>
           <div class="decision-box">
             <h3>Bound and explain provider traffic</h3>
-            <p>A PostgreSQL-backed Lagos-calendar budget reserves at most 300 calls per day. The sync path records each attempt, deduplicates identical forecast content by hash, and uses retry and circuit-breaker rules for transient provider failures. The public demo shows outcomes without exposing internal provider error strings.</p>
+            <p>A PostgreSQL-backed Lagos-calendar budget reserves at most 300 calls per day. The sync path records each attempt, deduplicates identical forecast content by hash, and uses retry and circuit-breaker rules for transient provider failures. Operations shows outcomes without exposing internal provider error strings.</p>
           </div>
           <div class="decision-box">
             <h3>Enhance the working page, keep the backend authoritative</h3>
@@ -95,9 +95,9 @@
         </section>
         <section class="case-study-section">
           <h2>Verification and limitations</h2>
-          <p>The <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080" rel="noreferrer">19 October 2026 CI run</a> passed 102 application tests with PostgreSQL and Redis, plus six frontend tests for comparison highlights, out-of-order date responses and failure recovery. <a href="https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5" rel="noreferrer">Inspect the released changes</a>.</p>
+          <p>The <a href="https://github.com/Lordt0m/crewcast-lagos/actions/runs/39209381596" rel="noreferrer">19 October 2026 CI run</a> passed 102 application tests with PostgreSQL and Redis, plus six frontend tests for comparison highlights, out-of-order date responses and failure recovery. <a href="https://github.com/Lordt0m/crewcast-lagos/commit/3b73284961936fa0d5e3b1c2c1fe68cb3b081498" rel="noreferrer">Inspect the released changes</a>.</p>
           <p>Browser checks covered desktop and phone layouts, keyboard, reduced motion, JavaScript-disabled public navigation, browser Back and offline retry. Slower CPU/network emulation was checked; physical lowest-end phones and production Core Web Vitals were not measured.</p>
-          <p>GitHub schedules can be delayed or skipped. This is a non-commercial educational prototype with synthetic jobs, not a live customer dispatch system. Redis is optional and is not a hosted dependency of the public demo; when absent, reads use PostgreSQL directly.</p>
+          <p>GitHub schedules can be delayed or skipped, so forecast age remains visible. Public access is read-only. Redis is optional; when absent, reads use PostgreSQL directly.</p>
         </section>
         <div class="case-study-back"><a class="btn btn-secondary" href="../index.html#projects">&larr; Back to all projects</a></div>
       </article>

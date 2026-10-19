@@ -166,7 +166,7 @@ CrewCast Lagos — weather-aware job planning for outdoor dispatchers in Lagos.
 
 **Project summary — verified**
 
-CrewCast is a Django planning aid that compares scheduled outdoor jobs with retrieved Open-Meteo forecasts. The public demo uses synthetic sites and jobs, while forecast retrievals are real. It shows when a forecast was last obtained, explains threshold-based recommendations, and suppresses favourable recommendations when the data becomes stale.
+CrewCast is a Django planning aid that compares scheduled outdoor jobs with retrieved Open-Meteo forecasts. Public access is read-only with example sites and jobs; forecast retrievals are real. It shows when a forecast was last obtained, explains threshold-based recommendations, and suppresses favourable recommendations when the data becomes stale. Public wording uses the product name and “Open CrewCast” without demo/prototype framing.
 
 The 16 October 2026 release adds a weather-bulletin interface, explicit job windows and retrieval provenance, responsive operational records, and progressive TypeScript date navigation that preserves the board position. All evaluation and authorization remain in Django. Core content, links and forms work without JavaScript.
 
@@ -180,17 +180,18 @@ The 16 October 2026 release adds a weather-bulletin interface, explicit job wind
 - CrewCast CI passed after the portfolio-readiness fixes at [36247508159](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36247508159), and the final public error-copy fix passed at [36248342118](https://github.com/Lordt0m/crewcast-lagos/actions/runs/36248342118).
 - The interface release [e7bcb50](https://github.com/Lordt0m/crewcast-lagos/commit/e7bcb5076d0c6d131952efbd397d7b449922d667) passed [CI 38928513370](https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370): 94 application tests with PostgreSQL/Redis and six frontend tests for comparison highlights, request cancellation and recovery.
 - The 19 October cleanup [563aaa2](https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5) is live on Render. [CI 39207360080](https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080) passed 102 application tests with PostgreSQL/Redis and six frontend tests, including nine legacy bookmark cases.
+- Product wording release [3b73284](https://github.com/Lordt0m/crewcast-lagos/commit/3b73284961936fa0d5e3b1c2c1fe68cb3b081498) removes the public mode banner and demo/prototype framing while retaining read-only enforcement, example labels and forecast provenance. [CI 39209381596](https://github.com/Lordt0m/crewcast-lagos/actions/runs/39209381596) passed 102 PostgreSQL/Redis application tests and six frontend tests.
 - Browser checks covered desktop/phone layouts, keyboard, reduced motion, JavaScript-disabled public date navigation, browser Back and offline retry. Slower CPU/network emulation was checked; physical lowest-end devices and production Core Web Vitals were not measured.
 - The example comparison uses optional, interruptible highlights; keyboard and reduced-motion activation settle immediately. Its concise public label is “Example comparison.”
 
 **Interface evidence — verified 19 October 2026**
 
-- Actual published entry and Operations captures: `assets/images/projects/crewcast/desktop-entry-20261019.jpg` and `desktop-operations-20261019.jpg`. The retired replay screenshot is removed from public pages.
+- Actual published entry and Operations captures: `assets/images/projects/crewcast/desktop-entry-product-20261019.jpg` and `desktop-operations-product-20261019.jpg`. The retired replay screenshot is removed from public pages.
 - The entry explains a work-window comparison. Operations shows stored retrieval records with their individual ages. Do not imply customer jobs or a fully fresh fleet.
 
 **Trade-off and limitations — verified**
 
-The public site is a read-only demonstration, not a dispatch or occupational-safety clearance tool. GitHub's scheduled jobs can be delayed or skipped, and provider requests can fail. CrewCast therefore surfaces data age and failure states rather than implying forecasts are always fresh. No always-on production worker or hosted Redis is claimed.
+Public access is read-only. The site contains example jobs and provides planning signals, not occupational-safety clearance. GitHub's scheduled jobs can be delayed or skipped, and provider requests can fail. CrewCast therefore surfaces data age and failure states rather than implying forecasts are always fresh. No always-on production worker or hosted Redis is claimed.
 
 **Technology line — verified**
 
@@ -198,7 +199,7 @@ Python · Django · PostgreSQL · TypeScript · CSS · Neon · GitHub Actions ·
 
 **Inspection actions — verified**
 
-- `Live demo`: `https://crewcast-lagos.onrender.com/`
+- `Open CrewCast`: `https://crewcast-lagos.onrender.com/`
 - `Operations`: `https://crewcast-lagos.onrender.com/operations/`
 - `Release CI`: `https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080`
 - `Source code`: `https://github.com/Lordt0m/crewcast-lagos`

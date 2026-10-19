@@ -15,6 +15,8 @@ from urllib.parse import urlparse
 
 # Approved external destinations from docs/content.md
 APPROVED_EXTERNAL_URLS = {
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39209381596",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/3b73284961936fa0d5e3b1c2c1fe68cb3b081498",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080",
     "https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5",
     "https://github.com/Lordt0m",
@@ -35,6 +37,8 @@ APPROVED_EXTERNAL_URLS = {
 }
 
 REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
+    "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39209381596",
+    "https://github.com/Lordt0m/crewcast-lagos/commit/3b73284961936fa0d5e3b1c2c1fe68cb3b081498",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080",
     "https://github.com/Lordt0m/crewcast-lagos/commit/563aaa24a283d497a6fe5d825c7baba0d2985cf5",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/38928513370",
