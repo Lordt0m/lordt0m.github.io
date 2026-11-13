@@ -10,7 +10,7 @@ Ayotomiwa Ojo
 
 **Role label — verified**
 
-Python & Django Developer
+Full-stack Software Developer
 
 **Portfolio address — verified**
 
@@ -18,16 +18,24 @@ Python & Django Developer
 
 **Primary statement — verified**
 
-I build practical web applications and backend systems with Python and Django.
+I build web applications from interface to database, with clear workflows and reliable systems underneath.
 
 **Availability — verified**
 
-Self-taught developer based in Lagos, Nigeria. Open to junior developer and internship opportunities.
+Explore the live products, source code, and engineering decisions behind my work. Open to software development roles in delivery teams.
+
+**Technology direction - owner stated, not shipped-project evidence**
+
+React and TypeScript interfaces, Django REST APIs, PostgreSQL workflows, HTML and CSS. Rust, C++ and C remain future exploration interests, not shipped project evidence. Rust, C++, and C appear in About as future exploration, not as demonstrated skills.
+
+**Portfolio presentation - verified against current project entries**
+
+The homepage leads with ShelfSum, SpecShift and Nobelese. Three further projects remain available under More independent projects. Detailed engineering claims and limitations remain in project capabilities, case studies, and the evidence below. The featured and supporting labels describe presentation hierarchy, not employment or customer adoption.
 
 **Hero actions**
 
 - `View projects` — verified; link to `#projects`.
-- `Download CV` — verified; link to `assets/documents/ayotomiwa-ojo-cv.pdf`.
+- `Backend CV (PDF)` - verified; link to `assets/documents/ayotomiwa-ojo-cv.pdf`. The current download is a Python/Django-specific CV and needs a separate full-stack revision before it can be labelled as a general CV.
 - `Email me` — verified; link to `mailto:ayotomiwa529@gmail.com`.
 - `GitHub` — verified; link to `https://github.com/Lordt0m`.
 
@@ -265,20 +273,40 @@ Python · Django · SQLite demo · HTML · CSS · PythonAnywhere
 
 Lagos, Nigeria. Do not publish a street address or more precise location.
 
-## Skills — verified
+## Skills - verified
 
-Publish exactly five evidence-backed skill groups demonstrated by the portfolio projects:
+Publish five groups: Python; Django & REST APIs; SQL & PostgreSQL; React, TypeScript & Web; Git & Delivery. Python, data processing and database rules are supported by ShelfSum and Credence; Django REST and access-control work by Nobelese; React and TypeScript by SpecShift. Automated verification and delivery documentation are inspectable in the linked repositories.
 
-- **Python:** Core Python 3.13, standard library, exact decimal arithmetic, CLI parsing, object-oriented domain services. Verified in Credence (zero runtime dependencies) and ShelfSum.
-- **Django:** Django 5.2 LTS, server-rendered views, MTV architecture, custom authentication/permissions (Owner vs Staff Member), business-scoped queries, forms, CSRF protection. Verified in ShelfSum.
-- **SQL & PostgreSQL:** Relational data modelling, PostgreSQL, Neon, transactions, integrity constraints, migrations, indexing, explainable reporting queries. Verified in ShelfSum.
-- **HTML & CSS:** Semantic markup, responsive layouts, accessibility landmarks, visible focus states, zero-JS progressive enhancement. Verified in ShelfSum and Portfolio.
-- **Git & GitHub:** Version control, focused commits, GitHub Actions CI, and release documentation. Verified across ShelfSum and Credence repositories.
+## About - verified
 
-## About — verified
+I am a self-taught software developer in Lagos. I build usable interfaces, backend workflows, and the data models that connect them. My independent projects combine React and TypeScript interfaces with Django APIs and PostgreSQL workflows. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti, a background that helps me explain and document technical decisions clearly.
 
-**Prose — verified**
+I am also exploring systems programming with Rust, C++, and C as a direction for future projects. Across stacks, I care about useful products, explicit rules, and testable behaviour.
 
-I am a self-taught developer focused on backend web development with Python, Django, and SQL. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti. My background helps me communicate technical decisions clearly and document the systems I build.
+## KDN-focused selection | verified 13 November 2026
 
-I prioritize clean code, automated testing, and transactional integrity over speculative complexity, building practical software around clear operational rules.
+This is a general portfolio update supporting a specific application. No KDN employment, relationship or delivery is implied. No KDN problem claims are published on the portfolio.
+
+### SpecShift - verified independent project
+
+- React 19 and TypeScript interface with a Django REST Framework comparison service; README and web/package.json inspected on 13 November 2026.
+- The public studio loaded with an explicitly recorded, synthetic comparison. This review did not execute a fresh API comparison or rerun its project tests.
+- Supports a bounded OpenAPI 3.0.0-3.0.3 subset. Unsupported constructs create coverage gaps; graph reachability is not proof of client runtime failure.
+- Public source: https://github.com/Lordt0m/specshift ; studio: https://specshift.pages.dev/ ; portfolio case study: projects/specshift.html.
+- Homepage preview is a labelled illustrative rendering of the documented synthetic order API example, not a screenshot, benchmark or customer result.
+
+### Nobelese - verified independent project
+
+- Ojo & Associates appointment API is a fictional demonstration, not a law-firm client engagement.
+- Django REST API with token-authenticated staff roles, public slot retrieval, pending request review and guarded confirmation/decline/cancellation workflows.
+- booking/services.py and booking/permissions.py inspected on 13 November 2026. Confirmation uses an atomic transaction, locked records and database constraints.
+- Public source: https://github.com/Lordt0m/nobelese ; portfolio case study: projects/nobelese.html.
+- No public deployment endpoint was verified; publish source and case-study actions, not a live-demo button.
+
+### Homepage and skill copy
+
+- Hero: I build web applications from interface to database, with clear workflows and reliable systems underneath.
+- Support: React and TypeScript interfaces, Django APIs, and PostgreSQL workflows. Built around clear user journeys, controlled access, and records people can inspect.
+- Five groups remain: Python; Django & REST APIs; SQL & PostgreSQL; React, TypeScript & Web; Git & Delivery.
+- About describes independent web/backend projects and an English and Literary Studies background. Future systems-language exploration is labelled as future work.
+- The current PDF is a backend-specific CV. No general or tailored full-stack CV has been substituted or claimed.

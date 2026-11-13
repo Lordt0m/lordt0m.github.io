@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayotomiwa Ojo — Python &amp; Django Developer</title>
-  <meta name="description" content="Portfolio of Ayotomiwa Ojo, a self-taught Python and Django developer based in Lagos, Nigeria. Building practical web applications and backend systems.">
+  <title>Ayotomiwa Ojo | Full-stack Software Developer</title>
+  <meta name="description" content="Ayotomiwa Ojo is a full-stack software developer in Lagos, Nigeria. Explore shipped web applications, engineering decisions, live demos, and source code.">
   <link rel="canonical" href="https://ayotomiwa.pages.dev/">
 
   <!-- Open Graph / Social Sharing -->
-  <meta property="og:title" content="Ayotomiwa Ojo — Python &amp; Django Developer">
-  <meta property="og:description" content="I build practical web applications and backend systems with Python and Django.">
+  <meta property="og:title" content="Ayotomiwa Ojo | Full-stack Software Developer">
+  <meta property="og:description" content="Web applications from interface to database. Explore the work, decisions, live demos, and code.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ayotomiwa.pages.dev/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Ayotomiwa Ojo — Python &amp; Django Developer">
-  <meta name="twitter:description" content="I build practical web applications and backend systems with Python and Django.">
+  <meta name="twitter:title" content="Ayotomiwa Ojo | Full-stack Software Developer">
+  <meta name="twitter:description" content="Web applications from interface to database. Explore the work, decisions, live demos, and code.">
 
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/site.css">
@@ -40,24 +40,26 @@
 
       <!-- Hero Section -->
       <section id="hero" class="hero-section" aria-labelledby="hero-title">
+        <p class="hero-eyebrow">Independent software projects / Lagos, Nigeria</p>
         <div class="hero-title-group">
           <h1 id="hero-title">
             <span class="hero-name">Ayotomiwa Ojo</span>
-            <span class="hero-role">Python &amp; Django Developer</span>
+            <span class="hero-role">Full-stack Software Developer</span>
           </h1>
         </div>
         <p class="hero-statement">
-          I build practical web applications and backend systems with Python and Django.
+          I build web applications from interface to database, with clear workflows and reliable systems underneath.
         </p>
         <p class="hero-availability">
-          Self-taught developer based in Lagos, Nigeria. Open to junior developer and internship opportunities.
+          Explore the live products, source code, and engineering decisions behind my work. Open to software development roles in delivery teams.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#projects">View projects</a>
-          <a class="btn btn-secondary" href="assets/documents/ayotomiwa-ojo-cv.pdf" download="ayotomiwa-ojo-cv.pdf">Download CV</a>
+          <a class="btn btn-secondary" href="assets/documents/ayotomiwa-ojo-cv.pdf" download="ayotomiwa-ojo-cv.pdf">Backend CV (PDF)</a>
           <a class="btn btn-secondary" href="mailto:ayotomiwa529@gmail.com">Email me</a>
           <a class="btn btn-ghost" href="https://github.com/Lordt0m" rel="noreferrer">GitHub</a>
         </div>
+        <p class="hero-footnote">React and TypeScript interfaces, Django APIs, and PostgreSQL workflows. Built around clear user journeys, controlled access, and records people can inspect.</p>
       </section>
 
       <!-- Projects Section -->
@@ -65,14 +67,12 @@
         <div class="section-header">
           <h2 id="projects-title" class="section-title">Projects</h2>
           <p class="section-lead">
-            Four projects that show how I structure data, protect important rules, and test the workflows that depend on them.
+            Three selected projects that connect usable interfaces, documented APIs, and dependable data workflows. Start with the product, then inspect the decisions behind it.
           </p>
         </div>
 
         <div class="projects-list">
-
-          <!-- Project 1: ShelfSum (Featured) -->
-          <article id="shelfsum" class="project-card" aria-labelledby="shelfsum-title">
+<article id="shelfsum" class="project-card" aria-labelledby="shelfsum-title">
             <div class="project-card-grid">
               <div class="project-preview">
                 <div class="project-preview-frame">
@@ -85,7 +85,7 @@
                   <h3 id="shelfsum-title" class="project-title">ShelfSum</h3>
                   <p class="project-descriptor">Explainable inventory and business activity for small shops.</p>
                   <p class="project-summary">
-                    ShelfSum is a server-rendered Django application for small shops. Owners and Staff Members can record Products, Purchases, Sales, Expenses, and Stock Adjustments while permissions and Business-scoped lookups protect each record. I built stock changes around explicit transactional services and an append-only movement ledger, so current quantities remain fast to read and every change stays traceable. The public Demo Business contains deterministic August 2026 data and rejects writes at both request and service boundaries. The verified release passed 288 automated tests against PostgreSQL with zero skips and runs on Render backed by Neon PostgreSQL.
+                    A complete inventory workflow for small shops, from the owner dashboard to the stock ledger. Purchases, sales, and corrections remain traceable through transactional services and append-only movements. The public read-only demo uses fictional data; the verified release passed 288 automated tests against PostgreSQL.
                   </p>
                   <div class="project-capabilities">
                     <div class="capabilities-title">Key Capabilities</div>
@@ -118,8 +118,27 @@
             </div>
           </article>
 
-          <!-- Project 2: CrewCast Lagos (Supporting) -->
-          <article id="crewcast-lagos" class="project-card" aria-labelledby="crewcast-title">
+<article id="specshift" class="project-card" aria-labelledby="specshift-title">
+  <div class="project-card-grid">
+    <div class="project-preview"><div class="project-preview-frame"><div class="workflow-preview" role="group" aria-label="Illustrative SpecShift comparison of a synthetic order API">
+      <div class="workflow-preview-header"><strong>SpecShift</strong><span>Synthetic API example</span></div>
+      <div class="workflow-preview-body"><p class="workflow-preview-title">See what an API change reaches.</p><p class="workflow-preview-caption">Response enum changed</p><code>Order.status</code><div class="workflow-preview-change"><span>pending · completed</span><span>+ refunded</span></div><p class="workflow-preview-caption">Dependent operations</p><ul class="workflow-preview-list"><li>GET /orders</li><li>GET /orders/{orderId}</li><li>POST /orders</li></ul><p class="workflow-preview-note">Contract reachability, not proof of runtime failure.</p></div>
+    </div></div></div>
+    <div class="project-content"><div><span class="project-badge">Full-stack Project</span><h3 id="specshift-title" class="project-title">SpecShift</h3><p class="project-descriptor">A visual studio for reviewing API changes.</p><p class="project-summary">A React and TypeScript interface connects API findings to their contract evidence and dependent operations. A Django service compares supported OpenAPI documents; the studio opens with a clearly labelled recorded example.</p><div class="project-capabilities"><div class="capabilities-title">What to inspect</div><ul class="capabilities-list"><li>Interactive findings, dependency exploration, and report exports.</li><li>Clear coverage gaps when a contract cannot be fully assessed.</li><li>A bounded, stateless API and documented frontend/backend boundaries.</li></ul></div></div><div><div class="project-tech">React · TypeScript · Django · Django REST Framework · OpenAPI</div><div class="project-actions"><a class="btn btn-primary" href="https://specshift.pages.dev/" rel="noreferrer">Open studio</a><a class="btn btn-secondary" href="https://github.com/Lordt0m/specshift" rel="noreferrer">Source code</a><a class="btn btn-secondary" href="projects/specshift.html">Case study</a></div><div class="demo-notice"><strong>Preview note:</strong> The initial comparison is synthetic. New API comparisons may wait for the free service to wake.</div></div></div>
+  </div>
+</article>
+
+<article id="nobelese" class="project-card" aria-labelledby="nobelese-title">
+  <div class="project-card-grid">
+    <div class="project-preview"><div class="project-preview-frame"><div class="workflow-preview" role="group" aria-label="Illustrative appointment request and staff confirmation workflow">
+      <div class="workflow-preview-header"><strong>Appointment API</strong><span>Fictional practice</span></div><div class="workflow-preview-body"><p class="workflow-preview-title">A request becomes a confirmed booking.</p><ol class="workflow-preview-list workflow-preview-steps"><li><span>Client</span>Submit a consultation request</li><li><span>Administrator</span>Review and assign an eligible lawyer</li><li><span>Database</span>Lock, recheck and confirm the slot</li></ol><p class="workflow-preview-note">Pending requests do not reserve a slot. Conflicting confirmations return a conflict.</p></div>
+    </div></div></div>
+    <div class="project-content"><div><span class="project-badge">Backend Project</span><h3 id="nobelese-title" class="project-title">Nobelese</h3><p class="project-descriptor">An appointment workflow with clear access and booking rules.</p><p class="project-summary">A Django REST API for consultation requests, staff review, and appointment confirmation. Public availability and role-restricted staff operations sit behind explicit rules for time, access, and conflicting bookings.</p><div class="project-capabilities"><div class="capabilities-title">What to inspect</div><ul class="capabilities-list"><li>Token-authenticated staff roles and restricted appointment access.</li><li>Transactional confirmation with record locks and database constraints.</li><li>OpenAPI documentation and a guarded read-only demo configuration.</li></ul></div></div><div><div class="project-tech">Python · Django REST Framework · PostgreSQL · OpenAPI · GitHub Actions</div><div class="project-actions"><a class="btn btn-primary" href="projects/nobelese.html">Explore the API</a><a class="btn btn-secondary" href="https://github.com/Lordt0m/nobelese" rel="noreferrer">Source code</a></div><div class="demo-notice"><strong>Project context:</strong> Independent demonstration using a fictional law practice and synthetic records.</div></div></div>
+  </div>
+</article>
+        </div>
+        <details class="more-projects"><summary>More independent projects: CrewCast, CiteGrid and Credence</summary><div class="projects-list">
+<article id="crewcast-lagos" class="project-card" aria-labelledby="crewcast-title">
             <div class="project-card-grid">
               <div class="project-preview project-preview-evidence">
                 <a class="project-preview-frame" href="projects/crewcast-lagos.html#interface-evidence" aria-label="View CrewCast interface screenshots and case study"><img src="assets/images/projects/crewcast/desktop-entry-product-20261019.jpg" alt="CrewCast's weather-bulletin interface bringing a work window, hourly rain probabilities and a reason to review together" width="1440" height="1000" loading="lazy"></a>
@@ -156,8 +175,7 @@
             </div>
           </article>
 
-          <!-- Project 3: CiteGrid (Supporting) -->
-          <article id="citegrid" class="project-card" aria-labelledby="citegrid-title">
+<article id="citegrid" class="project-card" aria-labelledby="citegrid-title">
             <div class="project-card-grid">
               <div class="project-preview">
                 <div class="project-preview-frame citegrid-preview" role="group" aria-label="Illustrative CiteGrid comparison preview with simulated example values">
@@ -177,7 +195,7 @@
                   <span class="project-badge">Supporting Project</span>
                   <h3 id="citegrid-title" class="project-title">CiteGrid</h3>
                   <p class="project-descriptor">Reproducible citations for development data.</p>
-                  <p class="project-summary">CiteGrid compares electricity access across Nigeria, Ghana, and Kenya using complete, immutable data snapshots. Analysts can inspect the values behind a chart, review changes between snapshots, and export a briefing pinned to the exact data it cites. The public PythonAnywhere site demonstrates these workflows with clearly labelled simulated data.</p>
+                    <p class="project-summary">An evidence ledger for comparing development data across Nigeria, Ghana, and Kenya. Visitors can inspect chart values, see what changed between immutable snapshots, and export a briefing tied to the exact data it cites. The hosted example uses clearly labelled simulated data.</p>
                   <div class="project-capabilities">
                     <div class="capabilities-title">Key Capabilities</div>
                     <ul class="capabilities-list">
@@ -200,8 +218,7 @@
             </div>
           </article>
 
-          <!-- Project 4: Credence (Supporting) -->
-          <article id="credence" class="project-card" aria-labelledby="credence-title">
+<article id="credence" class="project-card" aria-labelledby="credence-title">
             <div class="project-card-grid">
               <div class="project-preview">
                 <div class="project-preview-frame">
@@ -239,7 +256,7 @@
                   <h3 id="credence-title" class="project-title">Credence</h3>
                   <p class="project-descriptor">Deterministic cashbook validation and financial summaries from one Python command.</p>
                   <p class="project-summary">
-                    Credence is a local Python 3.13 command-line tool that validates small-business cashbook CSV files and produces clean transactions, validation errors, and a JSON summary. It uses only the standard library at runtime, keeps physical source-line numbers in diagnostics, rejects every duplicate transaction ID case-insensitively, and calculates income and expenses with Decimal. Report files are completed in a temporary staging directory before publication. Existing target files cause a safe refusal, and handled publication errors trigger best-effort rollback without claiming crash-safe multi-file commits. The accepted release baseline contains 35 automated tests across Ubuntu and Windows CI.
+                    A local command-line tool that turns messy cashbook CSV files into clean transactions, useful errors, and an exact financial summary. It traces errors to source lines, uses Decimal for money, and stages reports before publishing them. The accepted release baseline contains 35 tests across Ubuntu and Windows CI.
                   </p>
                   <div class="project-capabilities">
                     <div class="capabilities-title">Key Capabilities</div>
@@ -263,8 +280,7 @@
               </div>
             </div>
           </article>
-
-        </div>
+</div></details>
       </section>
 
       <!-- Skills Section -->
@@ -272,7 +288,7 @@
         <div class="section-header">
           <h2 id="skills-title" class="section-title">Skills</h2>
           <p class="section-lead">
-            Five core technical competencies demonstrated directly by the architecture, test suites, and deployments of ShelfSum, CrewCast Lagos, CiteGrid, and Credence.
+            Tools I have used in shipped projects. Each group connects to a project you can inspect.
           </p>
         </div>
 
@@ -283,8 +299,8 @@
           </div>
 
           <div class="skill-card">
-            <h3>Django</h3>
-            <p>Django 5.2 LTS, server-rendered views, authentication and permissions, business-scoped queries, forms, and CSRF protection.</p>
+            <h3>Django &amp; REST APIs</h3>
+            <p>Django and Django REST Framework, documented endpoints, request validation, authentication, permissions, forms, and business-scoped queries.</p>
           </div>
 
           <div class="skill-card">
@@ -293,13 +309,13 @@
           </div>
 
           <div class="skill-card">
-            <h3>HTML &amp; CSS</h3>
-            <p>Semantic markup, responsive layouts, accessibility landmarks, visible focus states, and progressive enhancement without essential JavaScript.</p>
+            <h3>React, TypeScript &amp; Web</h3>
+            <p>React and TypeScript interfaces in SpecShift; semantic HTML, CSS, responsive layouts, keyboard access, and progressive enhancement across web projects.</p>
           </div>
 
           <div class="skill-card">
-            <h3>Git &amp; GitHub</h3>
-            <p>Version control, focused commits, issue-led delivery, repository documentation, and reviewable release history.</p>
+            <h3>Git &amp; Delivery</h3>
+            <p>Version control, GitHub Actions, automated checks, deployment configuration, and clear repository and release documentation.</p>
           </div>
         </div>
       </section>
@@ -312,10 +328,10 @@
 
         <div class="about-prose">
           <p>
-            I am a self-taught developer focused on backend web development with Python, Django, and SQL. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti. My background helps me communicate technical decisions clearly and document the systems I build.
+            I am a self-taught software developer in Lagos. I build usable interfaces, backend workflows, and the data models that connect them. My independent projects combine React and TypeScript interfaces with Django APIs and PostgreSQL workflows. I hold a B.A. in English and Literary Studies from Federal University Oye-Ekiti, a background that helps me explain and document technical decisions clearly.
           </p>
           <p>
-            I prioritize clean code, automated testing, and transactional integrity over speculative complexity, building practical software around clear operational rules.
+            I am also exploring systems programming with Rust, C++, and C as a direction for future projects. Across stacks, I care about useful products, explicit rules, and testable behaviour.
           </p>
         </div>
       </section>

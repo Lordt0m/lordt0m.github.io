@@ -1,6 +1,6 @@
 # Developer Portfolio
 
-The portfolio presents inspectable evidence that Ayotomiwa Ojo can build, understand, explain, test, debug, and ship Python and Django software.
+The portfolio presents inspectable evidence that Ayotomiwa Ojo can build, understand, explain, test, debug, and ship full-stack software with inspectable frontend, API and database evidence.
 
 ## Language
 

@@ -2,12 +2,12 @@
 
 ## Outcome
 
-Create a precise, technically confident public portfolio that helps recruiters evaluate Ayotomiwa Ojo for Python and Django opportunities without overstating experience or making them search for evidence.
+Create a precise, technically confident public portfolio that helps delivery teams evaluate Ayotomiwa Ojo for full-stack software development work without overstating experience or making them search for evidence.
 
 ## Primary readers
 
 - Recruiters and hiring managers for Nigerian onsite, hybrid, and remote roles.
-- Engineers reviewing candidates for Python/Django internships, graduate or associate developer positions, junior Python roles, and junior Django/backend roles.
+- Engineers reviewing candidates for software development, full-stack, backend, graduate, associate, junior, and internship roles based on actual responsibilities.
 - International remote reviewers as a secondary audience.
 
 ## Product principles
@@ -20,7 +20,7 @@ Create a precise, technically confident public portfolio that helps recruiters e
 
 ## Required content
 
-- Approved identity, role label, Lagos positioning, and concise junior-developer available-for-work message.
+- Approved identity, full-stack role label, Lagos positioning, and concise availability for software development roles in delivery teams.
 - Featured ShelfSum project overview with live demo link, source link, dedicated case study link, demo guidance, and verified screenshots.
 - Supporting Credence project overview with source link, dedicated case study link, and verified demonstration output preview.
 - Supporting CrewCast Lagos project overview with live demo, source, and dedicated case study links; distinguish synthetic jobs from live forecast retrievals.
@@ -28,7 +28,7 @@ Create a precise, technically confident public portfolio that helps recruiters e
 - Dedicated case-study pages for ShelfSum (`projects/shelfsum.html`), CrewCast Lagos (`projects/crewcast-lagos.html`), CiteGrid (`projects/citegrid.html`), and Credence (`projects/credence.html`).
 - Downloadable CV PDF (`assets/documents/ayotomiwa-ojo-cv.pdf`) inspected and linked directly from the hero section.
 - GitHub link (`https://github.com/Lordt0m`).
-- Exactly five evidence-backed skills groups (`Python`, `Django`, `SQL & PostgreSQL`, `HTML & CSS`, `Git & GitHub`).
+- Five evidence-backed groups: Python; Django & REST APIs; SQL & PostgreSQL; React, TypeScript & Web; Git & Delivery.
 - Two-paragraph About section highlighting self-taught background and B.A. in English and Literary Studies from Federal University Oye-Ekiti.
 - Contact routes: direct email action (`mailto:ayotomiwa529@gmail.com`), GitHub link, and inert `LinkedIn — coming soon` status text.
 
@@ -50,6 +50,7 @@ Restrained dark presentation inspired by Cyze: deep navy background, slightly el
 
 - Blog, newsletter, comments, accounts, admin interface, CMS, database, server application, contact-message storage, analytics dashboard, theme switcher, animation system, skill meters, testimonials, certificates gallery, and AI-dependent behaviour.
 - Claims of professional experience, client work, employment duration, or production scale that evidence does not support.
+- Claims that Rust, C++ or C projects have shipped before public evidence exists. React and TypeScript claims are backed by the inspected SpecShift implementation.
 - Public discussion of AI assistance unless specifically requested.
 
 ## Release acceptance
@@ -63,3 +64,8 @@ The redesign release is accepted only when:
 5. all public links, case study pages, and downloadable CV work from the deployed site;
 6. the repository contains no machine-specific paths, secrets, empty placeholders, or unrelated generated files;
 7. the active release ticket records the public ref, deployment URL, checks, viewports, remaining limitations, and next safe action.
+
+
+## Selected work update | 13 November 2026
+
+Lead with ShelfSum, SpecShift and Nobelese. Preserve CrewCast, CiteGrid and Credence under a native expandable More independent projects section. Add projects/specshift.html and projects/nobelese.html. Retain the existing dark visual system and backend-CV label. KDN findings and contribution proposals stay in the separate application brief.

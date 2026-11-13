@@ -15,6 +15,10 @@ from urllib.parse import urlparse
 
 # Approved external destinations from docs/content.md
 APPROVED_EXTERNAL_URLS = {
+    "https://specshift.pages.dev/",
+    "https://github.com/Lordt0m/specshift",
+    "https://github.com/Lordt0m/nobelese",
+
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39209381596",
     "https://github.com/Lordt0m/crewcast-lagos/commit/3b73284961936fa0d5e3b1c2c1fe68cb3b081498",
     "https://github.com/Lordt0m/crewcast-lagos/actions/runs/39207360080",
@@ -50,6 +54,8 @@ REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
 }
 
 CANONICAL_URLS = {
+    "projects/specshift.html": "https://ayotomiwa.pages.dev/projects/specshift.html",
+    "projects/nobelese.html": "https://ayotomiwa.pages.dev/projects/nobelese.html",
     "index.html": "https://ayotomiwa.pages.dev/",
     "projects/shelfsum.html": "https://ayotomiwa.pages.dev/projects/shelfsum.html",
     "projects/credence.html": "https://ayotomiwa.pages.dev/projects/credence.html",
@@ -443,9 +449,9 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
             f"index.html: Required section IDs missing: {sorted(list(missing_ids))}"
         )
 
-    if index_parser.class_counts["project-card"] != 4:
+    if index_parser.class_counts["project-card"] != 6:
         errors.append(
-            f"index.html: Expected exactly 4 project cards, found {index_parser.class_counts['project-card']}"
+            f"index.html: Expected exactly 6 project cards, found {index_parser.class_counts['project-card']}"
         )
 
     if index_parser.class_counts["skill-card"] != 5:
@@ -480,7 +486,7 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     # Check availability statement on index.html
     if (
         "lagos, nigeria" not in index_content.lower()
-        or not any(term in index_content.lower() for term in ("junior", "internship", "available for"))
+        or not any(term in index_content.lower() for term in ("junior", "internship", "available for", "open to software development roles"))
     ):
         errors.append("index.html: Required availability statement is missing or incomplete")
 
@@ -536,6 +542,10 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
     )
     if not citegrid_block or "simulated" not in citegrid_block.group(0).lower():
         errors.append("index.html: CiteGrid project and simulated-data label are required")
+
+    for slug in ("specshift", "nobelese"):
+        if not any(href == f"projects/{slug}.html" for _, href, _, _, _, _ in index_parser.links):
+            errors.append(f"index.html: Missing selected project case study: {slug}")
 
     # 2. Verify project-specific evidence
     shelfsum_page = repo_root / "projects" / "shelfsum.html"

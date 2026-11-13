@@ -2,7 +2,7 @@
 
 ## System objective
 
-Turn a recruiter's short visit into a reliable path from positioning to inspectable technical evidence, with the least possible implementation and maintenance surface.
+Turn a reviewer's short visit into a reliable path from broad software developer positioning to inspectable technical evidence, with the least possible implementation and maintenance surface.
 
 The portfolio is a small static site: one recruiter-focused overview, four project case studies, and an error page. Its architecture optimizes for owner comprehension, fast verification, durable public links, accessibility, and cheap future edits. The site itself must not become another complex product competing with the projects it presents.
 
@@ -27,7 +27,7 @@ Use this section order:
 7. CV and contact
 8. Footer
 
-The homepage includes the verified ShelfSum Featured Project, CrewCast Lagos, CiteGrid, and Credence Supporting Projects, five skill groups, two About paragraphs, the CV download, and verified contact actions. Detailed evidence belongs on the four case-study pages. LinkedIn remains visible only as inert status text until the owner supplies a verified URL.
+The homepage includes the verified ShelfSum Featured Project, CrewCast Lagos, CiteGrid, and Credence Supporting Projects, five skill groups, two About paragraphs, the CV download, and verified contact actions. The hero states a broader full-stack direction; skills and project links show shipped evidence, while future language exploration is labelled as such. Detailed evidence belongs on the four case-study pages. LinkedIn remains visible only as inert status text until the owner supplies a verified URL.
 
 ## Module map
 
@@ -39,7 +39,7 @@ Key documents:
 - `index.html`: concise recruiter overview, hero, project proof blocks, 5 skills groups, About, CV download, and contact actions.
 - `projects/shelfsum.html`: dedicated case study detailing problem, user roles, transactional stock architecture, immutable ledger, current interface captures, progressive landing motion, 288 PostgreSQL tests, and Render/Neon deployment.
 - `projects/credence.html`: dedicated case study detailing cashbook validation pipeline, 7-column CSV contract, deterministic artifacts, exact decimal math, and 35 tests.
-- `projects/crewcast-lagos.html`: dedicated case study with actual released interface screenshots, progressive date navigation, forecast freshness, bounded provider traffic, scheduled updates, the 94-test PostgreSQL/Redis and six frontend-test release, and the read-only/scripted demo boundaries.
+- `projects/crewcast-lagos.html`: dedicated case study detailing forecast freshness, bounded provider traffic, scheduled updates, and the read-only demo boundary.
 - `projects/citegrid.html`: dedicated case study detailing complete snapshot publication, revision history, pinned citations, and the simulated demo boundary.
 - `404.html`: standalone accessible error page with navigation and return routes.
 
@@ -138,3 +138,8 @@ Wide screenshots and data tables may have local scrolling or responsive cropping
 Add a new abstraction only when current implementation evidence shows repeated change or duplicated knowledge. Before adding a page generator, project schema, framework, component library, CMS, analytics provider, contact backend, or animation system, identify the repeated problem and record why the existing module interface cannot contain it.
 
 New projects accrete through the existing Project Proof Block. New Claims enter `docs/content.md` as withheld or planned, become verified only after evidence is inspected, and reach the public document only after verification. This keeps expansion additive without weakening prior evidence.
+
+
+## Selected work additions | 13 November 2026
+
+`projects/specshift.html` and `projects/nobelese.html` use the existing case-study structure and shared stylesheet. Their homepage previews are explicitly illustrative and contain semantic HTML. More independent projects uses native details/summary with no script dependency. The verifier now checks six project proof blocks, five skill groups and the new case-study links and canonical destinations.

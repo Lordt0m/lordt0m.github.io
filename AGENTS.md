@@ -14,7 +14,7 @@ The active ticket owns the current slice. The specification owns stable product 
 
 ## Product boundary
 
-Build a fast, accessible, evidence-led portfolio for Ayotomiwa Ojo, a Lagos-based Python and Django developer seeking internship, graduate, associate, junior Python, and junior Django/backend roles.
+Build a fast, accessible, evidence-led portfolio for Ayotomiwa Ojo, a Lagos-based full-stack software developer seeking web, backend and related software development roles matched to demonstrated capabilities.
 
 The portfolio is a public evidence surface, not a personal social network, blog platform, content-management system, or demonstration of frontend complexity. It must remain understandable without JavaScript and must not imply professional experience that has not occurred.
 
