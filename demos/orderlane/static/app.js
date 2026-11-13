@@ -30,16 +30,16 @@
     $('prep-time').textContent = restaurant.prep;
     $('menu').innerHTML = Object.entries(state.boot.menu).filter(([, m]) => m.restaurant === state.restaurant).map(([id, meal]) => {
       const qty = state.cart[id] || 0;
-      return `<article class="meal"><div><h3>${esc(meal.name)}</h3><p>${esc(meal.description)}</p><strong>${money(meal.price)}</strong><small>${esc(meal.category)}</small></div><div class="quantity"><button data-meal="${id}" data-delta="-1" aria-label="Remove one ${esc(meal.name)}" ${!qty || state.pending ? 'disabled' : ''}>-</button><output aria-label="Quantity of ${esc(meal.name)}">${qty}</output><button data-meal="${id}" data-delta="1" aria-label="Add one ${esc(meal.name)}" ${qty >= 10 || state.pending ? 'disabled' : ''}>+</button></div></article>`;
+      return `<article class="meal"><div><h3>${esc(meal.name)}</h3><p>${esc(meal.description)}</p><strong>${money(meal.price)}</strong><small>${esc(meal.category)}</small></div><div class="quantity"><button data-meal="${id}" data-delta="-1" aria-label="Remove one ${esc(meal.name)}" ${!qty || state.pending ? 'disabled' : ''}>−</button><output aria-label="Quantity of ${esc(meal.name)}">${qty}</output><button data-meal="${id}" data-delta="1" aria-label="Add one ${esc(meal.name)}" ${qty >= 10 || state.pending ? 'disabled' : ''}>+</button></div></article>`;
     }).join('');
     renderBasket();
   }
   function renderBasket() {
     const rows = Object.entries(state.cart).filter(([, qty]) => qty > 0);
-    $('basket').innerHTML = rows.length ? rows.map(([id, qty]) => `<div class="basket-row"><span>${qty} � ${esc(state.boot.menu[id].name)}</span><strong>${money(state.boot.menu[id].price * qty)}</strong></div>`).join('') : '<p class="empty">Your tray is empty.<br>Add something from the menu.</p>';
+    $('basket').innerHTML = rows.length ? rows.map(([id, qty]) => `<div class="basket-row"><span>${qty} × ${esc(state.boot.menu[id].name)}</span><strong>${money(state.boot.menu[id].price * qty)}</strong></div>`).join('') : '<p class="empty">Your tray is empty.<br>Add something from the menu.</p>';
     $('total').textContent = money(rows.reduce((sum, [id, qty]) => sum + state.boot.menu[id].price * qty, 0));
     $('place-order').disabled = !rows.length || state.busy || !!state.pending;
-    $('place-order').textContent = state.busy ? 'Placing your order.' : 'Place demo order';
+    $('place-order').textContent = state.busy ? 'Placing your order…' : 'Place demo order';
     $('restaurant').disabled = !!state.pending || state.busy;
     $('retry-order').hidden = !state.pending || state.busy;
   }
@@ -50,7 +50,7 @@
     }).join('')}</ol>`;
   }
   function orderMarkup(order, vendor = false) {
-    return `<article class="order"><div class="order-head"><span class="order-id">#${esc(order.id.slice(0,8).toUpperCase())} � ${esc(order.restaurant_name)}</span><span class="status ${order.status}">${order.status}</span></div><p class="order-items">${order.items.map((i) => `${i.quantity} � ${esc(i.name)}`).join('<br>')}</p><strong>${money(order.total)}</strong>${timeline(order)}${vendor && nextLabel[order.status] ? `<button class="primary" data-advance="${order.id}">${nextLabel[order.status]}</button>` : ''}</article>`;
+    return `<article class="order"><div class="order-head"><span class="order-id">#${esc(order.id.slice(0,8).toUpperCase())} · ${esc(order.restaurant_name)}</span><span class="status ${order.status}">${order.status}</span></div><p class="order-items">${order.items.map((i) => `${i.quantity} × ${esc(i.name)}`).join('<br>')}</p><strong>${money(order.total)}</strong>${timeline(order)}${vendor && nextLabel[order.status] ? `<button class="primary" data-advance="${order.id}">${nextLabel[order.status]}</button>` : ''}</article>`;
   }
   function renderOrders() {
     const latest = state.orders.find((o) => o.id === state.latest);
@@ -77,7 +77,13 @@
       await setRole('customer');
       const data = await api('/api/orders/', {method:'POST',headers:{'Idempotency-Key':state.pending.key},body:JSON.stringify(state.pending.payload)});
       state.latest = data.order.id; state.pending = null; state.cart = {};
-      await loadOrders(); notice(`Order #${state.latest.slice(0,8).toUpperCase()} ${data.created ? 'placed' : 'recovered safely'}. Open Vendor desk to accept it.`);
+      const message = `Order #${state.latest.slice(0,8).toUpperCase()} ${data.created ? 'placed' : 'recovered safely'}.`;
+      try {
+        await loadOrders();
+        notice(`${message} Open Vendor desk to accept it.`);
+      } catch {
+        notice(`${message} The status refresh failed. Use Refresh status to load its history.`, true);
+      }
     } catch (error) { notice(`${error.message} Your request is saved for retry with the same key.`, true); }
     finally { state.busy = false; renderMenu(); }
   }
@@ -94,7 +100,7 @@
   async function runChecks() {
     if (state.busy) return;
     state.busy = true; $('run-checks').disabled = true; $('check-results').innerHTML = ''; $('api-log').textContent = '';
-    const append = (message, passed) => { const item = document.createElement('li'); item.className = passed ? 'passed' : 'failed'; item.textContent = `${passed ? 'PASS' : 'FAIL'} � ${message}`; $('check-results').append(item); };
+    const append = (message, passed) => { const item = document.createElement('li'); item.className = passed ? 'passed' : 'failed'; item.textContent = `${passed ? 'PASS' : 'FAIL'} · ${message}`; $('check-results').append(item); };
     async function probe(path, options = {}) {
       const result = await request(path, options);
       $('api-log').textContent += `${options.method || 'GET'} ${path}\n${options.body || ''}\nHTTP ${result.status}\n${JSON.stringify(result.data, null, 2)}\n\n`;
@@ -125,13 +131,22 @@
   document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => switchView(b.dataset.view)));
   $('restaurant').addEventListener('change', (e) => {state.restaurant = e.target.value;state.cart = {};renderMenu();});
   $('vendor').addEventListener('change', async (e) => {if(state.busy)return;state.vendor=e.target.value;await switchView('vendor');});
-  $('menu').addEventListener('click', (e) => {const b=e.target.closest('[data-meal]');if(!b||state.pending||state.busy)return;state.cart[b.dataset.meal]=Math.max(0,Math.min(10,(state.cart[b.dataset.meal]||0)+Number(b.dataset.delta)));renderMenu();});
+  $('menu').addEventListener('click', (e) => {
+    const b=e.target.closest('[data-meal]');
+    if(!b||state.pending||state.busy)return;
+    const {meal,delta}=b.dataset;
+    state.cart[meal]=Math.max(0,Math.min(10,(state.cart[meal]||0)+Number(delta)));
+    renderMenu();
+    const sameAction=$('menu').querySelector(`[data-meal="${meal}"][data-delta="${delta}"]`);
+    const target=sameAction && !sameAction.disabled ? sameAction : $('menu').querySelector(`[data-meal="${meal}"]:not(:disabled)`);
+    target?.focus();
+  });
   $('place-order').addEventListener('click', placeOrder); $('retry-order').addEventListener('click', placeOrder);
   $('vendor-orders').addEventListener('click', (e) => {const b=e.target.closest('[data-advance]');if(b)advance(b.dataset.advance,b);});
   ['refresh-customer','refresh-vendor'].forEach((id) => $(id).addEventListener('click', async () => {try{await loadOrders();notice('Order status refreshed.');}catch(error){notice(error.message,true);}}));
   $('run-checks').addEventListener('click', runChecks);
   async function start() {
-    try {state.boot=await api('/api/bootstrap/');await setRole('customer');renderMenu();await loadOrders();$('connection').textContent='Django API connected � Your own demo workspace';}
+    try {state.boot=await api('/api/bootstrap/');await setRole('customer');renderMenu();await loadOrders();$('connection').textContent='Django API connected · Your own demo workspace';}
     catch(error){$('connection').textContent='API unavailable';notice(`${error.message} Refresh the page to reconnect.`,true);}
   }
   start();

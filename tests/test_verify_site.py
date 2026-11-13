@@ -44,6 +44,7 @@ VALID_INDEX_HTML = """<!DOCTYPE html>
         </section>
         <section id="projects">
             <h2>Projects</h2>
+            <article id="orderlane" class="project-card"><h3>Orderlane</h3><p>Independent fictional ordering concept.</p><a href="https://orderlane-demo.onrender.com/">Try Orderlane</a><a href="https://github.com/Lordt0m/lordt0m.github.io/tree/main/demos/orderlane">Source code</a><a href="projects/orderlane.html">Case study</a></article>
             <article id="specshift" class="project-card"><h3>SpecShift</h3><p>Recorded synthetic comparison.</p><a href="https://specshift.pages.dev/">Open studio</a><a href="https://github.com/Lordt0m/specshift">Source code</a><a href="projects/specshift.html">Case study</a></article>
             <article id="nobelese" class="project-card"><h3>Nobelese</h3><p>Fictional appointment API.</p><a href="https://github.com/Lordt0m/nobelese">Source code</a><a href="projects/nobelese.html">Case study</a></article>
 
@@ -247,7 +248,7 @@ class TestVerifySite(unittest.TestCase):
         (self.root / "404.html").write_text(VALID_404_HTML, encoding="utf-8")
 
         # Create index.html
-        for slug in ("specshift", "nobelese"):
+        for slug in ("specshift", "nobelese", "orderlane"):
             (self.root / "projects" / (slug + ".html")).write_text(
                 '<html><head><link rel="canonical" href="https://ayotomiwa.pages.dev/projects/' + slug + '.html"><meta property="og:url" content="https://ayotomiwa.pages.dev/projects/' + slug + '.html"></head><body><a href="#main-content">Skip to content</a><main id="main-content"><h1>' + slug + '</h1></main></body></html>', encoding="utf-8")
         self.create_index(VALID_INDEX_HTML)
@@ -468,7 +469,7 @@ class TestVerifySite(unittest.TestCase):
     def test_exact_project_and_skill_counts(self):
         self.create_index(VALID_INDEX_HTML.replace(' class="project-card"', '', 1))
         errors = verify(self.root)
-        self.assertTrue(any("exactly 6 project cards" in e for e in errors))
+        self.assertTrue(any("exactly 7 project cards" in e for e in errors))
 
         self.create_index(VALID_INDEX_HTML.replace(' class="skill-card"', '', 1))
         errors = verify(self.root)

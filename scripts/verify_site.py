@@ -15,6 +15,8 @@ from urllib.parse import urlparse
 
 # Approved external destinations from docs/content.md
 APPROVED_EXTERNAL_URLS = {
+    "https://orderlane-demo.onrender.com/",
+    "https://github.com/Lordt0m/lordt0m.github.io/tree/main/demos/orderlane",
     "https://specshift.pages.dev/",
     "https://github.com/Lordt0m/specshift",
     "https://github.com/Lordt0m/nobelese",
@@ -54,6 +56,7 @@ REQUIRED_INDEX_URLS = APPROVED_EXTERNAL_URLS - {
 }
 
 CANONICAL_URLS = {
+    "projects/orderlane.html": "https://ayotomiwa.pages.dev/projects/orderlane.html",
     "projects/specshift.html": "https://ayotomiwa.pages.dev/projects/specshift.html",
     "projects/nobelese.html": "https://ayotomiwa.pages.dev/projects/nobelese.html",
     "index.html": "https://ayotomiwa.pages.dev/",
@@ -76,7 +79,7 @@ FORBIDDEN_PUBLIC_FACT_PATTERNS = [
     (re.compile(r"\b(?:268|271)\s+automated\s+tests?\b", re.IGNORECASE), "stale ShelfSum test total"),
     (re.compile(r"\batomic\s+staged", re.IGNORECASE), "unsupported atomic publication claim"),
     (re.compile(r"09151855301"), "phone number withheld from the website"),
-    (re.compile(r"lordt0m\.github\.io", re.IGNORECASE), "stale GitHub Pages production URL"),
+    (re.compile(r"(?:https?:)?//lordt0m\.github\.io\b", re.IGNORECASE), "stale GitHub Pages production URL"),
 ]
 
 SHELFSUM_DEMO_CREDENTIALS = (
@@ -449,9 +452,9 @@ def verify(repo_root: Path = Path(".")) -> list[str]:
             f"index.html: Required section IDs missing: {sorted(list(missing_ids))}"
         )
 
-    if index_parser.class_counts["project-card"] != 6:
+    if index_parser.class_counts["project-card"] != 7:
         errors.append(
-            f"index.html: Expected exactly 6 project cards, found {index_parser.class_counts['project-card']}"
+            f"index.html: Expected exactly 7 project cards, found {index_parser.class_counts['project-card']}"
         )
 
     if index_parser.class_counts["skill-card"] != 5:

@@ -143,3 +143,6 @@ New projects accrete through the existing Project Proof Block. New Claims enter 
 ## Selected work additions | 13 November 2026
 
 `projects/specshift.html` and `projects/nobelese.html` use the existing case-study structure and shared stylesheet. Their homepage previews are explicitly illustrative and contain semantic HTML. More independent projects uses native details/summary with no script dependency. The verifier now checks six project proof blocks, five skill groups and the new case-study links and canonical destinations.
+
+
+Orderlane addition, 13 November 2026: seven project proof blocks; selected work includes the independent Orderlane concept and projects/orderlane.html. Its Django source is in demos/orderlane and is hosted separately on Render. The portfolio remains static and uses the existing stylesheet.

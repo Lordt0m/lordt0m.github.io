@@ -310,3 +310,13 @@ This is a general portfolio update supporting a specific application. No KDN emp
 - Five groups remain: Python; Django & REST APIs; SQL & PostgreSQL; React, TypeScript & Web; Git & Delivery.
 - About describes independent web/backend projects and an English and Literary Studies background. Future systems-language exploration is labelled as future work.
 - The current PDF is a backend-specific CV. No general or tailored full-stack CV has been substituted or claimed.
+
+
+## Orderlane independent concept | verified 13 November 2026
+
+- Public Django application: https://orderlane-demo.onrender.com/ ; source: https://github.com/Lordt0m/lordt0m.github.io/tree/main/demos/orderlane ; case study: projects/orderlane.html.
+- Independently inspired by FufuPlanet's advertised customer/vendor order features. No KDN affiliation, client engagement or missing-feature claim.
+- Customer ordering and a vendor desk with server-owned menu prices, relational records, scoped restaurant queries, request-key uniqueness, legal status transitions, conditional revision updates and transactional audit events.
+- All 23 API tests passed locally and during the hosted build. Live requests verified order creation, identical replay returning the same order, cross-restaurant 404 and the full lifecycle. No high-load or PostgreSQL concurrency test claim.
+- Browser-session workspaces with an explicit demo role switcher, not production authentication. Temporary SQLite filesystem storage can reset. No payments, delivery or native mobile build.
+- Preview on homepage is a labelled workflow overview, not a screenshot. Local customer screen and ordering were exercised; hosted/mobile visual QA remains unverified due to browser connection failure.
