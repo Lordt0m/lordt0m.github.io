@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Orderlane, an independent Django ordering concept by Ayotomiwa Ojo. Try customer ordering, the vendor desk and live API checks.">
+  <title>Orderlane | From menu to ready</title>
+  <link rel="stylesheet" href="{% static 'app.css' %}">
+  <script defer src="{% static 'app.js' %}"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to workspace</a>
+<header class="masthead">
+  <a class="brand" href="/" aria-label="Orderlane home"><svg viewBox="0 0 36 36" width="32" height="32" aria-hidden="true"><rect x="2" y="2" width="32" height="32" rx="9" fill="currentColor"/><path d="M11 12h14M11 18h10M11 24h14" stroke="#f8f5ed" stroke-width="2.5" stroke-linecap="round"/></svg>Orderlane<span class="brand-dot">.</span></a>
+  <p>A small concept. A complete order journey.</p>
+  <a href="https://ayotomiwa.pages.dev/">By Ayotomiwa Ojo <span aria-hidden="true">?</span></a>
+</header>
+<div class="demo-note">Independent concept inspired by FufuPlanet. Fictional restaurants and orders. No affiliation, payments or delivery.</div>
+<nav class="workspace-nav" aria-label="Demo views">
+  <div><button type="button" data-view="customer" aria-pressed="true">Customer</button><button type="button" data-view="vendor" aria-pressed="false">Vendor desk</button><button type="button" data-view="engineering" aria-pressed="false">Under the hood</button></div>
+  <span id="connection" role="status">Starting your demo workspace.</span>
+</nav>
+<main id="main" tabindex="-1">
+  <div id="notice" role="status" aria-live="polite"></div>
+  <section id="customer-view" aria-labelledby="customer-heading">
+    <div class="page-title"><div><h1 id="customer-heading">Something good for lunch.</h1><p>Choose a kitchen. Build your order. Follow it to the counter.</p></div><label>Kitchen<select id="restaurant"><option value="lagos">Lagos Kitchen</option><option value="ember">Ember &amp; Grain</option></select></label></div>
+    <div class="workspace-grid">
+      <section class="menu-pane" aria-labelledby="kitchen-name"><div class="pane-heading"><div><h2 id="kitchen-name">Lagos Kitchen</h2><p id="kitchen-description">Comfort food, made for your lunch break.</p></div><span id="prep-time" class="time-tag">20-30 min</span></div><div id="menu"><p class="empty">The menu is loading. The free server may need a moment to wake up.</p></div><p class="small-print">Collection-only demo � Prices in Nigerian naira � No real purchase</p></section>
+      <aside class="receipt" aria-labelledby="basket-heading"><h2 id="basket-heading">Your order</h2><p class="receipt-subtitle">A little lunch, in the making.</p><div id="basket"><p class="empty">Your tray is empty.<br>Add something from the menu.</p></div><div class="total-line"><span>Total</span><strong id="total">?0</strong></div><button id="place-order" class="primary full" disabled>Place demo order</button><button id="retry-order" class="text-button full" hidden>Retry the same submission</button><p class="small-print">Prices are calculated again by the API. An interrupted submission keeps its request key for a safe retry.</p></aside>
+    </div>
+    <section class="tracking" aria-labelledby="tracking-heading"><div class="pane-heading"><div><h2 id="tracking-heading">From kitchen to counter</h2><p>Your latest order, with its recorded history.</p></div><button id="refresh-customer" class="secondary">Refresh status</button></div><div id="customer-orders"><p class="empty">Place an order to follow its progress here.</p></div></section>
+  </section>
+  <section id="vendor-view" aria-labelledby="vendor-heading" hidden>
+    <div class="page-title"><div><h1 id="vendor-heading">The kitchen is yours.</h1><p>Accept an order, start cooking, then mark it ready for collection.</p></div><label>Demo restaurant<select id="vendor"><option value="lagos">Lagos Kitchen</option><option value="ember">Ember &amp; Grain</option></select></label></div>
+    <div class="desk-note"><p>This selector changes your demo role on the server. Each restaurant sees its own orders. Production login is outside this concept.</p><button id="refresh-vendor" class="secondary">Refresh orders</button></div>
+    <div id="vendor-orders" class="vendor-orders"></div>
+  </section>
+  <section id="engineering-view" aria-labelledby="engineering-heading" hidden>
+    <div class="page-title"><div><h1 id="engineering-heading">The rules behind the receipt.</h1><p>Small interface. Real requests. Explicit backend decisions.</p></div><a class="secondary" href="https://github.com/Lordt0m/lordt0m.github.io/tree/main/demos/orderlane">Inspect source <span aria-hidden="true">?</span></a></div>
+    <div class="engineering-grid"><div><h2>Try to break the workflow.</h2><p>The checks below call the running Django API in your workspace. They create one small fictional test order and record the responses.</p><button id="run-checks" class="primary">Run live API checks</button><ol id="check-results" class="check-results"><li>Replay an identical submission. Expect one order.</li><li>Read it as the other restaurant. Expect HTTP 404.</li><li>Skip preparation stages. Expect HTTP 409.</li><li>Send a stale revision. Expect HTTP 409.</li></ol><details class="trace"><summary>Request and response log</summary><pre id="api-log">Run the checks to inspect actual responses.</pre></details></div><aside class="architecture"><h2>What is implemented</h2><dl><dt>Order integrity</dt><dd>Server-owned prices, integer naira amounts, validated quantities and a unique request-key constraint.</dd><dt>Safe updates</dt><dd>Explicit status transitions and conditional revision updates. The status and its audit event commit together.</dd><dt>Restaurant boundaries</dt><dd>Session-scoped workspaces and server-filtered restaurant queries. A demo role switcher stands in for login.</dd><dt>Deliberate limits</dt><dd>SQLite on temporary hosting. One application worker. No payment, delivery, production authentication, load-test or PostgreSQL concurrency claims.</dd></dl></aside></div>
+  </section>
+  <noscript><p class="failure">JavaScript is required for this interactive demo. The <a href="https://github.com/Lordt0m/lordt0m.github.io/tree/main/demos/orderlane">source and walkthrough</a> explain the API and tests.</p></noscript>
+</main>
+<footer><span>Orderlane � Independent work by Ayotomiwa Ojo</span><span>Temporary demo data. Free hosting may take a moment to wake.</span></footer>
+</body></html>
