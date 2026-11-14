@@ -134,12 +134,18 @@ class OrderAPITests(TestCase):
         self.assertEqual(self.client.get('/health/').json()['status'], 'ok')
         response = self.client.get('/')
         self.assertContains(response, 'Orderlane')
-        self.assertContains(response, '/static/app.js')
+        self.assertContains(response, '/static/storefront.js')
 
     def test_seed_is_not_repeated_on_refresh(self):
         count = Order.objects.count()
         self.client.get('/api/bootstrap/')
         self.assertEqual(Order.objects.count(), count)
+
+    def test_starter_orders_are_labelled_separately_from_customer_orders(self):
+        self.assertTrue(all(order['demo_sample'] for order in self.client.get('/api/orders/').json()['orders']))
+        created = self.create().json()['order']
+        self.assertFalse(created['demo_sample'])
+        self.assertEqual(self.client.get('/api/bootstrap/').json()['workspace'], self.client.session['workspace'])
 
     def test_wrong_http_method_is_rejected(self):
         self.assertEqual(self.client.delete('/api/orders/').status_code, 405)

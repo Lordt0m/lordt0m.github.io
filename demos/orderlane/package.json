@@ -1,0 +1,7 @@
+{
+  "name": "orderlane-interface-checks",
+  "private": true,
+  "scripts": { "test:ui": "node tests/storefront.integration.cjs" },
+  "devDependencies": { "jsdom": "26.1.0" },
+  "engines": { "node": ">=20" }
+}

@@ -320,3 +320,12 @@ This is a general portfolio update supporting a specific application. No KDN emp
 - All 23 API tests passed locally and during the hosted build. Live requests verified order creation, identical replay returning the same order, cross-restaurant 404 and the full lifecycle. No high-load or PostgreSQL concurrency test claim.
 - Browser-session workspaces with an explicit demo role switcher, not production authentication. Temporary SQLite filesystem storage can reset. No payments, delivery or native mobile build.
 - Preview on homepage is a labelled workflow overview, not a screenshot. Local customer screen and ordering were exercised; hosted/mobile visual QA remains unverified due to browser connection failure.
+
+
+## Orderlane customer-first redesign | 14 November 2026
+
+User selected customer ordering and free-only hosting, then dropped PythonAnywhere and requested retaining Render unless a clearly better free fit was established. Host and demo URL remain unchanged. No cold-start or latency improvement is claimed.
+
+Current interface: local licensed dish photos, self-hosted Manrope, search/dietary filters, separate editable kitchen baskets, session draft recovery, confirmation, customer order history, secondary kitchen operations and Build details. Fictional starter orders are excluded from customer history. Uncertain requests retain their keys across reload.
+
+Verification: 24 Django API tests and13 DOM integration checks against actual local Django API passed. Independent source-review findings on license links and history handling were fixed and rechecked. Browser connection was unavailable; no screenshot, mobile layout or visual-conformance claim. Photo licenses are attached per asset and in the interface.

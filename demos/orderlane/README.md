@@ -4,10 +4,12 @@ A compact, working customer-to-vendor ordering concept by Ayotomiwa Ojo. Indepen
 
 ## Review in two minutes
 
-1. In Customer view, add meals and place a fictional order.
-2. Switch to Vendor desk, choose the same restaurant, and progress the order through accepted, preparing, ready and completed.
-3. Return to Customer and refresh to see its history.
-4. Open Under the hood and run the live API checks. These call the server and show actual responses, not simulated assertions.
+1. Choose a kitchen, search or filter the menu, and add meals to the basket.
+2. Place a fictional collection order and inspect its confirmation in Your orders.
+3. Open Kitchen view from the confirmation or footer, then accept and progress the order.
+4. Return to Your orders and refresh. Open Build details in the footer to run actual API checks.
+
+The customer-first interface uses local, attributed food photographs and a self-hosted Manrope font. Separate baskets survive kitchen switches and session refreshes. An uncertain submission keeps its request key for a safe retry. Starter orders are labelled and shown in the kitchen view; they are excluded from customer history. The active files are `templates/storefront.html`, `static/storefront.css`, and `static/storefront.js`.
 
 ## Run locally
 
@@ -22,6 +24,18 @@ python -m venv .venv
 ```
 
 On Linux use `.venv/bin/python`. `--insecure` serves local development assets with DEBUG disabled; production uses WhiteNoise and collectstatic. Visit the URL printed by Django.
+
+## Frontend integration verification
+
+With the local Django server running, install the development-only dependency using `npm install`, then run `npm run test:ui`. The 13 checks use jsdom against the real local Django API, including an interrupted response after the server accepts an order. They cover filtering, empty-state recovery, focus, separate kitchen baskets, reload recovery, confirmation, vendor updates, tracking and safe replay. They are DOM checks, not browser screenshots or a mobile visual audit. Set `ORDERLANE_TEST_URL` to test another explicit deployment.
+
+## Assets
+
+Menu photography is illustrative. Credits, source links and individual CC BY-SA 4.0 or CC0 licenses are in `static/assets/credits.json` and rendered in the footer. Images have been resized for the interface. Manrope's SIL Open Font License is included as `static/assets/OFL.txt`. The five dish photographs together are approximately 436 KB; the font is approximately 165 KB. All are self-hosted.
+
+## Hosting decision | 14 November 2026
+
+The owner selected free-only hosting and explicitly dropped PythonAnywhere. Retain Render until a clearly better free fit is established. The redesign does not remove Render's free-tier wake-up delay or its temporary-storage limits. No latency improvement is claimed without measurement.
 
 ## API
 

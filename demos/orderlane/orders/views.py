@@ -45,7 +45,7 @@ def body(request):
 
 @ensure_csrf_cookie
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'storefront.html')
 
 
 def health(request):
@@ -63,6 +63,7 @@ def bootstrap(request):
         request.session['role'] = 'customer'
     response = JsonResponse({'restaurants': s.RESTAURANTS, 'menu': s.MENU,
                              'role': request.session.get('role', 'customer'),
+                             'workspace': request.session['workspace'],
                              'demo': True, 'storage': 'Temporary SQLite demo; records may reset on service restart.'})
     response['Cache-Control'] = 'no-store'
     return response

@@ -5,8 +5,8 @@ from django.db import IntegrityError, transaction
 from .models import Event, Order
 
 RESTAURANTS = {
-    'lagos': {'name': 'Lagos Kitchen', 'description': 'Comfort food, made for your lunch break.', 'prep': '20-30 min'},
-    'ember': {'name': 'Ember & Grain', 'description': 'Smoky grills and generous bowls.', 'prep': '25-35 min'},
+    'lagos': {'name': 'Lagos Kitchen', 'description': 'Comfort food, made for your lunch break.', 'prep': '20–30 min'},
+    'ember': {'name': 'Ember & Grain', 'description': 'Smoky grills and generous bowls.', 'prep': '25–35 min'},
 }
 MENU = {
     'jollof': {'restaurant': 'lagos', 'name': 'Party jollof & chicken', 'description': 'Smoky rice, grilled chicken, sweet plantain.', 'price': 4500, 'category': 'House favourite'},
@@ -25,6 +25,7 @@ class Problem(Exception):
 
 def serialise(order):
     return {'id': str(order.id), 'restaurant': order.restaurant,
+            'demo_sample': order.request_key.startswith('seed-'),
             'restaurant_name': RESTAURANTS[order.restaurant]['name'], 'items': order.items,
             'total': order.total, 'status': order.status, 'revision': order.revision,
             'created_at': order.created_at.isoformat(),

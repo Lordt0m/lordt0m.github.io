@@ -1,13 +1,18 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-13T00:00:00Z",
+  "generatedAt": "2026-11-14T00:00:00Z",
   "title": "Design System: Orderlane",
   "extensions": {
-    "shadows": [{"name":"receipt","value":"0 8px 30px #193d320b","purpose":"Soft separation for the receipt."}],
-    "motion": [{"name":"receipt-in","value":"receipt-in .45s cubic-bezier(.16,1,.3,1)","purpose":"Translate from 8px below to rest; disabled by prefers-reduced-motion."}],
-    "breakpoints": [{"name":"stack","value":"800px"}]
+    "shadows": [{"name":"mobile-basket","value":"0 6px 24px #142a2429","purpose":"Separate the fixed mobile basket action."}],
+    "motion": [{"name":"confirm-in","value":"confirm-in .35s cubic-bezier(.16,1,.3,1)","purpose":"Translate confirmation from 7px below to rest only under prefers-reduced-motion: no-preference."}],
+    "breakpoints": [
+      {"name":"wide-min","value":"1440px"},
+      {"name":"compact-max","value":"1080px"},
+      {"name":"stack-max","value":"800px"},
+      {"name":"phone-max","value":"450px"}
+    ]
   },
   "narrative": {
-    "overview": "Operate mode: a restaurant service counter, with warm cream paper, dark forest ink and orange action controls. Serif headings pair with quiet sans-serif controls. Food is described through authored menu content, not decorative illustrations."
+    "overview": "Operate mode: a photo-led customer menu with a clear basket, confirmation and tracking. Warm white, forest and restrained orange support food photography and compact Manrope typography. The technical walkthrough is secondary."
   }
 }
