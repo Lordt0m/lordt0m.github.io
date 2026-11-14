@@ -12,8 +12,15 @@ MENU = {
     'jollof': {'restaurant': 'lagos', 'name': 'Party jollof & chicken', 'description': 'Smoky rice, grilled chicken, sweet plantain.', 'price': 4500, 'category': 'House favourite'},
     'egusi': {'restaurant': 'lagos', 'name': 'Egusi & pounded yam', 'description': 'Melon-seed soup, tender beef, soft pounded yam.', 'price': 5200, 'category': 'From the pot'},
     'beans': {'restaurant': 'lagos', 'name': 'Beans & plantain', 'description': 'Slow-cooked honey beans with golden plantain.', 'price': 2800, 'category': 'Vegetarian'},
+    'amala': {'restaurant': 'lagos', 'name': 'Amala, ewedu & gbegiri', 'description': 'Yam-flour swallow, jute-leaf and bean soups, beef stew.', 'price': 4800, 'category': 'From the pot'},
+    'ofada': {'restaurant': 'lagos', 'name': 'Ofada rice & ayamase', 'description': 'Local rice, green pepper sauce and tender beef.', 'price': 5000, 'category': 'House favourite'},
+    'moi-moi': {'restaurant': 'lagos', 'name': 'Moi moi & pap', 'description': 'Steamed bean pudding with smooth maize pap. No egg, fish or meat.', 'price': 2500, 'category': 'Vegetarian'},
     'suya': {'restaurant': 'ember', 'name': 'Suya rice bowl', 'description': 'Spiced beef, seasoned rice, crunchy slaw.', 'price': 4800, 'category': 'Off the grill'},
     'chicken': {'restaurant': 'ember', 'name': 'Grilled chicken bowl', 'description': 'Charred chicken, herbed grains, pepper sauce.', 'price': 5500, 'category': 'House favourite'},
+    'waakye': {'restaurant': 'ember', 'name': 'Waakye & egg', 'description': 'Ghanaian rice and beans, boiled egg and shito pepper sauce.', 'price': 4200, 'category': 'House favourite'},
+    'thieboudienne': {'restaurant': 'ember', 'name': 'Thieboudienne', 'description': 'Senegalese tomato rice, fish, cabbage, carrot and cassava.', 'price': 6000, 'category': 'From the pot'},
+    'ndole': {'restaurant': 'ember', 'name': 'Ndole & plantain', 'description': 'Cameroonian bitterleaf and groundnut stew with beef and boiled plantain.', 'price': 5800, 'category': 'From the pot'},
+    'peri-peri': {'restaurant': 'ember', 'name': 'Peri-peri chicken & rice', 'description': 'Mozambican-style chilli-grilled chicken with seasoned rice.', 'price': 5600, 'category': 'Off the grill'},
 }
 NEXT = {'placed': 'accepted', 'accepted': 'preparing', 'preparing': 'ready', 'ready': 'completed'}
 
@@ -40,8 +47,9 @@ def create_order(workspace, payload, key):
     if not isinstance(restaurant, str) or restaurant not in RESTAURANTS:
         raise Problem('Choose a listed restaurant.')
     rows = payload.get('items')
-    if not isinstance(rows, list) or not 1 <= len(rows) <= 5:
-        raise Problem('Choose between one and five different meals.')
+    max_meals = sum(meal['restaurant'] == restaurant for meal in MENU.values())
+    if not isinstance(rows, list) or not 1 <= len(rows) <= max_meals:
+        raise Problem(f'Choose between one and {max_meals} different meals from this kitchen.')
     items, seen = [], set()
     for row in rows:
         if not isinstance(row, dict):

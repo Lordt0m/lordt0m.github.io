@@ -1,6 +1,7 @@
 import json
 from django.test import Client, TestCase
 from .models import Event, Order
+from .services import MENU
 
 
 class OrderAPITests(TestCase):
@@ -159,3 +160,45 @@ class OrderAPITests(TestCase):
         replay = self.create()
         self.assertEqual(replay.status_code, 200)
         self.assertEqual(first.json()['order']['id'], replay.json()['order']['id'])
+
+    def test_full_expanded_kitchen_menu_can_be_ordered_and_replayed(self):
+        for restaurant in ['lagos', 'ember']:
+            with self.subTest(restaurant=restaurant):
+                meals = {key: meal for key, meal in MENU.items() if meal['restaurant'] == restaurant}
+                self.assertEqual(len(meals), 6)
+                payload = {'restaurant': restaurant, 'total': 1, 'items': [
+                    {'meal': key, 'quantity': 2, 'price': 1} for key in meals
+                ]}
+                first = self.create(key='expanded-' + restaurant, payload=payload)
+                self.assertEqual(first.status_code, 201)
+                order = first.json()['order']
+                self.assertEqual(order['total'], 2 * sum(meal['price'] for meal in meals.values()))
+                self.assertEqual({row['meal'] for row in order['items']}, set(meals))
+                self.assertEqual(len(order['events']), 1)
+                payload['items'].reverse()
+                replay = self.create(key='expanded-' + restaurant, payload=payload)
+                self.assertEqual(replay.status_code, 200)
+                self.assertEqual(replay.json()['order']['id'], order['id'])
+
+    def test_expanded_catalogue_has_served_image_and_disclosure_for_every_meal(self):
+        from pathlib import Path
+        from django.conf import settings
+        assets = Path(settings.BASE_DIR) / 'static' / 'assets'
+        credits = {row['key']: row for row in json.loads((assets / 'credits.json').read_text())}
+        bootstrap = self.client.get('/api/bootstrap/').json()
+        self.assertEqual(set(bootstrap['menu']), set(MENU))
+        for key, meal in bootstrap['menu'].items():
+            with self.subTest(meal=key):
+                self.assertGreater(meal['price'], 0)
+                self.assertEqual(credits[key]['type'], 'generated')
+                self.assertTrue((assets / credits[key]['file']).is_file())
+
+    def test_expanded_menu_rejects_other_kitchen_and_unknown_meals(self):
+        for meal in ['ndole', 'missing-meal']:
+            with self.subTest(meal=meal):
+                payload = {'restaurant': 'lagos', 'items': [{'meal': meal, 'quantity': 1}]}
+                self.assertEqual(self.create(payload=payload).status_code, 400)
+
+    def test_more_rows_than_the_kitchen_catalogue_is_rejected(self):
+        self.payload['items'] = [{'meal': 'jollof', 'quantity': 1}] * 7
+        self.assertEqual(self.create().status_code, 400)

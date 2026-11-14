@@ -39,7 +39,7 @@
     const rows=Object.entries(state.boot.menu).filter(([,m])=>m.restaurant===state.restaurant&&(state.filter==='all'||state.filter==='favourites'&&m.category==='House favourite'||state.filter==='vegetarian'&&m.category==='Vegetarian')&&`${m.name} ${m.description}`.toLowerCase().includes(state.search));
     $('menu').innerHTML=rows.length?rows.map(([id,meal])=>{
       const qty=cart()[id]||0;
-      return `<article class="meal"><img class="meal-image" src="${assetRoot+id}.jpg" alt="" width="400" height="300" loading="lazy"><div class="meal-content"><div class="meal-top"><h3>${esc(meal.name)}</h3></div><div class="meal-bottom"><strong class="meal-price">${money(meal.price)}</strong>${qty?quantity(id,qty,'menu'):`<button class="add-meal" data-meal="${id}" data-delta="1" data-context="menu" aria-label="Add one ${esc(meal.name)}" ${state.pending||state.busy?'disabled':''}>${icon('plus')}</button>`}</div></div></article>`;
+      return `<article class="meal"><img class="meal-image" src="${assetRoot+id}-illustrative.jpg" alt="" width="960" height="720" loading="lazy"><div class="meal-content"><div class="meal-top"><h3>${esc(meal.name)}</h3></div><div class="meal-bottom"><strong class="meal-price">${money(meal.price)}</strong>${qty?quantity(id,qty,'menu'):`<button class="add-meal" data-meal="${id}" data-delta="1" data-context="menu" aria-label="Add one ${esc(meal.name)}" ${state.pending||state.busy?'disabled':''}>${icon('plus')}</button>`}</div></div></article>`;
     }).join(''):'<div class="empty-state"><h2>No meals found</h2><p>Try a different search or choose All meals.</p><button class="secondary" id="clear-search">Clear filters</button></div>';
     $('menu-result').textContent=`${rows.length} ${rows.length===1?'meal':'meals'} on this menu. Prices in Nigerian naira.`;
     renderBasket();
@@ -160,7 +160,7 @@
       $('connection-text').textContent='Connected';$('connection').hidden=true;
       if(location.hash==='#orders')showView('tracking');
     }catch(error){state.ready=false;$('connection').hidden=false;$('connection').classList.add('error');$('connection-text').textContent='Offline. Refresh to reconnect.';notice(`${error.message} Refresh to reconnect.`,true);renderBasket();}
-    fetch(assetRoot+'credits.json').then(r=>r.json()).then(rows=>{$('photo-credits').innerHTML=rows.map(row=>`<p><a href="${esc(row.source)}" rel="noreferrer">${esc(row.key)} photo</a> ${esc(row.artist)} · <a href="${esc(row.licenseUrl)}" rel="license">${esc(row.license)}</a></p>`).join('');}).catch(()=>{$('photo-credits').textContent='Photo attribution is also included with the source assets.';});
+    fetch(assetRoot+'credits.json').then(r=>r.json()).then(rows=>{$('photo-credits').innerHTML=rows.map(row=>row.type==='generated'?`<p>${esc(row.title)} · AI-generated illustration.</p>`:`<p><a href="${esc(row.source)}" rel="noreferrer">${esc(row.key)} photo</a> ${esc(row.artist)} · <a href="${esc(row.licenseUrl)}" rel="license">${esc(row.license)}</a></p>`).join('');}).catch(()=>{$('photo-credits').textContent='Menu images are AI-generated illustrations. Asset details are included with the source.';});
   }
   start();
   document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const b=e.target.closest('button');if(b)b.setAttribute('data-keyboard','');}});

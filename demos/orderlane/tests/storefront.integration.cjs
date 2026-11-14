@@ -33,16 +33,18 @@ async function page(saved){
 
 (async()=>{
   let dom=await page();let d=dom.window.document;
-  assert.equal(d.querySelectorAll('.meal').length,3);assert.equal(d.querySelectorAll('#customer-orders .order').length,0);pass('menu loads and starter orders stay out of customer history');
+  assert.equal(d.querySelectorAll('.meal').length,6);assert.equal(d.querySelectorAll('#customer-orders .order').length,0);pass('expanded menu loads and starter orders stay out of customer history');
   const historyLength=dom.window.history.length;
   d.querySelector('.primary-nav [data-view="tracking"]').click();await wait(()=>!d.getElementById('tracking-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'tracking panel');
   assert.equal(dom.window.history.length,historyLength);assert.equal(dom.window.location.hash,'#orders');
   d.querySelector('.primary-nav [data-view="customer"]').click();await wait(()=>!d.getElementById('customer-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'menu panel');
   assert.equal(dom.window.history.length,historyLength);assert.equal(dom.window.location.hash,'');pass('panel changes do not create history entries that can restore the wrong panel');
-  const suyaCredit=[...d.querySelectorAll('#photo-credits p')].find(p=>p.textContent.includes('suya'));
-  assert.match(suyaCredit.querySelector('[rel="license"]').href,/publicdomain\/zero/);pass('each photograph links to its own license');
-  d.querySelector('[data-filter="vegetarian"]').click();assert.equal(d.querySelectorAll('.meal').length,1);assert.match(d.querySelector('.meal h3').textContent,/Beans/);pass('dietary filter limits the actual menu');
-  d.querySelector('[data-filter="all"]').click();const search=d.getElementById('menu-search');search.value='no such meal';search.dispatchEvent(new dom.window.Event('input',{bubbles:true}));assert.equal(d.querySelectorAll('.meal').length,0);d.getElementById('clear-search').click();assert.equal(d.querySelectorAll('.meal').length,3);pass('search empty state can recover');
+  const credits=[...d.querySelectorAll('#photo-credits p')];
+  assert.equal(credits.length,12);assert.ok(credits.every(p=>p.textContent.includes('AI-generated illustration.')));
+  for(const image of d.querySelectorAll('.meal-image')){const response=await dom.window.fetch(image.src);assert.equal(response.status,200);assert.match(response.headers.get('content-type'),/image\/jpeg/);}
+  pass('menu images load and generated images are disclosed');
+  d.querySelector('[data-filter="vegetarian"]').click();assert.equal(d.querySelectorAll('.meal').length,2);assert.match(d.getElementById('menu').textContent,/Beans/);assert.match(d.getElementById('menu').textContent,/Moi moi/);pass('dietary filter includes both vegetarian dishes');
+  d.querySelector('[data-filter="all"]').click();const search=d.getElementById('menu-search');search.value='no such meal';search.dispatchEvent(new dom.window.Event('input',{bubbles:true}));assert.equal(d.querySelectorAll('.meal').length,0);d.getElementById('clear-search').click();assert.equal(d.querySelectorAll('.meal').length,6);pass('search empty state can recover');
   d.querySelector('#menu [data-meal="jollof"][data-delta="1"]').click();assert.equal(d.activeElement.dataset.meal,'jollof');assert.equal(d.getElementById('basket-count').textContent,'1');pass('adding a meal updates the basket and retains keyboard focus');
   d.getElementById('restaurant').value='ember';d.getElementById('restaurant').dispatchEvent(new dom.window.Event('change',{bubbles:true}));assert.equal(d.getElementById('basket-count').textContent,'0');
   d.querySelector('#menu [data-meal="suya"][data-delta="1"]').click();
@@ -67,5 +69,18 @@ async function page(saved){
   await wait(()=>d.querySelectorAll('#customer-orders .order').length===2,'exactly two total orders');
   await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'retry finished');
   pass('an uncertain response keeps its request key across reload and retries without duplication');
+  dom.window.close();dom=await page();d=dom.window.document;
+  const mealIds=[...d.querySelectorAll('#menu [data-delta="1"]')].map(button=>button.dataset.meal);
+  for(const id of mealIds)d.querySelector(`#menu [data-meal="${id}"][data-delta="1"]`).click();
+  assert.equal(d.getElementById('basket-count').textContent,'6');d.getElementById('place-order').click();
+  await wait(()=>!d.getElementById('confirmation').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'six-dish basket accepted');
+  const fullOrder=d.querySelector('#customer-orders .order');assert.match(fullOrder.textContent,/Amala/);assert.match(fullOrder.textContent,/Moi moi/);assert.match(fullOrder.textContent,/Ofada/);assert.match(fullOrder.querySelector('.order-total').textContent,/24,800/);
+  pass('all six Lagos dishes submit together at server-owned prices');
+  d.querySelector('.primary-nav [data-view="customer"]').click();await wait(()=>!d.getElementById('customer-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'return to expanded menu');
+  d.getElementById('restaurant').value='ember';d.getElementById('restaurant').dispatchEvent(new dom.window.Event('change',{bubbles:true}));
+  assert.equal(d.querySelectorAll('.meal').length,6);
+  for(const image of d.querySelectorAll('.meal-image'))assert.equal((await dom.window.fetch(image.src)).status,200);
+  const find=d.getElementById('menu-search');find.value='Senegalese';find.dispatchEvent(new dom.window.Event('input',{bubbles:true}));assert.equal(d.querySelectorAll('.meal').length,1);assert.match(d.getElementById('menu').textContent,/Thieboudienne/);
+  pass('Ember serves six images and search finds regional dish descriptions');
   dom.window.close();console.log(`${checks} storefront integration checks passed.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

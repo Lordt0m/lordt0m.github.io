@@ -1,52 +1,115 @@
 [
   {
-    "key": "jollof",
-    "title": "File:Jollof rice with boiled egg and fried chicken.jpg",
-    "file": "jollof.jpg",
-    "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Jollof_rice_with_boiled_egg_and_fried_chicken.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-    "source": "https://commons.wikimedia.org/wiki/File:Jollof_rice_with_boiled_egg_and_fried_chicken.jpg",
-    "artist": "daSupremo",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "key": "egusi",
+    "title": "Egusi & pounded yam",
+    "file": "egusi-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "description": "Nigerian egusi melon seed soup with leafy greens and tender beef chunks, beside one smooth mound of pounded yam",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
   },
   {
-    "key": "egusi",
-    "title": "File:Pounded Yam and Egusi Soup.jpg",
-    "file": "egusi.jpg",
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Pounded_Yam_and_Egusi_Soup.jpg/960px-Pounded_Yam_and_Egusi_Soup.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "source": "https://commons.wikimedia.org/wiki/File:Pounded_Yam_and_Egusi_Soup.jpg",
-    "artist": "Justdifference",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "key": "jollof",
+    "title": "Party jollof & chicken",
+    "file": "jollof-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "description": "Nigerian smoky orange-red party jollof rice with grilled chicken and golden fried sweet plantain",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
   },
   {
     "key": "beans",
-    "title": "File:Fried ripe plantain and beans stew.jpg",
-    "file": "beans.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Fried_ripe_plantain_and_beans_stew.jpg",
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Fried_ripe_plantain_and_beans_stew.jpg/960px-Fried_ripe_plantain_and_beans_stew.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "artist": "Maame1Yaa",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "title": "Beans & plantain",
+    "file": "beans-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "description": "Nigerian slow-cooked honey beans stew with golden fried ripe plantain; completely vegetarian",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
   },
   {
     "key": "suya",
-    "title": "File:SuyavarietiesTX.JPG",
-    "file": "suya.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:SuyavarietiesTX.JPG",
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/SuyavarietiesTX.JPG/960px-SuyavarietiesTX.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "artist": "WhisperToMe",
-    "license": "CC0",
-    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+    "title": "Suya rice bowl",
+    "file": "suya-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "description": "Nigerian suya spiced grilled beef strips over seasoned rice, with crunchy cabbage and carrot slaw",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
   },
   {
     "key": "chicken",
-    "title": "File:Liat Portal for Foodie Disorder - Homemade grilled chicken thighs with rice and Israeli salad.jpg",
-    "file": "chicken.jpg",
-    "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Liat_Portal_for_Foodie_Disorder_-_Homemade_grilled_chicken_thighs_with_rice_and_Israeli_salad.jpg/960px-Liat_Portal_for_Foodie_Disorder_-_Homemade_grilled_chicken_thighs_with_rice_and_Israeli_salad.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-    "source": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Homemade_grilled_chicken_thighs_with_rice_and_Israeli_salad.jpg",
-    "artist": "HaJunkiyada",
-    "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    "title": "Grilled chicken bowl",
+    "file": "chicken-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "description": "chargrilled chicken pieces over herbed grains with a small serving of red pepper sauce",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "amala",
+    "title": "Amala, ewedu & gbegiri",
+    "file": "amala-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "ofada",
+    "title": "Ofada rice & ayamase",
+    "file": "ofada-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "moi-moi",
+    "title": "Moi moi & pap",
+    "file": "moi-moi-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "waakye",
+    "title": "Waakye & egg",
+    "file": "waakye-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "thieboudienne",
+    "title": "Thieboudienne",
+    "file": "thieboudienne-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "ndole",
+    "title": "Ndole & plantain",
+    "file": "ndole-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
+  },
+  {
+    "key": "peri-peri",
+    "title": "Peri-peri chicken & rice",
+    "file": "peri-peri-illustrative.jpg",
+    "type": "generated",
+    "generator": "OpenAI built-in image generation",
+    "date": "2026-11-14",
+    "disclosure": "Illustrative food image; not a photograph of a real restaurant order."
   }
 ]
