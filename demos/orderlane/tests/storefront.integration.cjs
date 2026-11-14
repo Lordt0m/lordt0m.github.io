@@ -26,7 +26,7 @@ async function page(saved){
   const script=w.document.createElement('script');script.src=base+'/static/storefront.js';
   Object.defineProperty(w.document,'currentScript',{get:()=>script,configurable:true});
   w.eval(readFileSync(join(__dirname,'../static/storefront.js'),'utf8'));
-  await wait(()=>w.document.getElementById('connection-text').textContent.includes('Kitchen connected'),'bootstrap');
+  await wait(()=>w.document.getElementById('connection-text').textContent.includes('Connected'),'bootstrap');
   await wait(()=>w.document.getElementById('photo-credits').textContent.trim().length>0,'photo credits');
   return dom;
 }
@@ -35,9 +35,9 @@ async function page(saved){
   let dom=await page();let d=dom.window.document;
   assert.equal(d.querySelectorAll('.meal').length,3);assert.equal(d.querySelectorAll('#customer-orders .order').length,0);pass('menu loads and starter orders stay out of customer history');
   const historyLength=dom.window.history.length;
-  d.querySelector('.primary-nav [data-view="tracking"]').click();await wait(()=>!d.getElementById('tracking-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Sending'),'tracking panel');
+  d.querySelector('.primary-nav [data-view="tracking"]').click();await wait(()=>!d.getElementById('tracking-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'tracking panel');
   assert.equal(dom.window.history.length,historyLength);assert.equal(dom.window.location.hash,'#orders');
-  d.querySelector('.primary-nav [data-view="customer"]').click();await wait(()=>!d.getElementById('customer-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Sending'),'menu panel');
+  d.querySelector('.primary-nav [data-view="customer"]').click();await wait(()=>!d.getElementById('customer-view').hidden&&!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'menu panel');
   assert.equal(dom.window.history.length,historyLength);assert.equal(dom.window.location.hash,'');pass('panel changes do not create history entries that can restore the wrong panel');
   const suyaCredit=[...d.querySelectorAll('#photo-credits p')].find(p=>p.textContent.includes('suya'));
   assert.match(suyaCredit.querySelector('[rel="license"]').href,/publicdomain\/zero/);pass('each photograph links to its own license');
@@ -49,12 +49,12 @@ async function page(saved){
   d.getElementById('restaurant').value='lagos';d.getElementById('restaurant').dispatchEvent(new dom.window.Event('change',{bubbles:true}));assert.equal(d.getElementById('basket-count').textContent,'1');assert.match(d.getElementById('basket').textContent,/jollof/);assert.doesNotMatch(d.getElementById('basket').textContent,/Suya/);pass('kitchen switching preserves separate baskets');
   const stored=dom.window.sessionStorage.getItem('orderlane-draft-v2');dom.window.close();dom=await page(stored);d=dom.window.document;assert.equal(d.getElementById('basket-count').textContent,'1');pass('the draft survives a reload');
   d.getElementById('place-order').click();await wait(()=>!d.getElementById('confirmation').hidden&&!d.getElementById('tracking-view').hidden,'order confirmation');
-  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Sending'),'submission completed');
+  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'submission completed');
   assert.equal(d.getElementById('basket-count').textContent,'0');assert.match(d.getElementById('confirmation-text').textContent,/Lagos Kitchen/);pass('submission reaches a real server-confirmed order');
   d.querySelector('#confirmation [data-view="vendor"]').click();await wait(()=>!d.getElementById('vendor-view').hidden&&d.querySelector('#vendor-orders [data-advance]:not(:disabled)'),'vendor ready');
   assert.equal(d.querySelectorAll('#vendor-orders .order').length,2);d.querySelector('#vendor-orders [data-advance]').click();await wait(()=>d.getElementById('notice').textContent.includes('Order updated'),'vendor acceptance');pass('vendor actions are enabled after navigation and advance an actual order');
   d.querySelector('.primary-nav [data-view="tracking"]').click();await wait(()=>!d.getElementById('tracking-view').hidden&&d.querySelector('#customer-orders .order-status')?.textContent==='Accepted','customer updated');pass('customer tracking sees the vendor update');
-  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Sending'),'navigation finished');
+  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'navigation finished');
   const again=dom.window.sessionStorage.getItem('orderlane-draft-v2');dom.window.close();dom=await page(again);d=dom.window.document;assert.equal(d.querySelectorAll('#customer-orders .order').length,1);pass('order history remains available after reload');
   d.querySelector('#menu [data-meal="beans"][data-delta="1"]').click();
   const workingFetch=dom.window.fetch;let dropOnce=true;
@@ -65,7 +65,7 @@ async function page(saved){
   dom.window.close();dom=await page(uncertain);d=dom.window.document;assert.equal(JSON.parse(dom.window.sessionStorage.getItem('orderlane-draft-v2')).pending.key,requestKey);
   d.getElementById('retry-order').click();await wait(()=>!d.getElementById('confirmation').hidden&&!d.getElementById('tracking-view').hidden,'replayed order confirmed');
   await wait(()=>d.querySelectorAll('#customer-orders .order').length===2,'exactly two total orders');
-  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Sending'),'retry finished');
+  await wait(()=>!d.getElementById('place-order').firstElementChild.textContent.includes('Placing'),'retry finished');
   pass('an uncertain response keeps its request key across reload and retries without duplication');
   dom.window.close();console.log(`${checks} storefront integration checks passed.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

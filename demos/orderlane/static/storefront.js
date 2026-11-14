@@ -13,7 +13,7 @@
   try { const value=JSON.parse(sessionStorage.getItem(storeKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))saved=value; } catch {}
   const state = {boot:null,view:'customer',restaurant:['lagos','ember'].includes(saved.restaurant)?saved.restaurant:'lagos',vendor:'lagos',carts:saved.carts&&typeof saved.carts==='object'&&!Array.isArray(saved.carts)?saved.carts:{},orders:[],pending:saved.pending||null,workspace:saved.workspace,ready:false,busy:false,filter:'all',search:'',confirmation:null};
   const cart = () => state.carts[state.restaurant] || (state.carts[state.restaurant]={});
-  const notice = (message,error=false) => {$('notice').textContent=message;$('notice').hidden=!message;$('notice').classList.toggle('error',error);};
+  const notice = (message,error=false) => {$('notice').hidden=false;$('notice').textContent=message;$('notice').classList.toggle('error',error);};
   function persist(){try{sessionStorage.setItem(storeKey,JSON.stringify({restaurant:state.restaurant,carts:state.carts,pending:state.pending,workspace:state.workspace}));}catch{}}
   async function request(path,options={}){
     const csrf=document.cookie.split('; ').find(c=>c.startsWith('csrftoken='))?.split('=')[1]||'';
@@ -36,13 +36,10 @@
     $('kitchen-name').textContent=restaurant.name;
     $('kitchen-description').textContent=restaurant.description;
     $('prep-time').textContent=restaurant.prep;
-    const photo=state.restaurant==='lagos'?'jollof':'chicken';
-    $('kitchen-photo').src=assetRoot+photo+'.jpg';
-    $('kitchen-photo').alt=state.restaurant==='lagos'?'Illustrative jollof rice and chicken':'Illustrative grilled chicken and rice';
     const rows=Object.entries(state.boot.menu).filter(([,m])=>m.restaurant===state.restaurant&&(state.filter==='all'||state.filter==='favourites'&&m.category==='House favourite'||state.filter==='vegetarian'&&m.category==='Vegetarian')&&`${m.name} ${m.description}`.toLowerCase().includes(state.search));
     $('menu').innerHTML=rows.length?rows.map(([id,meal])=>{
       const qty=cart()[id]||0;
-      return `<article class="meal"><img class="meal-image" src="${assetRoot+id}.jpg" alt="Illustrative ${esc(meal.name)}" width="160" height="150" loading="lazy"><div class="meal-content"><div class="meal-top"><h3>${esc(meal.name)}</h3>${meal.category==='House favourite'?'<span class="meal-label">House favourite</span>':''}</div><p>${esc(meal.description)}</p><div class="meal-bottom"><strong class="meal-price">${money(meal.price)}</strong>${qty?quantity(id,qty,'menu'):`<button class="add-meal" data-meal="${id}" data-delta="1" data-context="menu" aria-label="Add one ${esc(meal.name)}" ${state.pending||state.busy?'disabled':''}>Add ${icon('plus')}</button>`}</div></div></article>`;
+      return `<article class="meal"><img class="meal-image" src="${assetRoot+id}.jpg" alt="" width="400" height="300" loading="lazy"><div class="meal-content"><div class="meal-top"><h3>${esc(meal.name)}</h3></div><div class="meal-bottom"><strong class="meal-price">${money(meal.price)}</strong>${qty?quantity(id,qty,'menu'):`<button class="add-meal" data-meal="${id}" data-delta="1" data-context="menu" aria-label="Add one ${esc(meal.name)}" ${state.pending||state.busy?'disabled':''}>${icon('plus')}</button>`}</div></div></article>`;
     }).join(''):'<div class="empty-state"><h2>No meals found</h2><p>Try a different search or choose All meals.</p><button class="secondary" id="clear-search">Clear filters</button></div>';
     $('menu-result').textContent=`${rows.length} ${rows.length===1?'meal':'meals'} on this menu. Prices in Nigerian naira.`;
     renderBasket();
@@ -52,28 +49,29 @@
     const rows=Object.entries(cart()).filter(([id,qty])=>qty>0&&state.boot.menu[id]?.restaurant===state.restaurant);
     const count=rows.reduce((sum,[,qty])=>sum+qty,0);
     const total=rows.reduce((sum,[id,qty])=>sum+state.boot.menu[id].price*qty,0);
-    $('basket').innerHTML=rows.length?rows.map(([id,qty])=>`<div class="basket-row"><div><h3>${esc(state.boot.menu[id].name)}</h3>${quantity(id,qty,'basket')}</div><strong>${money(state.boot.menu[id].price*qty)}</strong></div>`).join(''):'<div class="basket-empty"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M9 17h26l-3 22H12L9 17Zm8 0v-5a5 5 0 0 1 10 0v5M16 23v8m12-8v8"/></svg><h3>Your basket is empty</h3><p>Add meals from this kitchen to start your collection order.</p></div>';
+    $('basket').innerHTML=rows.length?rows.map(([id,qty])=>`<div class="basket-row"><div><h3>${esc(state.boot.menu[id].name)}</h3>${quantity(id,qty,'basket')}</div><strong>${money(state.boot.menu[id].price*qty)}</strong></div>`).join(''):'<div class="basket-empty"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M9 17h26l-3 22H12L9 17Zm8 0v-5a5 5 0 0 1 10 0v5M16 23v8m12-8v8"/></svg><p>Add a meal to start.</p></div>';
     $('basket-count').textContent=count;
     $('basket-summary').hidden=!rows.length;
     $('subtotal').textContent=money(total);$('total').textContent=money(total);
     $('place-order').disabled=!rows.length||state.busy||!!state.pending||!state.ready;
-    $('place-order').firstElementChild.textContent=state.busy?'Sending your order…':'Place demo order';
+    $('place-order').firstElementChild.textContent=state.busy?'Placing order…':'Place order';
     $('retry-order').hidden=!state.pending||state.busy||!state.ready;
     $('restaurant').disabled=!!state.pending||state.busy;
     $('mobile-basket').hidden=!count||state.view!=='customer';
-    $('mobile-count').textContent=count;$('mobile-total').textContent=money(total);
+    $('mobile-count').textContent=count;$('mobile-item-label').textContent=count===1?'item':'items';$('mobile-total').textContent=money(total);
   }
   function timeline(order){return `<ol class="timeline" aria-label="Order progress">${stages.map((stage,index)=>{const event=order.events.find(e=>e.status===stage);return `<li class="${index<=stages.indexOf(order.status)?'done':''}">${stageNames[stage]}${event?`<time datetime="${esc(event.at)}">${new Date(event.at).toLocaleTimeString('en-NG',{hour:'2-digit',minute:'2-digit'})}</time>`:''}</li>`;}).join('')}</ol>`;}
-  function orderMarkup(order,vendor=false){return `<article class="order"><div class="order-head"><div class="order-id"><strong>${esc(order.restaurant_name)}</strong>#${esc(order.id.slice(0,8).toUpperCase())} · ${new Date(order.created_at).toLocaleDateString('en-NG',{day:'numeric',month:'short'})}</div><span class="order-status ${order.status}">${stageNames[order.status]}</span></div><div class="order-body"><p class="order-items">${order.items.map(i=>`${i.quantity} × ${esc(i.name)}`).join('<br>')}</p><strong class="order-total">${money(order.total)}</strong></div>${timeline(order)}${vendor&&actions[order.status]?`<button class="primary" data-advance="${order.id}" ${state.busy?'disabled':''}>${actions[order.status]}</button>`:''}${order.demo_sample?'<span class="order-seed">Starter order · fictional example</span>':''}</article>`;}
+  function orderMarkup(order,vendor=false){return `<article class="order"><div class="order-head"><div class="order-id"><strong>${esc(order.restaurant_name)}</strong>#${esc(order.id.slice(0,8).toUpperCase())} · ${new Date(order.created_at).toLocaleDateString('en-NG',{day:'numeric',month:'short'})}</div><span class="order-status ${order.status}">${stageNames[order.status]}</span></div><div class="order-body"><p class="order-items">${order.items.map(i=>`${i.quantity} × ${esc(i.name)}`).join('<br>')}</p><strong class="order-total">${money(order.total)}</strong></div>${timeline(order)}${vendor&&actions[order.status]?`<button class="primary" data-advance="${order.id}" ${state.busy?'disabled':''}>${actions[order.status]}</button>`:''}${order.demo_sample?'<span class="order-seed">Sample order</span>':''}</article>`;}
   function renderOrders(){
     const customers=state.orders.filter(o=>!o.demo_sample);
     $('order-count').hidden=!customers.length;$('order-count').textContent=customers.length;
-    $('customer-orders').innerHTML=customers.length?customers.map(o=>orderMarkup(o)).join(''):'<div class="empty-state"><h2>No orders yet</h2><p>Place a demo order from the menu to track its progress here.</p><button class="primary" data-view="customer">Explore the menu</button></div>';
+    $('customer-orders').innerHTML=customers.length?customers.map(o=>orderMarkup(o)).join(''):'<div class="empty-state"><h2>No orders yet</h2><p>Your orders will appear here.</p><button class="primary" data-view="customer">Explore the menu</button></div>';
     const vendors=state.orders.filter(o=>o.restaurant===state.vendor);
-    $('vendor-orders').innerHTML=vendors.length?vendors.map(o=>orderMarkup(o,true)).join(''):'<div class="empty-state"><h2>No kitchen orders</h2><p>Place a demo order from this kitchen to see it here.</p><button class="primary" data-view="customer">Go to the menu</button></div>';
+    if($('kitchen-order-count'))$('kitchen-order-count').textContent=`${vendors.length} ${vendors.length===1?'order':'orders'}`;
+    $('vendor-orders').innerHTML=vendors.length?vendors.map(o=>orderMarkup(o,true)).join(''):'<div class="empty-state"><h2>No kitchen orders</h2><p>Orders for this kitchen will appear here.</p><button class="primary" data-view="customer">Go to the menu</button></div>';
   }
   function showView(view){
-    state.view=view;
+    state.view=view;document.title='Orderlane | '+({customer:'Menu',tracking:'Orders',vendor:'Kitchen',engineering:'API lab'}[view]);
     for(const name of ['customer','tracking','vendor','engineering'])$(name+'-view').hidden=name!==view;
     document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
     $('mobile-basket').hidden=state.view!=='customer'||!Object.values(cart()).some(q=>q>0);
@@ -107,18 +105,18 @@
       const order=data.order;state.vendor=order.restaurant;$('vendor').value=state.vendor;
       state.pending=null;state.carts[state.restaurant]={};persist();
       state.confirmation=order.id;state.orders=[order,...state.orders.filter(o=>o.id!==order.id)];
-      showView('tracking');renderOrders();$('confirmation').hidden=false;$('confirmation-text').textContent=`${order.restaurant_name} received order #${order.id.slice(0,8).toUpperCase()}. Your total is ${money(order.total)}.`;
+      showView('tracking');renderOrders();$('confirmation').hidden=false;$('confirmation-text').textContent=`${order.restaurant_name} · #${order.id.slice(0,8).toUpperCase()} · ${money(order.total)}`;
       $('confirmation').focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});
-      try{await loadOrders();notice('');}catch{notice('Your order was placed. Status could not refresh; use Refresh status to reconnect.',true);}
+      try{await loadOrders();notice('');}catch{notice('Your order was placed. Status could not refresh; select Refresh to reconnect.',true);}
     }catch(error){
       if(error.status&&[400,401,403,409,415,429].includes(error.status)){state.pending=null;persist();notice(`${error.message} Review your basket before sending again.`,true);}
-      else notice(`${error.message} Your basket is saved. Use Retry saved submission to safely check the same order.`,true);
+      else notice(`${error.message} Basket saved. Select Retry order to check the same submission.`,true);
     }finally{state.busy=false;renderMenu();}
   }
   async function advanceOrder(id,button){
     if(state.busy)return;const order=state.orders.find(o=>o.id===id);if(!order)return;
     state.busy=true;button.disabled=true;
-    try{await api(`/api/orders/${id}/status/`,{method:'POST',body:JSON.stringify({status:stages[stages.indexOf(order.status)+1],revision:order.revision})});await loadOrders();notice('Order updated. Return to Your orders to see the customer view.');}
+    try{await api(`/api/orders/${id}/status/`,{method:'POST',body:JSON.stringify({status:stages[stages.indexOf(order.status)+1],revision:order.revision})});await loadOrders();notice('Order updated.');}
     catch(error){notice(error.message,true);await loadOrders().catch(()=>{});}
     finally{state.busy=false;renderOrders();}
   }
@@ -153,16 +151,18 @@
   async function start(){
     try{
       state.boot=await api('/api/bootstrap/');
-      if(state.workspace&&state.workspace!==state.boot.workspace&&state.pending){state.pending=null;notice('Your previous demo workspace expired. Your basket is kept; review it before placing a new order.');}
+      if(state.workspace&&state.workspace!==state.boot.workspace&&state.pending){state.pending=null;notice('Your session expired. Review your saved basket before placing an order.');}
       state.workspace=state.boot.workspace;
       if(state.pending&&!state.boot.restaurants[state.pending.payload?.restaurant])state.pending=null;
       if(state.pending)state.restaurant=state.pending.payload.restaurant;
       for(const restaurant of ['lagos','ember']){const old=state.carts[restaurant];state.carts[restaurant]={};if(old&&typeof old==='object')for(const [id,qty]of Object.entries(old))if(state.boot.menu[id]?.restaurant===restaurant&&Number.isInteger(qty)&&qty>0&&qty<=10)state.carts[restaurant][id]=qty;}
       await setRole('customer');state.ready=true;persist();renderMenu();await loadOrders();
-      $('connection-text').textContent='Kitchen connected · Demo workspace';
+      $('connection-text').textContent='Connected';$('connection').hidden=true;
       if(location.hash==='#orders')showView('tracking');
-    }catch(error){state.ready=false;$('connection').classList.add('error');$('connection-text').textContent='Kitchen offline · Refresh to reconnect';notice(`${error.message} Refresh the page to reconnect.`,true);renderBasket();}
+    }catch(error){state.ready=false;$('connection').hidden=false;$('connection').classList.add('error');$('connection-text').textContent='Offline. Refresh to reconnect.';notice(`${error.message} Refresh to reconnect.`,true);renderBasket();}
     fetch(assetRoot+'credits.json').then(r=>r.json()).then(rows=>{$('photo-credits').innerHTML=rows.map(row=>`<p><a href="${esc(row.source)}" rel="noreferrer">${esc(row.key)} photo</a> ${esc(row.artist)} · <a href="${esc(row.licenseUrl)}" rel="license">${esc(row.license)}</a></p>`).join('');}).catch(()=>{$('photo-credits').textContent='Photo attribution is also included with the source assets.';});
   }
   start();
+  document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const b=e.target.closest('button');if(b)b.setAttribute('data-keyboard','');}});
+  document.addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(b)b.removeAttribute('data-keyboard');});
 })();

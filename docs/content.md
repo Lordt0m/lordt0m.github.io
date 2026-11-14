@@ -329,3 +329,12 @@ User selected customer ordering and free-only hosting, then dropped PythonAnywhe
 Current interface: local licensed dish photos, self-hosted Manrope, search/dietary filters, separate editable kitchen baskets, session draft recovery, confirmation, customer order history, secondary kitchen operations and Build details. Fictional starter orders are excluded from customer history. Uncertain requests retain their keys across reload.
 
 Verification: 24 Django API tests and13 DOM integration checks against actual local Django API passed. Independent source-review findings on license links and history handling were fixed and rechecked. Browser connection was unavailable; no screenshot, mobile layout or visual-conformance claim. Photo licenses are attached per asset and in the interface.
+
+
+## Orderlane illustration overhaul | 14 November 2026
+
+This supersedes the first redesign evidence above. The customer-first app now uses Outfit, cool white/indigo surfaces, an attributed unDraw Cooking illustration, photo menus and one demo disclosure in About. Main control names are Menu, Orders, Kitchen, API lab, Basket and Place order. The Django API and safe replay rules remain intact.
+
+Verified locally: 24 backend tests, 13 actual-API DOM integration checks, browser captures at 1440, 1280, 390 and 320 pixels, plus phone basket, confirmation, kitchen and API screens. No menu horizontal overflow and no visible menu controls below44pixels high in those four widths. This is targeted verification, not full accessibility certification. Existing free Render remains selected; do not claim cold-start removal or measured loading-speed gains. Release commit and hosted verification will be recorded in the active ticket.
+
+Case-study section headings use Interface and API rules to keep the narrow layout readable.

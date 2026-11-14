@@ -1,92 +1,105 @@
 ---
 name: Orderlane
-description: A photo-led customer ordering demonstration.
+description: A cool white and indigo collection counter.
 colors:
-  paper: "#faf9f6"
-  white: "#fff"
-  ink: "#222b26"
-  muted: "#626c65"
-  line: "#e4e7e1"
-  green: "#253b31"
-  orange: "#b64527"
-  wash: "#f0f3ec"
-  danger: "#a12f24"
-  primary-hover: "#97391f"
-  secondary-hover: "#e5eadf"
+  neutral-0: "#fff"
+  neutral-50: "#f5f6fb"
+  neutral-100: "#eceef5"
+  neutral-200: "#dce0ec"
+  neutral-500: "#666e85"
+  neutral-700: "#3c455d"
+  neutral-900: "#20273b"
+  blue-50: "#eef0ff"
+  blue-100: "#e1e6ff"
+  blue-600: "#4059d8"
+  blue-700: "#3048bc"
+  green-50: "#e8f5ed"
+  green-700: "#276545"
+  red-50: "#fff0ed"
+  red-700: "#ab3528"
 typography:
   body:
-    fontFamily: "Manrope, sans-serif"
-    fontSize: "14px"
-  display:
-    fontFamily: "Manrope, sans-serif"
-    fontSize: "clamp(28px,3.2vw,42px)"
-    fontWeight: 800
+    fontFamily: "Outfit, sans-serif"
+    fontSize: "1rem"
+  small:
+    fontSize: ".875rem"
+  caption:
+    fontSize: ".8125rem"
+  title:
+    fontSize: "1.25rem"
+  heading:
+    fontSize: "clamp(2rem,3.2vw,2.75rem)"
+    fontWeight: 700
     lineHeight: 1.1
-    letterSpacing: "-1.2px"
+    letterSpacing: "-.03em"
 rounded:
-  control: "7px"
-  basket: "14px"
-  hero: "16px"
-  meal-image: "12px"
+  sm: "8px"
+  md: "14px"
+  lg: "20px"
+  action: "10px"
 spacing:
-  desktop-gap: "42px"
   basket-padding: "24px"
+  desktop-gap: "30px"
 components:
   button-primary:
-    backgroundColor: "{colors.orange}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.control}"
-    padding: "14px 17px"
+    backgroundColor: "{colors.blue-600}"
+    textColor: "{colors.neutral-0}"
+    rounded: "{rounded.action}"
+    padding: "13px 18px"
   button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
+    backgroundColor: "{colors.blue-700}"
   button-secondary:
-    backgroundColor: "{colors.wash}"
-    textColor: "{colors.green}"
-    rounded: "{rounded.control}"
-    padding: "14px 17px"
+    backgroundColor: "{colors.neutral-0}"
+    textColor: "{colors.neutral-700}"
+    rounded: "{rounded.action}"
+    padding: "13px 18px"
 ---
 
 # Design System: Orderlane
 
 ## Overview
 
-Operate mode: a photo-led customer menu with a clear basket, confirmation and tracking. Warm white, forest and restrained orange support food photography and compact Manrope typography. The technical walkthrough is secondary.
+A crisp contemporary collection counter: Outfit, cool white surfaces, an indigo action accent, a compact kitchen identity, Cooking illustration, dish photographs and tabular naira prices. Choose a kitchen, add a meal, inspect the basket, place an order and follow its status. Kitchen actions and API evidence remain secondary tasks.
 
-This record replaces the earlier serif, text-only counter direction with the implementation in `static/storefront.css` and the ordering surface brief. Source inspection only: browser unavailable, no screenshots or visual approval. This remains a fictional, small ordering demonstration.
+The full overhaul replaces the warm Manrope identity. The user delegated illustration and overhaul choices. The formal concept-roll and decision-card stage was not run; no retrospective comp approval or full workflow compliance is claimed. Implementation authority is `templates/counter.html`, `static/counter.css`, `static/storefront.js` and `.impeccable/surfaces/counter-overhaul.md`.
 
 ## Colors
 
-Paper provides the page background; white supports menu controls, baskets and order cards. Ink and muted text establish hierarchy. Green marks selected filters, confirmation and completed stages; orange carries primary actions and keyboard focus. Wash provides quiet grouping; danger marks failures.
+Neutral-50 is the canvas; neutral-0 supplies white surfaces. Neutral-900 carries main text, neutral-500 secondary text and neutral-200 separators. Blue-600 marks actions and focus; blue-50 and blue-100 provide selected and interactive backgrounds. Green pairs mark confirmation and completed orders; red pairs mark errors. CSS semantic aliases map these primitives to page, surface, text, line, accent and focus roles.
 
 ## Typography
 
-Self-hosted Manrope supplies headings, body and controls, with weights 200 through 800 available. Its local font asset is `static/assets/manrope.ttf`, with license in `static/assets/OFL.txt`. Menu headings use 24px at weight 750; meal titles use 16px at weight 750. Money and quantities use tabular numerals. The display token describes the default hero heading; responsive rules override it at the documented breakpoints.
+Self-hosted Outfit variable WOFF2 supplies weights 400 through 800. The font asset is 32,292 bytes. Headings use compact tracking and weights 600 or 700; menu titles use 16px at weight 600. Body and input text remain readable, and prices, counts and timestamps use tabular numerals. Mobile search and selectors use 16px text. The heading token is overridden by the explicit responsive sizes in the stylesheet.
 
 ## Layout
 
-The default main container is capped at 1280px with 40px horizontal padding. The menu occupies the flexible column beside a 330px basket, separated by the desktop gap token. The basket is sticky at 24px from the top. A split kitchen hero pairs copy with a cover-cropped photograph.
+The shell is capped at 1660px. Default desktop navigation occupies a sticky 190px rail; the content area has 40px horizontal padding. The flexible menu sits beside a 310px sticky basket, with the desktop gap token. A split kitchen identity pairs copy and illustration. Menu cards form three columns by default.
 
-At min-width 1440px, the container grows to 1360px, basket to 350px and gap to 52px. At max-width 1080px, horizontal padding becomes 28px and the basket column 290px. At max-width 800px, ordering stacks, the basket becomes static, a fixed mobile basket action appears and other grids become one column. At max-width 450px, horizontal padding becomes 18px, search fills the menu heading and meal images narrow to 88px.
+At min-width 1500px, the rail grows to 210px, content padding to 48px and basket to 340px. At max-width 1250px, the rail is 166px, basket 280px and menu two columns. At max-width 960px, navigation becomes a top row. At max-width 740px, ordering stacks, basket becomes static, the inset basket shortcut appears and order timelines become vertical with readable times. At max-width 460px, meals become horizontal photo cards in one column. At max-width 350px, image width becomes 95px, search fills its row and the collection label hides.
+
+Desktop first view exposes kitchen identity, artwork, photo menu and basket together. Phone prioritises kitchen and menu, with the basket shortcut appearing after an item is added. Narrow layouts reflow controls.
 
 ## Elevation & Depth
 
-Borders and quiet backgrounds separate most surfaces. The fixed mobile basket action uses the recorded shadow. Confirmation enters from 7px below over .35s only when reduced motion is not requested. There is no receipt-entry animation in this stylesheet.
+Tonal surfaces supply most separation. Search and selected filters have subtle shadows. The mobile basket shortcut uses a larger shadow; secondary actions use an inset border shadow. There are no entry animations. Under no-preference motion settings, pointer press scales buttons to .96 over 150ms using cubic-bezier(.2,0,0,1). Keyboard activation disables this movement and transitions; reduced-motion settings do not enable them. Hover treatments apply only to fine pointers supporting hover.
 
 ## Shapes
 
-Controls have softly curved corners. The basket and kitchen hero use larger corners; meal photographs have rounded crops. Order cards and confirmation use 13px corners. Status markers and timeline dots are circular.
+Small corners serve navigation and grouping, medium corners serve meals, baskets and orders, and large corners serve the kitchen identity. Actions use the action radius. Photographs use cover crops; Cooking uses contain sizing. Timeline markers are circular.
 
 ## Components
 
-Primary buttons use orange and a darker hover; secondary buttons use wash and green text. Their CSS sets a minimum height of 44px, rather than a fixed height. Selected filters use green with white text. Active navigation uses an underline. Quantity controls are compact rectangular groups. Focus-visible uses a 3px orange outline with 4px offset; search focus-within uses a 2px orange outline with 2px offset. Disabled controls use .48 opacity.
+Adding a meal replaces its add control with an inline quantity group, retains focus and updates basket count and total. Final quantity buttons are 44px square. Add controls have a 44px minimum target; primary and secondary actions have a 48px minimum height. Selects, filters, text buttons and credits summary have a 44px minimum height. Search input has a 48px minimum height.
 
-Local food photographs and their source, artist and license records are in `static/assets/credits.json`: jollof, egusi, beans and chicken are recorded as CC BY-SA 4.0; suya as CC0. Preserve these records and the font license alongside the assets.
+Focus-visible uses a 3px accent outline offset by 4px; search focus-within uses 2px offset by 3px. Forced-colors rules use Highlight for focus and selected navigation, and CanvasText borders for meals and basket. Disabled buttons use .45 opacity. Status announcements and labelled fields retain their semantic implementation.
+
+All assets are self-hosted. The official unDraw Cooking SVG is recoloured to the blue-600 accent; its credit remains in About & credits. Food source, artist and license records remain in `static/assets/credits.json`, with font licensing alongside local font assets. One portfolio-demo disclosure lives in About; the API lab and project documentation carry technical boundaries. This is a small demonstration without real fulfilment, payment or production authentication.
 
 ## Do's and Don'ts
 
-- Do retain the photo-led menu, visible basket, confirmation and tracking hierarchy.
-- Do preserve attribution records and local font licensing.
-- Do keep visible keyboard focus and tabular money.
-- Don't imply real orders, payments, delivery, production accounts, ratings or discounts.
+- Do preserve the collection-order sequence, inline quantity interaction and phone timeline.
+- Do retain visible keyboard focus, readable inputs, tabular prices and asset credits.
+- Don't add fabricated reviews, promotional metrics, payment, delivery or affiliation claims.
+- Don't scatter repeated demo disclaimers through ordering tasks.
 
-
+Verification: a fresh reviewer opened eight actual browser screenshots covering menu widths 1440, 1280, 390 and 320, plus phone basket, orders, kitchen and API views. No material visual defect was found against the written direction. Images and font loaded, no horizontal overflow was observed, and menu controls met the 44px minimum. Twenty-four API checks and thirteen DOM checks passed. These are targeted checks, not a full accessibility audit.

@@ -135,6 +135,8 @@ class OrderAPITests(TestCase):
         response = self.client.get('/')
         self.assertContains(response, 'Orderlane')
         self.assertContains(response, '/static/storefront.js')
+        self.assertContains(response, '/static/counter.css')
+        self.assertContains(response, '/static/assets/cooking.svg')
 
     def test_seed_is_not_repeated_on_refresh(self):
         count = Order.objects.count()

@@ -5,11 +5,11 @@ A compact, working customer-to-vendor ordering concept by Ayotomiwa Ojo. Indepen
 ## Review in two minutes
 
 1. Choose a kitchen, search or filter the menu, and add meals to the basket.
-2. Place a fictional collection order and inspect its confirmation in Your orders.
-3. Open Kitchen view from the confirmation or footer, then accept and progress the order.
-4. Return to Your orders and refresh. Open Build details in the footer to run actual API checks.
+2. Place a fictional collection order and inspect its confirmation in Orders.
+3. Open Kitchen from the confirmation or navigation, then accept and progress the order.
+4. Return to Orders and refresh. Open API lab from the navigation to run actual API checks.
 
-The customer-first interface uses local, attributed food photographs and a self-hosted Manrope font. Separate baskets survive kitchen switches and session refreshes. An uncertain submission keeps its request key for a safe retry. Starter orders are labelled and shown in the kitchen view; they are excluded from customer history. The active files are `templates/storefront.html`, `static/storefront.css`, and `static/storefront.js`.
+The customer-first interface uses local, attributed food photographs and a self-hosted Outfit font and a licensed unDraw cooking illustration. Separate baskets survive kitchen switches and session refreshes. An uncertain submission keeps its request key for a safe retry. Starter orders are labelled and shown in the kitchen view; they are excluded from customer history. The active files are `templates/counter.html`, `static/counter.css`, and `static/storefront.js`.
 
 ## Run locally
 
@@ -27,11 +27,11 @@ On Linux use `.venv/bin/python`. `--insecure` serves local development assets wi
 
 ## Frontend integration verification
 
-With the local Django server running, install the development-only dependency using `npm install`, then run `npm run test:ui`. The 13 checks use jsdom against the real local Django API, including an interrupted response after the server accepts an order. They cover filtering, empty-state recovery, focus, separate kitchen baskets, reload recovery, confirmation, vendor updates, tracking and safe replay. They are DOM checks, not browser screenshots or a mobile visual audit. Set `ORDERLANE_TEST_URL` to test another explicit deployment.
+With the local Django server running, install the development-only dependency using `npm install`, then run `npm run test:ui`. The 13 checks use jsdom against the real local Django API, including an interrupted response after the server accepts an order. They cover filtering, empty-state recovery, focus, separate kitchen baskets, reload recovery, confirmation, vendor updates, tracking and safe replay. Browser render checks additionally cover the menu at 1440, 1280, 390 and 320 CSS pixels, plus populated basket, confirmation, kitchen queue and API lab at 390 pixels. Captures from this local verification are retained in `.impeccable/review/` in the working checkout. These checks do not establish a complete accessibility audit. Set `ORDERLANE_TEST_URL` to test another explicit deployment.
 
 ## Assets
 
-Menu photography is illustrative. Credits, source links and individual CC BY-SA 4.0 or CC0 licenses are in `static/assets/credits.json` and rendered in the footer. Images have been resized for the interface. Manrope's SIL Open Font License is included as `static/assets/OFL.txt`. The five dish photographs together are approximately 436 KB; the font is approximately 165 KB. All are self-hosted.
+Menu photography is illustrative. Credits, source links and individual CC BY-SA 4.0 or CC0 licenses are in `static/assets/credits.json` and rendered in the footer. Images have been resized for the interface. The unDraw Cooking illustration and its permitted recolouring are recorded in `static/assets/illustration-source.json`. Outfit's SIL Open Font License is included as `static/assets/Outfit-OFL.txt`. The five dish photographs together are 435,704 bytes; the WOFF2 font is 32,292 bytes and the illustration is 7,500 bytes. All are self-hosted.
 
 ## Hosting decision | 14 November 2026
 

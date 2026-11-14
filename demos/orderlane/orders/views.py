@@ -45,7 +45,7 @@ def body(request):
 
 @ensure_csrf_cookie
 def index(request):
-    return render(request, 'storefront.html')
+    return render(request, 'counter.html')
 
 
 def health(request):
